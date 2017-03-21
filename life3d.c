@@ -13,6 +13,7 @@ int main(int argc, char** argv) {
     }
     char *input_file  = argv[1];
     int generations = atoi(argv[2]);
+    printf("Input file: '%s'\nGenerations: %d\n", input_file, generations);
 
     if (generations <= 0) {
         printf("[ERROR] Number of generations must be bigger that 0. Got: '%d'\n", generations);
@@ -46,7 +47,7 @@ int main(int argc, char** argv) {
         _y = strtok(NULL, " ");
         _z = strtok(NULL, "\n");
         if(!_x || !_y || !_z) {
-            printf("%p, %p, %p\n", _x, _y, _z);
+            printf("x: %p, b: %p, z: %p\n", _x, _y, _z);
             printf("[ERROR] Found an error parsing the input file.\n", generations);
             return -1;
         }
@@ -54,11 +55,11 @@ int main(int argc, char** argv) {
         y = atoi(_y);
         z = atoi(_z);
 
+        // @TODO: do something here with the values. Populate the matrix.
         printf("(%d, %d, %d)\n", x, y, z);
     }
 
     fclose(f);
 
-    printf("Got: %s, %d\n", input_file, generations);
     return 0;
 }
