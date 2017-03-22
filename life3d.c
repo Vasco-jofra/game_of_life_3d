@@ -65,19 +65,22 @@ void STinsert(int n, z_list matrix[][n], int x, int y, int z)
     return;
 }
 
-int onLimitZ(int N, int z) {
-	
-	if)
-	return z+1 <= N || z-1 >=0;
-	
-}
+
 	
 int countNeighbours(int SIZE, z_list matrix[][SIZE], int x, int y, z_list ptr){
+	int cnt=0;
 	printf("POINTER:x %d y %d z %d SIZE:%d\n",x,y, ptr->z,SIZE);
 	
-	if()
-		printf("HELLO\n");
-		
+   if(ptr->next != NULL && (ptr->next->z == ptr->z+1))
+	 		cnt++;
+	
+	// +++++++****** ERRO +++++*****/
+	// o prev da cabeça da lista não é nulo, verificar porque
+	if(ptr->prev != NULL)
+		// if((ptr->prev->z == ptr->z-1))
+		cnt++;
+	
+printf("COUNTER: %d\n",cnt);		
 		
 		
 		return 0;
