@@ -41,12 +41,9 @@ void STinsert(int n, z_list matrix[][n], int x, int y, int z)
 
     if (matrix[x][y] == NULL) {
         matrix[x][y] = new_el;
-        printf("AQUI111: %d %d %d\n", x, y, matrix[x][y]->z);
-
     } else {
         if (z < ptr->z) {
-            //matrix[x][y]->prev = new_el;
-            matrix[x][y]->prev = new_el;
+			  matrix[x][y]->prev = new_el;
             new_el->next = matrix[x][y];
             matrix[x][y] = new_el;
             return;
@@ -56,20 +53,49 @@ void STinsert(int n, z_list matrix[][n], int x, int y, int z)
                     new_el->next = ptr->next;
                     new_el->prev = ptr;
                     ptr->next = new_el;
-                    printf("PUMBAS: %d %d %d\n", x, y, matrix[x][y]->z);
                     return;
                 } else {
                     ptr = ptr->next;
                 }
             }
-            printf("INSERE NO ULTIMO\n");
             ptr->next = new_el;
             new_el->prev = ptr;
         }
     }
-    printf("FIM\n");
-
     return;
+}
+
+int onLimitZ(int N, int z) {
+	
+	if)
+	return z+1 <= N || z-1 >=0;
+	
+}
+	
+int countNeighbours(int SIZE, z_list matrix[][SIZE], int x, int y, z_list ptr){
+	printf("POINTER:x %d y %d z %d SIZE:%d\n",x,y, ptr->z,SIZE);
+	
+	if()
+		printf("HELLO\n");
+		
+		
+		
+		return 0;
+}
+
+void TraverseAliveCells(int n, z_list matrix[][n]){
+   z_list ptr;
+	int counter;
+	
+   for (int i = 0; i < n; i++) {
+       for (int j = 0; j < n; j++) {
+           ptr = matrix[i][j];
+           while (ptr != NULL) {
+				  counter = countNeighbours(n,matrix,i,j,ptr);
+               ptr = ptr->next;
+           }
+       }
+   }
 }
 
 int main(int argc, char* argv[])
@@ -110,6 +136,8 @@ int main(int argc, char* argv[])
         STinsert(SIZE, cell_matrix, x, y, z);
     }
     fclose(fp);
+
+TraverseAliveCells(SIZE,cell_matrix);
 
     // Print
     z_list ptr;
