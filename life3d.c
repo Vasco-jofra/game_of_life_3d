@@ -2,10 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-/********************/
+/******************/
 /*** STRUCTURES ***/
-/********************/
-
+/******************/
 // Node representing elements of sparse matrix
 struct node {
     int z;
@@ -14,21 +13,20 @@ struct node {
 
 typedef struct node* z_list;
 
-/********************/
+/*****************/
 /*** FUNCTIONS ***/
-/********************/
-
-/**	Initialize hashmap	**/
+/*****************/
+/**	Initialize cube	**/
 void STinit(int max, z_list matrix[][max])
 {
-    int i, j;
-
-    for (i = 0; i < max; i++)
-        for (j = 0; j < max; j++)
+    for (int i = 0; i < max; i++) {
+        for (int j = 0; j < max; j++) {
             matrix[i][j] = NULL;
+        }
+    }
 }
 
-/**  Add alive cell coordinates in hashmap  **/
+/**  Add alive cell coordinates in the cube  **/
 // Inserted by ordered to maintain sparse matrix
 void STinsert(int n, z_list matrix[][n], int x, int y, int z)
 {
@@ -37,16 +35,15 @@ void STinsert(int n, z_list matrix[][n], int x, int y, int z)
 
     ptr = matrix[x][y];
     new_el = (z_list)malloc(sizeof(z_list));
-    new_el->z = z	;
+    new_el->z = z;
     new_el->next = NULL;
     new_el->prev = NULL;
 
     if (matrix[x][y] == NULL) {
         matrix[x][y] = new_el;
         printf("AQUI111: %d %d %d\n", x, y, matrix[x][y]->z);
-    }
 
-    else {
+    } else {
         if (z < ptr->z) {
             //matrix[x][y]->prev = new_el;
             matrix[x][y]->prev = new_el;
@@ -61,8 +58,9 @@ void STinsert(int n, z_list matrix[][n], int x, int y, int z)
                     ptr->next = new_el;
                     printf("PUMBAS: %d %d %d\n", x, y, matrix[x][y]->z);
                     return;
-                } else
+                } else {
                     ptr = ptr->next;
+                }
             }
             printf("INSERE NO ULTIMO\n");
             ptr->next = new_el;
@@ -96,32 +94,33 @@ int main(int argc, char* argv[])
         perror("[ERROR]");
         return -1;
     }
-	int SIZE;
+    int SIZE;
     if (fscanf(fp, "%d", &SIZE) == EOF) {
-		printf("[ERROR] Unable to read the size.\n");
+        printf("[ERROR] Unable to read the size.\n");
         return -1;
     }
 
-    int i, j, x, y, z;
-    z_list ptr;
+    // Finished parsing metadata. Now only need to parse the actual positions
     z_list cell_matrix[SIZE][SIZE];
-
     STinit(SIZE, cell_matrix);
 
+    int x, y, z;
     while (fscanf(fp, "%d %d %d", &x, &y, &z) != EOF) {
         printf("%d %d %d\n", x, y, z);
         STinsert(SIZE, cell_matrix, x, y, z);
     }
     fclose(fp);
 
-	// Print
-    for (i = 0; i < SIZE; i++)
-        for (j = 0; j < SIZE; j++) {
+    // Print
+    z_list ptr;
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
             ptr = cell_matrix[i][j];
             while (ptr != NULL) {
                 printf("x y z : %d %d %d\n", i, j, ptr->z);
                 ptr = ptr->next;
             }
         }
+    }
     return 0;
 }
