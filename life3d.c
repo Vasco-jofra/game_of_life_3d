@@ -37,7 +37,7 @@ void STinsert(int n, z_list matrix[][n], int x, int y, int z)
     z_list new_el;
 
     new_el = (z_list) malloc(sizeof(struct node));
-    // new_el = (z_list) malloc(sizeof(z_list)); // @BUG: This was a bug! z_list is a pointer, so it was only allocating 24 bytes. It was working out o luck because the allcoator probably allocates with some extra space to allign stuff probably.
+    // new_el = (z_list) malloc(sizeof(z_list)); // @BUG: This was a bug! z_list is a pointer, so it was only allocating 8 bytes out of the 24 bytes we want. It was working out o luck because the allcoator probably allocates with some extra space to allign stuff probably.
     // printf("size of z_list: %ld\n", sizeof(z_list));
     // printf("size of node  : %ld\n", sizeof(struct node));
 
