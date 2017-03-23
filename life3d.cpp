@@ -5,6 +5,13 @@
 int x_plus[4] = { -1, 1, 0, 0 };
 int y_plus[4] = { 0, 0, -1, 1 };
 
+struct l_elem{
+	int x;
+	int y;
+	int z;
+	l_elem *next;
+};
+
 // Node representing elements of sparse matrix
 struct node {
     int z;
@@ -12,6 +19,9 @@ struct node {
 };
 
 typedef struct node* z_list;
+typedef struct l_elem* dead_list;
+
+dead_list d_list = NULL;
 
 typedef struct matrix_str {
     int side;
@@ -100,7 +110,7 @@ int onLimit(int x, int y, int max)
 
 int CountNeighbours(Matrix* m, int x, int y, z_list ptr, int SIZE)
 {
-    int w = 0, cnt = 0;
+    int cnt = 0;
     printf("POINTER:x %d y %d z %d\n", x, y, ptr->z);
 
     if (ptr->next != NULL && (ptr->next->z == ptr->z + 1))
@@ -109,15 +119,36 @@ int CountNeighbours(Matrix* m, int x, int y, z_list ptr, int SIZE)
     if (ptr->prev != NULL && (ptr->prev->z == ptr->z - 1))
         cnt++;
 
-    for (w; w < 4; w++) {
+    for (int w=0; w < 4; w++) {
         if (onLimit(x + x_plus[w], y + y_plus[w], SIZE))
             cnt = cnt + FindNeighbour(m, x + x_plus[w], y + y_plus[w], ptr->z);
     }
 
     printf("COUNTER: %d\n", cnt);
 
-    return 0;
+    return cnt;
 }
+
+
+void AddToDeadList(int x, int y, int z){
+	
+   dead_list new_el = (dead_list)malloc(sizeof(struct l_elem));
+   new_el->x = x;
+   new_el->y = y;
+   new_el->z = z;
+   new_el->next = NULL;
+	
+	dead_list ptr = d_list;
+	
+	if(d_list == NULL)
+		d_list = new_el;
+	else{
+		while( ptr->next != NULL)
+			ptr = ptr->next;
+		ptr->next = new_el;
+	}
+}
+
 
 void TraverseAliveCells(Matrix* m)
 {
@@ -130,11 +161,15 @@ void TraverseAliveCells(Matrix* m)
            ptr = matrix_get(m, i, j);
             while (ptr != NULL) {
                 counter = CountNeighbours(m, i, j, ptr,SIZE);
+					 if(counter < 2 || counter > 4)
+						 AddToDeadList(i,j,ptr->z);
                 ptr = ptr->next;
             }
         }
     }
 }
+
+
 
 int main(int argc, char* argv[])
 {
@@ -178,4 +213,11 @@ int main(int argc, char* argv[])
 
     // Print
     matrix_print(&m);
+    // Print
+	 dead_list ptr2 = d_list;
+	 while(ptr2 != NULL){
+		 printf("MORTO: %d %d %d\n", ptr2->x,ptr2->y,ptr2->z);
+		 ptr2 = ptr2->next;
+	 }
+	 
 }
