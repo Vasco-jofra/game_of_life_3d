@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+int x_plus[4] = {-1,1,0,0};
+int y_plus[4] = {0,0,-1,1};
+
 /******************/
 /*** STRUCTURES ***/
 /******************/
@@ -70,9 +73,28 @@ void STinsert(int n, z_list matrix[][n], int x, int y, int z)
     return;
 }
 
-int countNeighbours(int SIZE, z_list matrix[][SIZE], int x, int y, z_list ptr)
+int FindNeighbour(int SIZE, z_list matrix[][SIZE], int x, int y, int z){
+	z_list ptr = matrix[x][y];
+	
+	while(ptr != NULL){
+		if(z == ptr->z)
+			return 1;
+		ptr = ptr->next;
+	}
+	
+	return 0;
+}
+
+int onLimit(int x, int y, int max){
+	if( x >= 0 && x <= max && y >= 0 && y <= max )
+		return 1;
+	
+	return 0;
+	
+}
+int CountNeighbours(int SIZE, z_list matrix[][SIZE], int x, int y, z_list ptr)
 {
-    int cnt = 0;
+    int w=0,cnt = 0;
     printf("POINTER:x %d y %d z %d SIZE:%d\n", x, y, ptr->z, SIZE);
 
     if (ptr->next != NULL && (ptr->next->z == ptr->z + 1))
@@ -80,6 +102,12 @@ int countNeighbours(int SIZE, z_list matrix[][SIZE], int x, int y, z_list ptr)
 
     if (ptr->prev != NULL && (ptr->prev->z == ptr->z-1))
         cnt++;
+	 
+	 for(w; w< 4; w++){
+		 if(onLimit(x + x_plus[w], y + y_plus[w],SIZE))
+			cnt = cnt + FindNeighbour(SIZE, matrix,x + x_plus[w],y + y_plus[w], ptr->z);
+	 }
+	 
 
     printf("COUNTER: %d\n", cnt);
 
@@ -95,7 +123,7 @@ void TraverseAliveCells(int n, z_list matrix[][n])
         for (int j = 0; j < n; j++) {
             ptr = matrix[i][j];
             while (ptr != NULL) {
-                counter = countNeighbours(n, matrix, i, j, ptr);
+                counter = CountNeighbours(n, matrix, i, j, ptr);
                 ptr = ptr->next;
             }
         }
