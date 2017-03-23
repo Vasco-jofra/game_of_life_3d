@@ -78,10 +78,7 @@ int countNeighbours(int SIZE, z_list matrix[][SIZE], int x, int y, z_list ptr)
     if (ptr->next != NULL && (ptr->next->z == ptr->z + 1))
         cnt++;
 
-    // +++++++****** ERRO +++++*****/
-    // o prev da cabeça da lista não é nulo, verificar porque
-    if (ptr->prev != NULL)
-        // if((ptr->prev->z == ptr->z-1))
+    if (ptr->prev != NULL && (ptr->prev->z == ptr->z-1))
         cnt++;
 
     printf("COUNTER: %d\n", cnt);
