@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+int x_plus[4] = { -1, 1, 0, 0 };
+int y_plus[4] = { 0, 0, -1, 1 };
+
 // Node representing elements of sparse matrix
 struct node {
     int z;
@@ -20,7 +23,7 @@ Matrix make_matrix(int side)
     Matrix m;
     m.side = side;
     m.data = (z_list*)calloc(side * side, sizeof(z_list));
-    return m;
+    return m; 
 }
 
 z_list matrix_get(Matrix* m, int x, int y)
@@ -61,7 +64,7 @@ void matrix_print(Matrix* m)
 {
     int SIZE = m->side;
     printf("MATRIX: \n");
-    for (int i = 0; i < SIZE; i++) {
+    for (int i = 0; i < SIZE ; i++) {
         for (int j = 0; j < SIZE; j++) {
             printf("%d %d (", i, j);
             z_list ptr = matrix_get(m, i, j);
@@ -70,6 +73,65 @@ void matrix_print(Matrix* m)
                 ptr = ptr->next;
             }
             printf(")\n");
+        }
+    }
+}
+
+int FindNeighbour(Matrix* m, int x, int y, int z)
+{
+  z_list ptr = matrix_get(m, x, y);
+
+    while (ptr != NULL) {
+        if (z == ptr->z)
+            return 1;
+        ptr = ptr->next;
+    }
+
+    return 0;
+}
+
+int onLimit(int x, int y, int max)
+{
+    if (x >= 0 && x <= max && y >= 0 && y <= max)
+        return 1;
+
+    return 0;
+}
+
+int CountNeighbours(Matrix* m, int x, int y, z_list ptr, int SIZE)
+{
+    int w = 0, cnt = 0;
+    printf("POINTER:x %d y %d z %d\n", x, y, ptr->z);
+
+    if (ptr->next != NULL && (ptr->next->z == ptr->z + 1))
+        cnt++;
+
+    if (ptr->prev != NULL && (ptr->prev->z == ptr->z - 1))
+        cnt++;
+
+    for (w; w < 4; w++) {
+        if (onLimit(x + x_plus[w], y + y_plus[w], SIZE))
+            cnt = cnt + FindNeighbour(m, x + x_plus[w], y + y_plus[w], ptr->z);
+    }
+
+    printf("COUNTER: %d\n", cnt);
+
+    return 0;
+}
+
+void TraverseAliveCells(Matrix* m)
+{
+    z_list ptr;
+    int counter;
+    int SIZE = m->side;
+
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+           ptr = matrix_get(m, i, j);
+            while (ptr != NULL) {
+                counter = CountNeighbours(m, i, j, ptr,SIZE);
+                ptr = ptr->next;
+            }
         }
     }
 }
@@ -103,7 +165,7 @@ int main(int argc, char* argv[])
     }
 
     // Finished parsing metadata. Now only need to parse the actual positions
-    Matrix m = make_matrix(SIZE);
+    Matrix m = make_matrix(SIZE+1);
 
     int x, y, z;
     while (fscanf(fp, "%d %d %d", &x, &y, &z) != EOF) {
@@ -112,7 +174,7 @@ int main(int argc, char* argv[])
     }
     fclose(fp);
 
-    //TraverseAliveCells(SIZE, cell_matrix);
+    TraverseAliveCells(&m);
 
     // Print
     matrix_print(&m);
