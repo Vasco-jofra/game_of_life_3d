@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-int x_plus[4] = {-1,1,0,0};
-int y_plus[4] = {0,0,-1,1};
+int x_plus[4] = { -1, 1, 0, 0 };
+int y_plus[4] = { 0, 0, -1, 1 };
 
 /******************/
 /*** STRUCTURES ***/
@@ -31,12 +31,12 @@ void STinit(int max, z_list matrix[][max])
 
 /**  Add alive cell coordinates in the cube  **/
 // Inserted by ordered to maintain sparse matrix
-void STinsert(int n, z_list matrix[][n], int x, int y, int z)
+void STinsert(int N, z_list matrix[][n], int x, int y, int z)
 {
     z_list ptr = matrix[x][y];
     z_list new_el;
 
-    new_el = (z_list) malloc(sizeof(struct node));
+    new_el = (z_list)malloc(sizeof(struct node));
     // new_el = (z_list) malloc(sizeof(z_list)); // @BUG: This was a bug! z_list is a pointer, so it was only allocating 8 bytes out of the 24 bytes we want. It was working out o luck because the allcoator probably allocates with some extra space to allign stuff probably.
     // printf("size of z_list: %ld\n", sizeof(z_list));
     // printf("size of node  : %ld\n", sizeof(struct node));
@@ -73,41 +73,42 @@ void STinsert(int n, z_list matrix[][n], int x, int y, int z)
     return;
 }
 
-int FindNeighbour(int SIZE, z_list matrix[][SIZE], int x, int y, int z){
-	z_list ptr = matrix[x][y];
-	
-	while(ptr != NULL){
-		if(z == ptr->z)
-			return 1;
-		ptr = ptr->next;
-	}
-	
-	return 0;
+int FindNeighbour(int SIZE, z_list matrix[][SIZE], int x, int y, int z)
+{
+    z_list ptr = matrix[x][y];
+
+    while (ptr != NULL) {
+        if (z == ptr->z)
+            return 1;
+        ptr = ptr->next;
+    }
+
+    return 0;
 }
 
-int onLimit(int x, int y, int max){
-	if( x >= 0 && x <= max && y >= 0 && y <= max )
-		return 1;
-	
-	return 0;
-	
+int onLimit(int x, int y, int max)
+{
+    if (x >= 0 && x <= max && y >= 0 && y <= max)
+        return 1;
+
+    return 0;
 }
+
 int CountNeighbours(int SIZE, z_list matrix[][SIZE], int x, int y, z_list ptr)
 {
-    int w=0,cnt = 0;
+    int w = 0, cnt = 0;
     printf("POINTER:x %d y %d z %d SIZE:%d\n", x, y, ptr->z, SIZE);
 
     if (ptr->next != NULL && (ptr->next->z == ptr->z + 1))
         cnt++;
 
-    if (ptr->prev != NULL && (ptr->prev->z == ptr->z-1))
+    if (ptr->prev != NULL && (ptr->prev->z == ptr->z - 1))
         cnt++;
-	 
-	 for(w; w< 4; w++){
-		 if(onLimit(x + x_plus[w], y + y_plus[w],SIZE))
-			cnt = cnt + FindNeighbour(SIZE, matrix,x + x_plus[w],y + y_plus[w], ptr->z);
-	 }
-	 
+
+    for (w; w < 4; w++) {
+        if (onLimit(x + x_plus[w], y + y_plus[w], SIZE))
+            cnt = cnt + FindNeighbour(SIZE, matrix, x + x_plus[w], y + y_plus[w], ptr->z);
+    }
 
     printf("COUNTER: %d\n", cnt);
 
