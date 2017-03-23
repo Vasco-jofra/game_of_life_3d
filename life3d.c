@@ -30,20 +30,25 @@ void STinit(int max, z_list matrix[][max])
 // Inserted by ordered to maintain sparse matrix
 void STinsert(int n, z_list matrix[][n], int x, int y, int z)
 {
-    z_list ptr;
+    z_list ptr = matrix[x][y];
     z_list new_el;
 
-    ptr = matrix[x][y];
-    new_el = (z_list)malloc(sizeof(z_list));
+    new_el = (z_list) malloc(sizeof(struct node));
+    // new_el = (z_list) malloc(sizeof(z_list)); // @BUG: This was a bug! z_list is a pointer, so it was only allocating 24 bytes. It was working out o luck because the allcoator probably allocates with some extra space to allign stuff probably.
+    // printf("size of z_list: %ld\n", sizeof(z_list));
+    // printf("size of node  : %ld\n", sizeof(struct node));
+
     new_el->z = z;
     new_el->next = NULL;
     new_el->prev = NULL;
 
     if (matrix[x][y] == NULL) {
+        // Case where there are no nodes yet in the linked list
         matrix[x][y] = new_el;
     } else {
+        // We already have elements. Insert it ordered.
         if (z < ptr->z) {
-			  matrix[x][y]->prev = new_el;
+            matrix[x][y]->prev = new_el;
             new_el->next = matrix[x][y];
             matrix[x][y] = new_el;
             return;
@@ -65,40 +70,39 @@ void STinsert(int n, z_list matrix[][n], int x, int y, int z)
     return;
 }
 
+int countNeighbours(int SIZE, z_list matrix[][SIZE], int x, int y, z_list ptr)
+{
+    int cnt = 0;
+    printf("POINTER:x %d y %d z %d SIZE:%d\n", x, y, ptr->z, SIZE);
 
-	
-int countNeighbours(int SIZE, z_list matrix[][SIZE], int x, int y, z_list ptr){
-	int cnt=0;
-	printf("POINTER:x %d y %d z %d SIZE:%d\n",x,y, ptr->z,SIZE);
-	
-   if(ptr->next != NULL && (ptr->next->z == ptr->z+1))
-	 		cnt++;
-	
-	// +++++++****** ERRO +++++*****/
-	// o prev da cabeça da lista não é nulo, verificar porque
-	if(ptr->prev != NULL)
-		// if((ptr->prev->z == ptr->z-1))
-		cnt++;
-	
-printf("COUNTER: %d\n",cnt);		
-		
-		
-		return 0;
+    if (ptr->next != NULL && (ptr->next->z == ptr->z + 1))
+        cnt++;
+
+    // +++++++****** ERRO +++++*****/
+    // o prev da cabeça da lista não é nulo, verificar porque
+    if (ptr->prev != NULL)
+        // if((ptr->prev->z == ptr->z-1))
+        cnt++;
+
+    printf("COUNTER: %d\n", cnt);
+
+    return 0;
 }
 
-void TraverseAliveCells(int n, z_list matrix[][n]){
-   z_list ptr;
-	int counter;
-	
-   for (int i = 0; i < n; i++) {
-       for (int j = 0; j < n; j++) {
-           ptr = matrix[i][j];
-           while (ptr != NULL) {
-				  counter = countNeighbours(n,matrix,i,j,ptr);
-               ptr = ptr->next;
-           }
-       }
-   }
+void TraverseAliveCells(int n, z_list matrix[][n])
+{
+    z_list ptr;
+    int counter;
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            ptr = matrix[i][j];
+            while (ptr != NULL) {
+                counter = countNeighbours(n, matrix, i, j, ptr);
+                ptr = ptr->next;
+            }
+        }
+    }
 }
 
 int main(int argc, char* argv[])
@@ -140,7 +144,7 @@ int main(int argc, char* argv[])
     }
     fclose(fp);
 
-TraverseAliveCells(SIZE,cell_matrix);
+    TraverseAliveCells(SIZE, cell_matrix);
 
     // Print
     z_list ptr;
