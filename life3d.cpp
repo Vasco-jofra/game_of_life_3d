@@ -77,9 +77,13 @@ void matrix_print(Matrix* m)
     for (int i = 0; i < SIZE ; i++) {
         for (int j = 0; j < SIZE; j++) {
             printf("%d %d (", i, j);
+			   fflush( stdout );
+				
             z_list ptr = matrix_get(m, i, j);
             while (ptr != NULL) {
                 printf("%d%s", ptr->z, ptr->next == NULL ? "" : ", ");
+				    fflush( stdout );
+					 
                 ptr = ptr->next;
             }
             printf(")\n");
@@ -149,7 +153,52 @@ void AddToDeadList(int x, int y, int z){
 	}
 }
 
+void updateMatrix(Matrix* m){
+	
+	dead_list ptr = d_list;
 
+
+	// Remove the dead's from matrix
+		while( ptr != NULL){
+			z_list dead = matrix_get(m, ptr->x, ptr->y);
+			//CABEÇA DA MATRIX
+			z_list head = matrix_get(m, ptr->x, ptr->y);
+						
+			while(ptr->z != dead->z)
+				dead = dead->next;
+			
+			// ******ERRRRROROR ******//
+			//ERRO AQUI , PRIMEIRO IF
+			if(dead->prev == NULL){
+				printf("MORTO NA CABEÇA: %d %d %d %d\n", ptr->x,ptr->y,dead->z,ptr->z);
+				if(dead->next != NULL){
+					head = dead->next;
+					head->prev = NULL;
+				}
+				else
+				head = dead->next;
+				
+				free(dead);
+			}
+			else{
+			if(dead->prev != NULL){
+				printf("MORTO NO MEIO: %d %d %d %d\n", ptr->x,ptr->y,dead->prev->z,ptr->z);
+				dead->prev->next = dead->next;
+			}
+			if(dead->next != NULL){
+				printf("MORTO NO MEIO COM MAIS À FRENTE: %d %d %d %d\n", ptr->x,ptr->y,dead->prev->z,ptr->z);
+				dead->next = dead->prev;
+				
+			}
+			free(dead);
+			
+			}
+			
+			ptr = ptr->next;
+	   }
+			
+}
+	
 void TraverseAliveCells(Matrix* m)
 {
     z_list ptr;
@@ -167,6 +216,7 @@ void TraverseAliveCells(Matrix* m)
             }
         }
     }
+	 updateMatrix(m);
 }
 
 
