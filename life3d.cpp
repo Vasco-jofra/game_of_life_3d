@@ -174,7 +174,10 @@ void matrix_print_live(Matrix* m)
 
 inline int pos_mod(int val, int mod)
 {
-    return ((val % mod) + mod) % mod;
+    if (val >= mod) return val - mod;
+    else if (val < 0) return val + mod;
+    else return val;
+    // return ((val % mod) + mod) % mod;
 }
 
 bool matrix_ele_exists(Matrix* m, int x, int y, int z)
@@ -194,11 +197,13 @@ void insert_or_update_in_dead_to_check(int x, int y, int z)
 {
     // @ Sync: Synchronize here the addition and/or creation of the element!
     int ele = ++dead_to_check[std::make_tuple(x, y, z)];
-    //printf("Dead cell (%d, %d, %d) now has a count of %d.\n", x, y, z, ele);
+    // printf("    Dead cell (%d, %d, %d) now has a count of %d.\n", x, y, z, ele);
 }
 
 int count_neighbours(Matrix* m, int x, int y, z_list ptr)
 {
+    // printf("Counting neighbors for (%d, %d, %d)\n", x, y, ptr->z);
+
     int cnt = 0;
     int z = ptr->z;
     int SIZE = m->side;
@@ -212,7 +217,7 @@ int count_neighbours(Matrix* m, int x, int y, z_list ptr)
         // check if we are wrapping arround, and if so, if the ele on the other side exists
         if (_z > SIZE) {
             // We did wrap arround! Check again
-            _z = _z % SIZE;
+            _z = _z - SIZE;
             if (matrix_ele_exists(m, x, y, _z))
                 cnt++;
             else
@@ -231,7 +236,7 @@ int count_neighbours(Matrix* m, int x, int y, z_list ptr)
         // check if we are wrapping arround, and if so, if the ele on the other side exists
         if (_z < 0) {
             // We did wrap arround! Check again
-            _z = (_z % SIZE) * -1;
+            _z = (_z + SIZE);
             if (matrix_ele_exists(m, x, y, _z))
                 cnt++;
             else
@@ -304,7 +309,7 @@ int main(int argc, char* argv[])
     }
 
     // Finished parsing metadata. Now only need to parse the actual positions
-    Matrix m = make_matrix(SIZE + 1); //@SEE: Why +1?
+    Matrix m = make_matrix(SIZE); //@SEE: Why +1?
 
     int x, y, z;
     while (fscanf(fp, "%d %d %d", &x, &y, &z) != EOF) {
@@ -339,17 +344,13 @@ int main(int argc, char* argv[])
         }
 
         // Check the dead ones that were neighbours now
-        int c = 0;
         for (auto& it : dead_to_check) {
             if (it.second == 2 || it.second == 3) {
                 to_insert.push_back(it.first);
             }
             if (DEBUG)
-                printf("(%d, %d, %d): %d\n", std::get<0>(it.first), std::get<1>(it.first), std::get<2>(it.first), it.second);
-            c++;
+                printf("Dead cell (%d, %d, %d) has %d neighbors.\n", std::get<0>(it.first), std::get<1>(it.first), std::get<2>(it.first), it.second);
         }
-        if (DEBUG)
-            printf("Count: %d\n", c);
 
         // Do the inserting and removing now
         for (auto& t : to_insert) {
@@ -375,27 +376,6 @@ int main(int argc, char* argv[])
     //-----------
     //--- END ---
     //-----------
-    /*DEBUG = true;
-    printf("TEST\n");
-    printf("TEST\n");
-    printf("TEST\n");
-    printf("TEST\n");
-    printf("TEST\n");
-    Matrix m2 = make_matrix(4);
-
-    matrix_insert(&m2, 0, 1, 0);
-    matrix_insert(&m2, 0, 1, 2);
-    matrix_insert(&m2, 0, 1, 1);
-    matrix_print(&m2);
-    matrix_print_backwards(&m2);
-
-    matrix_remove(&m2, 0, 1, 2);
-    matrix_print(&m2);
-    matrix_remove(&m2, 0, 1, 0);
-    matrix_print(&m2);
-    matrix_remove(&m2, 0, 1, 1);
-    matrix_print(&m2);*/
-
     // Output the result
     matrix_print_live(&m);
 }
