@@ -2,11 +2,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
-#include <vector>
+#include <algorithm>
 #include <unordered_map>
+#include <vector>
 
 #define MAX_SIZE 10000
-#define DEBUG 1
+bool DEBUG = false;
 
 // Define the hash for tuple<int, int, int> so we can use it in the hash_map
 typedef std::tuple<int, int, int> Vector3;
@@ -52,7 +53,8 @@ z_list matrix_get(Matrix* m, int x, int y)
 
 void matrix_insert(Matrix* m, int x, int y, int z)
 {
-    if(DEBUG) printf("Inserting (%d, %d, %d)\n", x, y, z);
+    if (DEBUG)
+        printf("Inserting (%d, %d, %d)\n", x, y, z);
 
     z_list new_el = (z_list)malloc(sizeof(struct node));
     new_el->z = z;
@@ -66,10 +68,11 @@ void matrix_insert(Matrix* m, int x, int y, int z)
         m->data[x + (y * m->side)] = new_el;
     } else {
         // We already have elements. Insert it ordered.
-        while (ptr->next != NULL) {
+        while (ptr->next) {
             if (z < ptr->next->z) {
                 new_el->next = ptr->next;
                 new_el->prev = ptr;
+                ptr->next->prev = new_el;
                 ptr->next = new_el;
                 break;
             } else {
@@ -81,7 +84,55 @@ void matrix_insert(Matrix* m, int x, int y, int z)
     }
 }
 
+void matrix_remove(Matrix* m, int x, int y, int z)
+{
+    z_list ptr = matrix_get(m, x, y);
+
+    while(ptr) {
+        if(ptr->z == z) {
+            if (DEBUG)
+                printf("Removing (%d, %d, %d)\n", x, y, z);
+
+            // Actually removing here
+            if(ptr->next) {
+                ptr->next->prev = ptr->prev;
+            }
+
+            if(ptr->prev) {
+                ptr->prev->next = ptr->next;
+            } else {
+                // We are the head being removed. (Assigning to NULL it's ok here.)
+                m->data[x + (y * m->side)] = ptr->next;
+            }
+            free(ptr);
+            ptr = NULL;
+            return;
+        }
+        ptr = ptr->next;
+    }
+    if (DEBUG)
+        printf("Tried to remove, but entry (%d, %d, %d) was not found.\n", x, y, z);
+}
+
 void matrix_print(Matrix* m)
+{
+    int SIZE = m->side;
+    printf("MATRIX: \n");
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            printf("%d %d (", i, j);
+
+            z_list ptr = matrix_get(m, i, j);
+            while (ptr != NULL) {
+                printf("%d%s", ptr->z, ptr->next == NULL ? "" : ", ");
+                ptr = ptr->next;
+            }
+            printf(")\n");
+        }
+    }
+}
+
+void matrix_print_backwards(Matrix* m)
 {
     int SIZE = m->side;
     printf("MATRIX: \n");
@@ -91,15 +142,35 @@ void matrix_print(Matrix* m)
             fflush(stdout);
 
             z_list ptr = matrix_get(m, i, j);
-            while (ptr != NULL) {
-                printf("%d%s", ptr->z, ptr->next == NULL ? "" : ", ");
-                fflush(stdout);
+
+            // Go to the end of the list
+            while (ptr && ptr->next) {
                 ptr = ptr->next;
+            }
+            while (ptr) {
+                printf("%d%s", ptr->z, ptr->prev == NULL ? "" : ", ");
+                fflush(stdout);
+                ptr = ptr->prev;
             }
             printf(")\n");
         }
     }
 }
+
+void matrix_print_live(Matrix* m)
+{
+    int SIZE = m->side;
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            z_list ptr = matrix_get(m, i, j);
+            while (ptr != NULL) {
+                printf("%d %d %d\n", i, j, ptr->z);
+                ptr = ptr->next;
+            }
+        }
+    }
+}
+
 
 inline int pos_mod(int val, int mod)
 {
@@ -198,55 +269,9 @@ int count_neighbours(Matrix* m, int x, int y, z_list ptr)
         insert_or_update_in_dead_to_check(x, _y, z);
     }
 
-    if(DEBUG) printf("Element (%d, %d, %d) has %d neighbors.\n", x, y, z, cnt);
+    if (DEBUG)
+        printf("Element (%d, %d, %d) has %d neighbors.\n", x, y, z, cnt);
     return cnt;
-}
-
-
-void updateMatrix(Matrix* m){
-
-	dead_list ptr = d_list;
-
-
-	// Remove the dead's from matrix
-		while( ptr != NULL){
-			z_list dead = matrix_get(m, ptr->x, ptr->y);
-			//CABEÇA DA MATRIX
-			z_list head = matrix_get(m, ptr->x, ptr->y);
-
-			while(ptr->z != dead->z)
-				dead = dead->next;
-
-			// ******ERRRRROROR ******//
-			//ERRO AQUI , PRIMEIRO IF
-			if(dead->prev == NULL){
-				printf("MORTO NA CABEÇA: %d %d %d %d\n", ptr->x,ptr->y,dead->z,ptr->z);
-				if(dead->next != NULL){
-					head = dead->next;
-					head->prev = NULL;
-				}
-				else
-				head = dead->next;
-
-				free(dead);
-			}
-			else{
-			if(dead->prev != NULL){
-				printf("MORTO NO MEIO: %d %d %d %d\n", ptr->x,ptr->y,dead->prev->z,ptr->z);
-				dead->prev->next = dead->next;
-			}
-			if(dead->next != NULL){
-				printf("MORTO NO MEIO COM MAIS À FRENTE: %d %d %d %d\n", ptr->x,ptr->y,dead->prev->z,ptr->z);
-				dead->next = dead->prev;
-
-			}
-			free(dead);
-
-			}
-
-			ptr = ptr->next;
-	   }
-
 }
 
 int main(int argc, char* argv[])
@@ -258,7 +283,8 @@ int main(int argc, char* argv[])
     }
     char* input_file = argv[1];
     int generations = atoi(argv[2]);
-    if(DEBUG) printf("Input file: '%s'\nGenerations: %d\n", input_file, generations);
+    if (DEBUG)
+        printf("Input file: '%s'\nGenerations: %d\n", input_file, generations);
 
     if (generations <= 0) {
         printf("[ERROR] Number of generations must be bigger that 0. Got: '%d'\n", generations);
@@ -278,11 +304,12 @@ int main(int argc, char* argv[])
     }
 
     // Finished parsing metadata. Now only need to parse the actual positions
-    Matrix m = make_matrix(SIZE + 1);
+    Matrix m = make_matrix(SIZE + 1); //@SEE: Why +1?
 
     int x, y, z;
     while (fscanf(fp, "%d %d %d", &x, &y, &z) != EOF) {
-        if(DEBUG) printf("GOT: %d %d %d\n", x, y, z);
+        if (DEBUG)
+            printf("GOT: %d %d %d\n", x, y, z);
         matrix_insert(&m, x, y, z);
     }
     // Finished parsing!
@@ -292,8 +319,10 @@ int main(int argc, char* argv[])
     //--- MAIN LOOP ---
     //-----------------
     for (int gen = 0; gen < generations; gen++) {
-        if(DEBUG) printf("------------------------\n");
-        if(DEBUG) printf("Starting generation %d\n", gen);
+        if (DEBUG)
+            printf("------------------------\n");
+        if (DEBUG)
+            printf("Starting generation %d\n", gen);
 
         // @PARALLEL: Where we parallelize
         for (int i = 0; i < SIZE; i++) {
@@ -311,32 +340,62 @@ int main(int argc, char* argv[])
 
         // Check the dead ones that were neighbours now
         int c = 0;
-        for (auto& it: dead_to_check) {
-            if(it.second == 2 || it.second == 3) {
+        for (auto& it : dead_to_check) {
+            if (it.second == 2 || it.second == 3) {
                 to_insert.push_back(it.first);
             }
-            if(DEBUG) printf("(%d, %d, %d): %d\n", std::get<0>(it.first), std::get<1>(it.first), std::get<2>(it.first), it.second);
+            if (DEBUG)
+                printf("(%d, %d, %d): %d\n", std::get<0>(it.first), std::get<1>(it.first), std::get<2>(it.first), it.second);
             c++;
         }
-        if(DEBUG) printf("Count: %d\n", c);
+        if (DEBUG)
+            printf("Count: %d\n", c);
 
         // Do the inserting and removing now
-        for(auto &t : to_insert) {
+        for (auto& t : to_insert) {
             matrix_insert(&m, std::get<0>(t), std::get<1>(t), std::get<2>(t));
         }
-        for(auto &t : to_remove) {
-            if(DEBUG) printf("Removing (%d, %d, %d)\n", std::get<0>(t), std::get<1>(t), std::get<2>(t));
+
+        // By sorting we can remove the nodes closest to the head first. Could be further optimized (only go throught the list once)!
+        // @PROFILE!
+        std::sort(to_remove.begin(), to_remove.end());
+        for (auto& t : to_remove) {
+            matrix_remove(&m, std::get<0>(t), std::get<1>(t), std::get<2>(t));
         }
 
+        // Clear all the structures for the next iteration
         to_insert.clear();
         to_remove.clear();
         dead_to_check.clear();
-        if(DEBUG) printf("------------------------\n");
+        if (DEBUG)
+            printf("------------------------\n");
     }
+
+
     //-----------
     //--- END ---
     //-----------
+    /*DEBUG = true;
+    printf("TEST\n");
+    printf("TEST\n");
+    printf("TEST\n");
+    printf("TEST\n");
+    printf("TEST\n");
+    Matrix m2 = make_matrix(4);
+
+    matrix_insert(&m2, 0, 1, 0);
+    matrix_insert(&m2, 0, 1, 2);
+    matrix_insert(&m2, 0, 1, 1);
+    matrix_print(&m2);
+    matrix_print_backwards(&m2);
+
+    matrix_remove(&m2, 0, 1, 2);
+    matrix_print(&m2);
+    matrix_remove(&m2, 0, 1, 0);
+    matrix_print(&m2);
+    matrix_remove(&m2, 0, 1, 1);
+    matrix_print(&m2);*/
 
     // Output the result
-    // matrix_print(&m);
+    matrix_print_live(&m);
 }
