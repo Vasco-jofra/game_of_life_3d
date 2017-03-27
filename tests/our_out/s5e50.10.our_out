@@ -1,0 +1,4298 @@
+Input file: 'tests/s5e50.in'
+Generations: 10
+GOT: 0 0 1
+Inserting (0, 0, 1)
+GOT: 0 0 2
+Inserting (0, 0, 2)
+GOT: 0 1 0
+Inserting (0, 1, 0)
+GOT: 0 1 1
+Inserting (0, 1, 1)
+GOT: 0 1 2
+Inserting (0, 1, 2)
+GOT: 0 2 0
+Inserting (0, 2, 0)
+GOT: 0 2 1
+Inserting (0, 2, 1)
+GOT: 0 2 2
+Inserting (0, 2, 2)
+GOT: 0 2 3
+Inserting (0, 2, 3)
+GOT: 0 2 4
+Inserting (0, 2, 4)
+GOT: 0 3 0
+Inserting (0, 3, 0)
+GOT: 0 3 1
+Inserting (0, 3, 1)
+GOT: 0 3 3
+Inserting (0, 3, 3)
+GOT: 0 4 1
+Inserting (0, 4, 1)
+GOT: 0 4 2
+Inserting (0, 4, 2)
+GOT: 1 0 0
+Inserting (1, 0, 0)
+GOT: 1 0 2
+Inserting (1, 0, 2)
+GOT: 1 1 4
+Inserting (1, 1, 4)
+GOT: 1 2 0
+Inserting (1, 2, 0)
+GOT: 1 2 2
+Inserting (1, 2, 2)
+GOT: 1 2 4
+Inserting (1, 2, 4)
+GOT: 1 3 1
+Inserting (1, 3, 1)
+GOT: 1 3 2
+Inserting (1, 3, 2)
+GOT: 1 4 1
+Inserting (1, 4, 1)
+GOT: 1 4 3
+Inserting (1, 4, 3)
+GOT: 2 0 0
+Inserting (2, 0, 0)
+GOT: 2 0 1
+Inserting (2, 0, 1)
+GOT: 2 0 3
+Inserting (2, 0, 3)
+GOT: 2 1 0
+Inserting (2, 1, 0)
+GOT: 2 1 1
+Inserting (2, 1, 1)
+GOT: 2 2 1
+Inserting (2, 2, 1)
+GOT: 2 2 3
+Inserting (2, 2, 3)
+GOT: 2 3 2
+Inserting (2, 3, 2)
+GOT: 2 3 3
+Inserting (2, 3, 3)
+GOT: 2 4 0
+Inserting (2, 4, 0)
+GOT: 3 0 1
+Inserting (3, 0, 1)
+GOT: 3 0 4
+Inserting (3, 0, 4)
+GOT: 3 1 2
+Inserting (3, 1, 2)
+GOT: 3 2 2
+Inserting (3, 2, 2)
+GOT: 3 3 0
+Inserting (3, 3, 0)
+GOT: 3 3 3
+Inserting (3, 3, 3)
+GOT: 4 0 1
+Inserting (4, 0, 1)
+GOT: 4 0 3
+Inserting (4, 0, 3)
+GOT: 4 1 4
+Inserting (4, 1, 4)
+GOT: 4 2 1
+Inserting (4, 2, 1)
+GOT: 4 2 2
+Inserting (4, 2, 2)
+GOT: 4 2 4
+Inserting (4, 2, 4)
+GOT: 4 3 4
+Inserting (4, 3, 4)
+GOT: 4 4 1
+Inserting (4, 4, 1)
+GOT: 4 4 2
+Inserting (4, 4, 2)
+------------------------
+Starting generation 0
+Counting neighbors for (0, 0, 1)
+    Dead cell (0, 0, 0) now has a count of 1.
+    Dead cell (1, 0, 1) now has a count of 1.
+Element (0, 0, 1) has 4 neighbors.
+Counting neighbors for (0, 0, 2)
+    Dead cell (0, 0, 3) now has a count of 1.
+    Dead cell (4, 0, 2) now has a count of 1.
+Element (0, 0, 2) has 4 neighbors.
+Counting neighbors for (0, 1, 0)
+    Dead cell (0, 1, 4) now has a count of 1.
+    Dead cell (1, 1, 0) now has a count of 1.
+    Dead cell (4, 1, 0) now has a count of 1.
+    Dead cell (0, 0, 0) now has a count of 2.
+Element (0, 1, 0) has 2 neighbors.
+Counting neighbors for (0, 1, 1)
+    Dead cell (1, 1, 1) now has a count of 1.
+    Dead cell (4, 1, 1) now has a count of 1.
+Element (0, 1, 1) has 4 neighbors.
+Counting neighbors for (0, 1, 2)
+    Dead cell (0, 1, 3) now has a count of 1.
+    Dead cell (1, 1, 2) now has a count of 1.
+    Dead cell (4, 1, 2) now has a count of 1.
+Element (0, 1, 2) has 3 neighbors.
+Counting neighbors for (0, 2, 0)
+    Dead cell (4, 2, 0) now has a count of 1.
+Element (0, 2, 0) has 5 neighbors.
+Counting neighbors for (0, 2, 1)
+    Dead cell (1, 2, 1) now has a count of 1.
+Element (0, 2, 1) has 5 neighbors.
+Counting neighbors for (0, 2, 2)
+    Dead cell (0, 3, 2) now has a count of 1.
+Element (0, 2, 2) has 5 neighbors.
+Counting neighbors for (0, 2, 3)
+    Dead cell (1, 2, 3) now has a count of 1.
+    Dead cell (4, 2, 3) now has a count of 1.
+    Dead cell (0, 1, 3) now has a count of 2.
+Element (0, 2, 3) has 3 neighbors.
+Counting neighbors for (0, 2, 4)
+    Dead cell (0, 3, 4) now has a count of 1.
+    Dead cell (0, 1, 4) now has a count of 2.
+Element (0, 2, 4) has 4 neighbors.
+Counting neighbors for (0, 3, 0)
+    Dead cell (0, 3, 4) now has a count of 2.
+    Dead cell (1, 3, 0) now has a count of 1.
+    Dead cell (4, 3, 0) now has a count of 1.
+    Dead cell (0, 4, 0) now has a count of 1.
+Element (0, 3, 0) has 2 neighbors.
+Counting neighbors for (0, 3, 1)
+    Dead cell (4, 3, 1) now has a count of 1.
+Element (0, 3, 1) has 4 neighbors.
+Counting neighbors for (0, 3, 3)
+    Dead cell (0, 3, 4) now has a count of 3.
+    Dead cell (1, 3, 3) now has a count of 1.
+    Dead cell (4, 3, 3) now has a count of 1.
+    Dead cell (0, 4, 3) now has a count of 1.
+Element (0, 3, 3) has 1 neighbors.
+Counting neighbors for (0, 4, 1)
+    Dead cell (0, 4, 0) now has a count of 2.
+Element (0, 4, 1) has 5 neighbors.
+Counting neighbors for (0, 4, 2)
+    Dead cell (0, 4, 3) now has a count of 2.
+    Dead cell (1, 4, 2) now has a count of 1.
+    Dead cell (0, 3, 2) now has a count of 2.
+Element (0, 4, 2) has 3 neighbors.
+Counting neighbors for (1, 0, 0)
+    Dead cell (1, 0, 4) now has a count of 1.
+    Dead cell (0, 0, 0) now has a count of 3.
+    Dead cell (1, 1, 0) now has a count of 2.
+    Dead cell (1, 4, 0) now has a count of 1.
+Element (1, 0, 0) has 1 neighbors.
+Counting neighbors for (1, 0, 2)
+    Dead cell (1, 0, 3) now has a count of 1.
+    Dead cell (2, 0, 2) now has a count of 1.
+    Dead cell (1, 1, 2) now has a count of 2.
+    Dead cell (1, 4, 2) now has a count of 2.
+Element (1, 0, 2) has 1 neighbors.
+Counting neighbors for (1, 1, 4)
+    Dead cell (1, 1, 0) now has a count of 3.
+    Dead cell (1, 1, 3) now has a count of 1.
+    Dead cell (2, 1, 4) now has a count of 1.
+    Dead cell (0, 1, 4) now has a count of 3.
+    Dead cell (1, 0, 4) now has a count of 2.
+Element (1, 1, 4) has 1 neighbors.
+Counting neighbors for (1, 2, 0)
+    Dead cell (2, 2, 0) now has a count of 1.
+    Dead cell (1, 3, 0) now has a count of 2.
+    Dead cell (1, 1, 0) now has a count of 4.
+Element (1, 2, 0) has 2 neighbors.
+Counting neighbors for (1, 2, 2)
+    Dead cell (2, 2, 2) now has a count of 1.
+    Dead cell (1, 1, 2) now has a count of 3.
+Element (1, 2, 2) has 2 neighbors.
+Counting neighbors for (1, 2, 4)
+    Dead cell (2, 2, 4) now has a count of 1.
+    Dead cell (1, 3, 4) now has a count of 1.
+Element (1, 2, 4) has 3 neighbors.
+Counting neighbors for (1, 3, 1)
+    Dead cell (1, 3, 0) now has a count of 3.
+    Dead cell (2, 3, 1) now has a count of 1.
+    Dead cell (1, 2, 1) now has a count of 2.
+Element (1, 3, 1) has 3 neighbors.
+Counting neighbors for (1, 3, 2)
+    Dead cell (1, 3, 3) now has a count of 2.
+    Dead cell (0, 3, 2) now has a count of 3.
+    Dead cell (1, 4, 2) now has a count of 3.
+Element (1, 3, 2) has 3 neighbors.
+Counting neighbors for (1, 4, 1)
+    Dead cell (1, 4, 0) now has a count of 2.
+    Dead cell (2, 4, 1) now has a count of 1.
+    Dead cell (1, 0, 1) now has a count of 2.
+Element (1, 4, 1) has 2 neighbors.
+Counting neighbors for (1, 4, 3)
+    Dead cell (1, 4, 4) now has a count of 1.
+    Dead cell (2, 4, 3) now has a count of 1.
+    Dead cell (0, 4, 3) now has a count of 3.
+    Dead cell (1, 0, 3) now has a count of 2.
+    Dead cell (1, 3, 3) now has a count of 3.
+Element (1, 4, 3) has 0 neighbors.
+Counting neighbors for (2, 0, 0)
+    Dead cell (2, 0, 4) now has a count of 1.
+    Dead cell (3, 0, 0) now has a count of 1.
+Element (2, 0, 0) has 4 neighbors.
+Counting neighbors for (2, 0, 1)
+    Dead cell (1, 0, 1) now has a count of 3.
+    Dead cell (2, 4, 1) now has a count of 2.
+Element (2, 0, 1) has 3 neighbors.
+Counting neighbors for (2, 0, 3)
+    Dead cell (2, 0, 4) now has a count of 2.
+    Dead cell (3, 0, 3) now has a count of 1.
+    Dead cell (1, 0, 3) now has a count of 3.
+    Dead cell (2, 1, 3) now has a count of 1.
+    Dead cell (2, 4, 3) now has a count of 2.
+Element (2, 0, 3) has 0 neighbors.
+Counting neighbors for (2, 1, 0)
+    Dead cell (2, 1, 4) now has a count of 2.
+    Dead cell (3, 1, 0) now has a count of 1.
+    Dead cell (1, 1, 0) now has a count of 5.
+    Dead cell (2, 2, 0) now has a count of 2.
+Element (2, 1, 0) has 2 neighbors.
+Counting neighbors for (2, 1, 1)
+    Dead cell (2, 1, 2) now has a count of 1.
+    Dead cell (3, 1, 1) now has a count of 1.
+    Dead cell (1, 1, 1) now has a count of 2.
+Element (2, 1, 1) has 3 neighbors.
+Counting neighbors for (2, 2, 1)
+    Dead cell (2, 2, 0) now has a count of 3.
+    Dead cell (3, 2, 1) now has a count of 1.
+    Dead cell (1, 2, 1) now has a count of 3.
+    Dead cell (2, 3, 1) now has a count of 2.
+Element (2, 2, 1) has 1 neighbors.
+Counting neighbors for (2, 2, 3)
+    Dead cell (2, 2, 4) now has a count of 2.
+    Dead cell (3, 2, 3) now has a count of 1.
+    Dead cell (1, 2, 3) now has a count of 2.
+    Dead cell (2, 1, 3) now has a count of 2.
+Element (2, 2, 3) has 1 neighbors.
+Counting neighbors for (2, 3, 2)
+    Dead cell (2, 3, 1) now has a count of 3.
+    Dead cell (3, 3, 2) now has a count of 1.
+    Dead cell (2, 4, 2) now has a count of 1.
+    Dead cell (2, 2, 2) now has a count of 2.
+Element (2, 3, 2) has 2 neighbors.
+Counting neighbors for (2, 3, 3)
+    Dead cell (2, 3, 4) now has a count of 1.
+    Dead cell (1, 3, 3) now has a count of 4.
+    Dead cell (2, 4, 3) now has a count of 3.
+Element (2, 3, 3) has 3 neighbors.
+Counting neighbors for (2, 4, 0)
+    Dead cell (2, 4, 1) now has a count of 3.
+    Dead cell (2, 4, 4) now has a count of 1.
+    Dead cell (3, 4, 0) now has a count of 1.
+    Dead cell (1, 4, 0) now has a count of 3.
+    Dead cell (2, 3, 0) now has a count of 1.
+Element (2, 4, 0) has 1 neighbors.
+Counting neighbors for (3, 0, 1)
+    Dead cell (3, 0, 0) now has a count of 2.
+    Dead cell (3, 1, 1) now has a count of 2.
+    Dead cell (3, 4, 1) now has a count of 1.
+Element (3, 0, 1) has 2 neighbors.
+Counting neighbors for (3, 0, 4)
+    Dead cell (3, 0, 0) now has a count of 3.
+    Dead cell (4, 0, 4) now has a count of 1.
+    Dead cell (2, 0, 4) now has a count of 3.
+    Dead cell (3, 1, 4) now has a count of 1.
+    Dead cell (3, 4, 4) now has a count of 1.
+Element (3, 0, 4) has 0 neighbors.
+Counting neighbors for (3, 1, 2)
+    Dead cell (3, 1, 3) now has a count of 1.
+    Dead cell (3, 1, 1) now has a count of 3.
+    Dead cell (4, 1, 2) now has a count of 2.
+    Dead cell (2, 1, 2) now has a count of 2.
+    Dead cell (3, 0, 2) now has a count of 1.
+Element (3, 1, 2) has 1 neighbors.
+Counting neighbors for (3, 2, 2)
+    Dead cell (3, 2, 3) now has a count of 2.
+    Dead cell (3, 2, 1) now has a count of 2.
+    Dead cell (2, 2, 2) now has a count of 3.
+    Dead cell (3, 3, 2) now has a count of 2.
+Element (3, 2, 2) has 2 neighbors.
+Counting neighbors for (3, 3, 0)
+    Dead cell (3, 3, 4) now has a count of 1.
+    Dead cell (4, 3, 0) now has a count of 2.
+    Dead cell (2, 3, 0) now has a count of 2.
+    Dead cell (3, 4, 0) now has a count of 2.
+    Dead cell (3, 2, 0) now has a count of 1.
+Element (3, 3, 0) has 0 neighbors.
+Counting neighbors for (3, 3, 3)
+    Dead cell (3, 3, 4) now has a count of 2.
+    Dead cell (4, 3, 3) now has a count of 2.
+    Dead cell (3, 4, 3) now has a count of 1.
+    Dead cell (3, 2, 3) now has a count of 3.
+Element (3, 3, 3) has 1 neighbors.
+Counting neighbors for (4, 0, 1)
+    Dead cell (4, 0, 0) now has a count of 1.
+    Dead cell (4, 1, 1) now has a count of 2.
+Element (4, 0, 1) has 3 neighbors.
+Counting neighbors for (4, 0, 3)
+    Dead cell (4, 0, 4) now has a count of 2.
+    Dead cell (0, 0, 3) now has a count of 2.
+    Dead cell (3, 0, 3) now has a count of 2.
+    Dead cell (4, 1, 3) now has a count of 1.
+    Dead cell (4, 4, 3) now has a count of 1.
+Element (4, 0, 3) has 0 neighbors.
+Counting neighbors for (4, 1, 4)
+    Dead cell (4, 1, 0) now has a count of 2.
+    Dead cell (4, 1, 3) now has a count of 2.
+    Dead cell (0, 1, 4) now has a count of 4.
+    Dead cell (3, 1, 4) now has a count of 2.
+    Dead cell (4, 0, 4) now has a count of 3.
+Element (4, 1, 4) has 1 neighbors.
+Counting neighbors for (4, 2, 1)
+    Dead cell (4, 2, 0) now has a count of 2.
+    Dead cell (3, 2, 1) now has a count of 3.
+    Dead cell (4, 3, 1) now has a count of 2.
+    Dead cell (4, 1, 1) now has a count of 3.
+Element (4, 2, 1) has 2 neighbors.
+Counting neighbors for (4, 2, 2)
+    Dead cell (4, 3, 2) now has a count of 1.
+    Dead cell (4, 1, 2) now has a count of 3.
+Element (4, 2, 2) has 3 neighbors.
+Counting neighbors for (4, 2, 4)
+    Dead cell (4, 2, 0) now has a count of 3.
+    Dead cell (3, 2, 4) now has a count of 1.
+Element (4, 2, 4) has 3 neighbors.
+Counting neighbors for (4, 3, 4)
+    Dead cell (4, 3, 0) now has a count of 3.
+    Dead cell (4, 3, 3) now has a count of 3.
+    Dead cell (0, 3, 4) now has a count of 4.
+    Dead cell (3, 3, 4) now has a count of 3.
+    Dead cell (4, 4, 4) now has a count of 1.
+Element (4, 3, 4) has 1 neighbors.
+Counting neighbors for (4, 4, 1)
+    Dead cell (4, 4, 0) now has a count of 1.
+    Dead cell (3, 4, 1) now has a count of 2.
+    Dead cell (4, 3, 1) now has a count of 3.
+Element (4, 4, 1) has 3 neighbors.
+Counting neighbors for (4, 4, 2)
+    Dead cell (4, 4, 3) now has a count of 2.
+    Dead cell (3, 4, 2) now has a count of 1.
+    Dead cell (4, 0, 2) now has a count of 2.
+    Dead cell (4, 3, 2) now has a count of 2.
+Element (4, 4, 2) has 2 neighbors.
+Dead cell (3, 4, 2) has 1 neighbors.
+Dead cell (4, 4, 4) has 1 neighbors.
+Dead cell (4, 3, 2) has 2 neighbors.
+Dead cell (4, 4, 3) has 2 neighbors.
+Dead cell (4, 1, 3) has 2 neighbors.
+Dead cell (4, 4, 0) has 1 neighbors.
+Dead cell (3, 4, 3) has 1 neighbors.
+Dead cell (3, 2, 0) has 1 neighbors.
+Dead cell (3, 0, 2) has 1 neighbors.
+Dead cell (3, 4, 4) has 1 neighbors.
+Dead cell (3, 4, 1) has 2 neighbors.
+Dead cell (2, 4, 4) has 1 neighbors.
+Dead cell (2, 4, 2) has 1 neighbors.
+Dead cell (3, 3, 2) has 2 neighbors.
+Dead cell (2, 3, 4) has 1 neighbors.
+Dead cell (0, 4, 0) has 2 neighbors.
+Dead cell (4, 2, 3) has 1 neighbors.
+Dead cell (1, 0, 1) has 3 neighbors.
+Dead cell (4, 3, 0) has 3 neighbors.
+Dead cell (2, 2, 2) has 3 neighbors.
+Dead cell (3, 2, 4) has 1 neighbors.
+Dead cell (1, 3, 0) has 3 neighbors.
+Dead cell (2, 1, 2) has 2 neighbors.
+Dead cell (1, 2, 1) has 3 neighbors.
+Dead cell (4, 1, 2) has 3 neighbors.
+Dead cell (2, 0, 4) has 3 neighbors.
+Dead cell (2, 3, 0) has 2 neighbors.
+Dead cell (1, 3, 3) has 4 neighbors.
+Dead cell (1, 1, 2) has 3 neighbors.
+Dead cell (3, 1, 3) has 1 neighbors.
+Dead cell (4, 1, 0) has 2 neighbors.
+Dead cell (2, 0, 2) has 1 neighbors.
+Dead cell (3, 2, 3) has 3 neighbors.
+Dead cell (4, 2, 0) has 3 neighbors.
+Dead cell (0, 3, 2) has 3 neighbors.
+Dead cell (0, 1, 4) has 4 neighbors.
+Dead cell (4, 0, 2) has 2 neighbors.
+Dead cell (1, 1, 1) has 2 neighbors.
+Dead cell (0, 0, 3) has 2 neighbors.
+Dead cell (0, 0, 0) has 3 neighbors.
+Dead cell (0, 1, 3) has 2 neighbors.
+Dead cell (1, 1, 0) has 5 neighbors.
+Dead cell (3, 2, 1) has 3 neighbors.
+Dead cell (2, 2, 4) has 2 neighbors.
+Dead cell (0, 3, 4) has 4 neighbors.
+Dead cell (4, 0, 0) has 1 neighbors.
+Dead cell (3, 0, 3) has 2 neighbors.
+Dead cell (3, 1, 4) has 2 neighbors.
+Dead cell (4, 1, 1) has 3 neighbors.
+Dead cell (4, 3, 3) has 3 neighbors.
+Dead cell (1, 4, 2) has 3 neighbors.
+Dead cell (1, 0, 4) has 2 neighbors.
+Dead cell (3, 3, 4) has 3 neighbors.
+Dead cell (4, 3, 1) has 3 neighbors.
+Dead cell (0, 4, 3) has 3 neighbors.
+Dead cell (1, 4, 0) has 3 neighbors.
+Dead cell (1, 0, 3) has 3 neighbors.
+Dead cell (4, 0, 4) has 3 neighbors.
+Dead cell (1, 1, 3) has 1 neighbors.
+Dead cell (3, 1, 1) has 3 neighbors.
+Dead cell (2, 1, 4) has 2 neighbors.
+Dead cell (1, 2, 3) has 2 neighbors.
+Dead cell (2, 2, 0) has 3 neighbors.
+Dead cell (1, 3, 4) has 1 neighbors.
+Dead cell (2, 3, 1) has 3 neighbors.
+Dead cell (2, 4, 1) has 3 neighbors.
+Dead cell (1, 4, 4) has 1 neighbors.
+Dead cell (3, 4, 0) has 2 neighbors.
+Dead cell (2, 4, 3) has 3 neighbors.
+Dead cell (3, 0, 0) has 3 neighbors.
+Dead cell (2, 1, 3) has 2 neighbors.
+Dead cell (3, 1, 0) has 1 neighbors.
+Inserting (4, 3, 2)
+Inserting (4, 4, 3)
+Inserting (4, 1, 3)
+Inserting (3, 4, 1)
+Inserting (3, 3, 2)
+Inserting (0, 4, 0)
+Inserting (1, 0, 1)
+Inserting (4, 3, 0)
+Inserting (2, 2, 2)
+Inserting (1, 3, 0)
+Inserting (2, 1, 2)
+Inserting (1, 2, 1)
+Inserting (4, 1, 2)
+Inserting (2, 0, 4)
+Inserting (2, 3, 0)
+Inserting (1, 1, 2)
+Inserting (4, 1, 0)
+Inserting (3, 2, 3)
+Inserting (4, 2, 0)
+Inserting (0, 3, 2)
+Inserting (4, 0, 2)
+Inserting (1, 1, 1)
+Inserting (0, 0, 3)
+Inserting (0, 0, 0)
+Inserting (0, 1, 3)
+Inserting (3, 2, 1)
+Inserting (2, 2, 4)
+Inserting (3, 0, 3)
+Inserting (3, 1, 4)
+Inserting (4, 1, 1)
+Inserting (4, 3, 3)
+Inserting (1, 4, 2)
+Inserting (1, 0, 4)
+Inserting (3, 3, 4)
+Inserting (4, 3, 1)
+Inserting (0, 4, 3)
+Inserting (1, 4, 0)
+Inserting (1, 0, 3)
+Inserting (4, 0, 4)
+Inserting (3, 1, 1)
+Inserting (2, 1, 4)
+Inserting (1, 2, 3)
+Inserting (2, 2, 0)
+Inserting (2, 3, 1)
+Inserting (2, 4, 1)
+Inserting (3, 4, 0)
+Inserting (2, 4, 3)
+Inserting (3, 0, 0)
+Inserting (2, 1, 3)
+Removing (0, 2, 0)
+Removing (0, 2, 1)
+Removing (0, 2, 2)
+Removing (0, 3, 3)
+Removing (0, 4, 1)
+Removing (1, 0, 0)
+Removing (1, 0, 2)
+Removing (1, 1, 4)
+Removing (1, 4, 3)
+Removing (2, 0, 3)
+Removing (2, 2, 1)
+Removing (2, 2, 3)
+Removing (2, 4, 0)
+Removing (3, 0, 4)
+Removing (3, 1, 2)
+Removing (3, 3, 0)
+Removing (3, 3, 3)
+Removing (4, 0, 3)
+Removing (4, 1, 4)
+Removing (4, 3, 4)
+------------------------
+------------------------
+Starting generation 1
+Counting neighbors for (0, 0, 1)
+    Dead cell (0, 0, 0) now has a count of 1.
+    Dead cell (0, 4, 1) now has a count of 1.
+Element (0, 0, 1) has 3 neighbors.
+Counting neighbors for (0, 0, 0)
+    Dead cell (1, 0, 0) now has a count of 1.
+    Dead cell (4, 0, 0) now has a count of 1.
+Element (0, 0, 0) has 2 neighbors.
+Counting neighbors for (0, 0, 2)
+    Dead cell (1, 0, 2) now has a count of 1.
+Element (0, 0, 2) has 4 neighbors.
+Counting neighbors for (0, 0, 3)
+    Dead cell (0, 0, 4) now has a count of 1.
+    Dead cell (4, 0, 3) now has a count of 1.
+Element (0, 0, 3) has 4 neighbors.
+Counting neighbors for (0, 1, 0)
+    Dead cell (0, 1, 4) now has a count of 1.
+    Dead cell (1, 1, 0) now has a count of 1.
+    Dead cell (0, 2, 0) now has a count of 1.
+Element (0, 1, 0) has 3 neighbors.
+Counting neighbors for (0, 1, 1)
+    Dead cell (0, 2, 1) now has a count of 1.
+Element (0, 1, 1) has 5 neighbors.
+Counting neighbors for (0, 1, 2)
+    Dead cell (0, 2, 2) now has a count of 1.
+Element (0, 1, 2) has 5 neighbors.
+Counting neighbors for (0, 1, 3)
+    Dead cell (0, 1, 4) now has a count of 2.
+    Dead cell (1, 1, 3) now has a count of 1.
+Element (0, 1, 3) has 4 neighbors.
+Counting neighbors for (0, 2, 3)
+    Dead cell (0, 2, 2) now has a count of 2.
+    Dead cell (4, 2, 3) now has a count of 1.
+    Dead cell (0, 3, 3) now has a count of 1.
+Element (0, 2, 3) has 3 neighbors.
+Counting neighbors for (0, 2, 4)
+    Dead cell (0, 2, 0) now has a count of 2.
+    Dead cell (0, 3, 4) now has a count of 1.
+    Dead cell (0, 1, 4) now has a count of 3.
+Element (0, 2, 4) has 3 neighbors.
+Counting neighbors for (0, 3, 0)
+    Dead cell (0, 3, 4) now has a count of 2.
+    Dead cell (0, 2, 0) now has a count of 3.
+Element (0, 3, 0) has 4 neighbors.
+Counting neighbors for (0, 3, 1)
+    Dead cell (0, 4, 1) now has a count of 2.
+    Dead cell (0, 2, 1) now has a count of 2.
+Element (0, 3, 1) has 4 neighbors.
+Counting neighbors for (0, 3, 2)
+    Dead cell (0, 3, 3) now has a count of 2.
+    Dead cell (0, 2, 2) now has a count of 3.
+Element (0, 3, 2) has 4 neighbors.
+Counting neighbors for (0, 4, 0)
+    Dead cell (0, 4, 4) now has a count of 1.
+    Dead cell (4, 4, 0) now has a count of 1.
+Element (0, 4, 0) has 3 neighbors.
+Counting neighbors for (0, 4, 2)
+Element (0, 4, 2) has 5 neighbors.
+Counting neighbors for (0, 4, 3)
+    Dead cell (0, 4, 4) now has a count of 2.
+    Dead cell (1, 4, 3) now has a count of 1.
+    Dead cell (0, 3, 3) now has a count of 3.
+Element (0, 4, 3) has 3 neighbors.
+Counting neighbors for (1, 0, 1)
+    Dead cell (1, 0, 0) now has a count of 2.
+Element (1, 0, 1) has 4 neighbors.
+Counting neighbors for (1, 0, 3)
+    Dead cell (2, 0, 3) now has a count of 1.
+    Dead cell (1, 1, 3) now has a count of 2.
+    Dead cell (1, 4, 3) now has a count of 2.
+Element (1, 0, 3) has 2 neighbors.
+Counting neighbors for (1, 0, 4)
+    Dead cell (1, 0, 0) now has a count of 3.
+    Dead cell (0, 0, 4) now has a count of 2.
+    Dead cell (1, 1, 4) now has a count of 1.
+    Dead cell (1, 4, 4) now has a count of 1.
+Element (1, 0, 4) has 2 neighbors.
+Counting neighbors for (1, 1, 1)
+    Dead cell (1, 1, 0) now has a count of 2.
+Element (1, 1, 1) has 5 neighbors.
+Counting neighbors for (1, 1, 2)
+    Dead cell (1, 1, 3) now has a count of 3.
+    Dead cell (1, 0, 2) now has a count of 2.
+Element (1, 1, 2) has 4 neighbors.
+Counting neighbors for (1, 2, 0)
+    Dead cell (0, 2, 0) now has a count of 4.
+    Dead cell (1, 1, 0) now has a count of 3.
+Element (1, 2, 0) has 4 neighbors.
+Counting neighbors for (1, 2, 1)
+    Dead cell (2, 2, 1) now has a count of 1.
+    Dead cell (0, 2, 1) now has a count of 3.
+Element (1, 2, 1) has 4 neighbors.
+Counting neighbors for (1, 2, 2)
+    Dead cell (0, 2, 2) now has a count of 4.
+Element (1, 2, 2) has 5 neighbors.
+Counting neighbors for (1, 2, 3)
+    Dead cell (2, 2, 3) now has a count of 1.
+    Dead cell (1, 3, 3) now has a count of 1.
+    Dead cell (1, 1, 3) now has a count of 4.
+Element (1, 2, 3) has 3 neighbors.
+Counting neighbors for (1, 2, 4)
+    Dead cell (1, 3, 4) now has a count of 1.
+    Dead cell (1, 1, 4) now has a count of 2.
+Element (1, 2, 4) has 4 neighbors.
+Counting neighbors for (1, 3, 1)
+    Dead cell (1, 3, 0) now has a count of 1.
+Element (1, 3, 1) has 4 neighbors.
+Counting neighbors for (1, 3, 0)
+Element (1, 3, 0) has 4 neighbors.
+Counting neighbors for (1, 3, 2)
+    Dead cell (1, 3, 3) now has a count of 2.
+Element (1, 3, 2) has 4 neighbors.
+Counting neighbors for (1, 4, 1)
+    Dead cell (1, 4, 0) now has a count of 1.
+    Dead cell (0, 4, 1) now has a count of 3.
+Element (1, 4, 1) has 3 neighbors.
+Counting neighbors for (1, 4, 0)
+    Dead cell (2, 4, 0) now has a count of 1.
+    Dead cell (1, 0, 0) now has a count of 4.
+Element (1, 4, 0) has 2 neighbors.
+Counting neighbors for (1, 4, 2)
+    Dead cell (1, 4, 3) now has a count of 3.
+    Dead cell (2, 4, 2) now has a count of 1.
+    Dead cell (1, 0, 2) now has a count of 3.
+Element (1, 4, 2) has 2 neighbors.
+Counting neighbors for (2, 0, 0)
+    Dead cell (1, 0, 0) now has a count of 5.
+    Dead cell (2, 4, 0) now has a count of 2.
+Element (2, 0, 0) has 4 neighbors.
+Counting neighbors for (2, 0, 1)
+Element (2, 0, 1) has 5 neighbors.
+Counting neighbors for (2, 0, 4)
+    Dead cell (3, 0, 4) now has a count of 1.
+    Dead cell (2, 4, 4) now has a count of 1.
+Element (2, 0, 4) has 3 neighbors.
+Counting neighbors for (2, 1, 0)
+    Dead cell (3, 1, 0) now has a count of 1.
+    Dead cell (1, 1, 0) now has a count of 4.
+Element (2, 1, 0) has 4 neighbors.
+Counting neighbors for (2, 1, 1)
+    Dead cell (2, 2, 1) now has a count of 2.
+Element (2, 1, 1) has 5 neighbors.
+Counting neighbors for (2, 1, 2)
+    Dead cell (3, 1, 2) now has a count of 1.
+    Dead cell (2, 0, 2) now has a count of 1.
+Element (2, 1, 2) has 4 neighbors.
+Counting neighbors for (2, 1, 3)
+    Dead cell (3, 1, 3) now has a count of 1.
+    Dead cell (1, 1, 3) now has a count of 5.
+    Dead cell (2, 2, 3) now has a count of 2.
+    Dead cell (2, 0, 3) now has a count of 2.
+Element (2, 1, 3) has 2 neighbors.
+Counting neighbors for (2, 1, 4)
+    Dead cell (1, 1, 4) now has a count of 3.
+Element (2, 1, 4) has 5 neighbors.
+Counting neighbors for (2, 2, 0)
+    Dead cell (3, 2, 0) now has a count of 1.
+Element (2, 2, 0) has 4 neighbors.
+Counting neighbors for (2, 2, 2)
+Element (2, 2, 2) has 4 neighbors.
+Counting neighbors for (2, 2, 4)
+    Dead cell (3, 2, 4) now has a count of 1.
+    Dead cell (2, 3, 4) now has a count of 1.
+Element (2, 2, 4) has 3 neighbors.
+Counting neighbors for (2, 3, 2)
+    Dead cell (2, 3, 1) now has a count of 1.
+    Dead cell (2, 4, 2) now has a count of 2.
+Element (2, 3, 2) has 3 neighbors.
+Counting neighbors for (2, 3, 0)
+    Dead cell (3, 3, 0) now has a count of 1.
+    Dead cell (2, 4, 0) now has a count of 3.
+Element (2, 3, 0) has 3 neighbors.
+Counting neighbors for (2, 3, 1)
+    Dead cell (3, 3, 1) now has a count of 1.
+    Dead cell (2, 2, 1) now has a count of 3.
+Element (2, 3, 1) has 3 neighbors.
+Counting neighbors for (2, 3, 3)
+    Dead cell (2, 3, 4) now has a count of 2.
+    Dead cell (3, 3, 3) now has a count of 1.
+    Dead cell (1, 3, 3) now has a count of 3.
+    Dead cell (2, 2, 3) now has a count of 3.
+Element (2, 3, 3) has 1 neighbors.
+Counting neighbors for (2, 4, 1)
+    Dead cell (2, 4, 0) now has a count of 4.
+Element (2, 4, 1) has 4 neighbors.
+Counting neighbors for (2, 4, 3)
+    Dead cell (2, 4, 4) now has a count of 2.
+    Dead cell (3, 4, 3) now has a count of 1.
+    Dead cell (1, 4, 3) now has a count of 4.
+    Dead cell (2, 0, 3) now has a count of 3.
+Element (2, 4, 3) has 1 neighbors.
+Counting neighbors for (3, 0, 1)
+    Dead cell (3, 0, 0) now has a count of 1.
+Element (3, 0, 1) has 4 neighbors.
+Counting neighbors for (3, 0, 0)
+    Dead cell (4, 0, 0) now has a count of 2.
+    Dead cell (3, 1, 0) now has a count of 2.
+Element (3, 0, 0) has 2 neighbors.
+Counting neighbors for (3, 0, 3)
+    Dead cell (3, 0, 4) now has a count of 2.
+    Dead cell (4, 0, 3) now has a count of 2.
+    Dead cell (2, 0, 3) now has a count of 4.
+    Dead cell (3, 1, 3) now has a count of 2.
+    Dead cell (3, 4, 3) now has a count of 2.
+Element (3, 0, 3) has 0 neighbors.
+Counting neighbors for (3, 1, 1)
+    Dead cell (3, 1, 0) now has a count of 3.
+Element (3, 1, 1) has 4 neighbors.
+Counting neighbors for (3, 1, 4)
+    Dead cell (3, 1, 0) now has a count of 4.
+    Dead cell (4, 1, 4) now has a count of 1.
+    Dead cell (3, 2, 4) now has a count of 2.
+    Dead cell (3, 0, 4) now has a count of 3.
+Element (3, 1, 4) has 1 neighbors.
+Counting neighbors for (3, 2, 2)
+    Dead cell (3, 2, 1) now has a count of 1.
+    Dead cell (3, 1, 2) now has a count of 2.
+Element (3, 2, 2) has 3 neighbors.
+Counting neighbors for (3, 2, 1)
+    Dead cell (2, 2, 1) now has a count of 4.
+    Dead cell (3, 3, 1) now has a count of 2.
+Element (3, 2, 1) has 2 neighbors.
+Counting neighbors for (3, 2, 3)
+    Dead cell (3, 2, 4) now has a count of 3.
+    Dead cell (4, 2, 3) now has a count of 2.
+    Dead cell (2, 2, 3) now has a count of 4.
+    Dead cell (3, 3, 3) now has a count of 2.
+    Dead cell (3, 1, 3) now has a count of 3.
+Element (3, 2, 3) has 0 neighbors.
+Counting neighbors for (3, 3, 2)
+    Dead cell (3, 3, 1) now has a count of 3.
+    Dead cell (3, 4, 2) now has a count of 1.
+Element (3, 3, 2) has 3 neighbors.
+Counting neighbors for (3, 3, 4)
+    Dead cell (3, 3, 0) now has a count of 2.
+    Dead cell (4, 3, 4) now has a count of 1.
+    Dead cell (2, 3, 4) now has a count of 3.
+    Dead cell (3, 4, 4) now has a count of 1.
+    Dead cell (3, 2, 4) now has a count of 4.
+Element (3, 3, 4) has 0 neighbors.
+Counting neighbors for (3, 4, 1)
+    Dead cell (3, 4, 0) now has a count of 1.
+    Dead cell (3, 3, 1) now has a count of 4.
+Element (3, 4, 1) has 3 neighbors.
+Counting neighbors for (3, 4, 0)
+    Dead cell (3, 4, 1) now has a count of 1.
+    Dead cell (4, 4, 0) now has a count of 2.
+    Dead cell (2, 4, 0) now has a count of 5.
+    Dead cell (3, 3, 0) now has a count of 3.
+Element (3, 4, 0) has 1 neighbors.
+Counting neighbors for (4, 0, 1)
+    Dead cell (4, 0, 0) now has a count of 3.
+Element (4, 0, 1) has 5 neighbors.
+Counting neighbors for (4, 0, 2)
+    Dead cell (3, 0, 2) now has a count of 1.
+Element (4, 0, 2) has 4 neighbors.
+Counting neighbors for (4, 0, 4)
+    Dead cell (4, 0, 0) now has a count of 4.
+    Dead cell (0, 0, 4) now has a count of 3.
+    Dead cell (3, 0, 4) now has a count of 4.
+    Dead cell (4, 1, 4) now has a count of 2.
+    Dead cell (4, 4, 4) now has a count of 1.
+Element (4, 0, 4) has 0 neighbors.
+Counting neighbors for (4, 1, 0)
+    Dead cell (4, 1, 4) now has a count of 3.
+    Dead cell (3, 1, 0) now has a count of 5.
+    Dead cell (4, 0, 0) now has a count of 5.
+Element (4, 1, 0) has 3 neighbors.
+Counting neighbors for (4, 1, 1)
+Element (4, 1, 1) has 6 neighbors.
+Counting neighbors for (4, 1, 2)
+    Dead cell (3, 1, 2) now has a count of 3.
+Element (4, 1, 2) has 5 neighbors.
+Counting neighbors for (4, 1, 3)
+    Dead cell (4, 1, 4) now has a count of 4.
+    Dead cell (3, 1, 3) now has a count of 4.
+    Dead cell (4, 2, 3) now has a count of 3.
+    Dead cell (4, 0, 3) now has a count of 3.
+Element (4, 1, 3) has 2 neighbors.
+Counting neighbors for (4, 2, 1)
+    Dead cell (4, 2, 0) now has a count of 1.
+    Dead cell (0, 2, 1) now has a count of 4.
+Element (4, 2, 1) has 3 neighbors.
+Counting neighbors for (4, 2, 0)
+    Dead cell (0, 2, 0) now has a count of 5.
+    Dead cell (3, 2, 0) now has a count of 2.
+Element (4, 2, 0) has 2 neighbors.
+Counting neighbors for (4, 2, 2)
+    Dead cell (0, 2, 2) now has a count of 5.
+Element (4, 2, 2) has 3 neighbors.
+Counting neighbors for (4, 2, 4)
+    Dead cell (3, 2, 4) now has a count of 5.
+    Dead cell (4, 3, 4) now has a count of 2.
+    Dead cell (4, 1, 4) now has a count of 5.
+Element (4, 2, 4) has 2 neighbors.
+Counting neighbors for (4, 3, 0)
+    Dead cell (4, 3, 4) now has a count of 3.
+    Dead cell (3, 3, 0) now has a count of 4.
+    Dead cell (4, 4, 0) now has a count of 3.
+Element (4, 3, 0) has 3 neighbors.
+Counting neighbors for (4, 3, 1)
+    Dead cell (3, 3, 1) now has a count of 5.
+Element (4, 3, 1) has 5 neighbors.
+Counting neighbors for (4, 3, 2)
+Element (4, 3, 2) has 6 neighbors.
+Counting neighbors for (4, 3, 3)
+    Dead cell (4, 3, 4) now has a count of 4.
+    Dead cell (0, 3, 3) now has a count of 4.
+    Dead cell (3, 3, 3) now has a count of 3.
+    Dead cell (4, 2, 3) now has a count of 4.
+Element (4, 3, 3) has 2 neighbors.
+Counting neighbors for (4, 4, 1)
+    Dead cell (4, 4, 0) now has a count of 4.
+    Dead cell (0, 4, 1) now has a count of 4.
+Element (4, 4, 1) has 4 neighbors.
+Counting neighbors for (4, 4, 2)
+    Dead cell (3, 4, 2) now has a count of 2.
+Element (4, 4, 2) has 5 neighbors.
+Counting neighbors for (4, 4, 3)
+    Dead cell (4, 4, 4) now has a count of 2.
+    Dead cell (3, 4, 3) now has a count of 3.
+    Dead cell (4, 0, 3) now has a count of 4.
+Element (4, 4, 3) has 3 neighbors.
+Dead cell (4, 2, 0) has 1 neighbors.
+Dead cell (4, 4, 4) has 2 neighbors.
+Dead cell (3, 0, 2) has 1 neighbors.
+Dead cell (3, 4, 0) has 1 neighbors.
+Dead cell (3, 4, 4) has 1 neighbors.
+Dead cell (3, 4, 2) has 2 neighbors.
+Dead cell (3, 2, 1) has 1 neighbors.
+Dead cell (4, 1, 4) has 5 neighbors.
+Dead cell (3, 3, 3) has 3 neighbors.
+Dead cell (3, 3, 0) has 4 neighbors.
+Dead cell (3, 3, 1) has 5 neighbors.
+Dead cell (2, 3, 4) has 3 neighbors.
+Dead cell (2, 0, 2) has 1 neighbors.
+Dead cell (3, 1, 0) has 5 neighbors.
+Dead cell (3, 4, 1) has 1 neighbors.
+Dead cell (2, 4, 4) has 2 neighbors.
+Dead cell (2, 4, 2) has 2 neighbors.
+Dead cell (1, 4, 0) has 1 neighbors.
+Dead cell (2, 3, 1) has 1 neighbors.
+Dead cell (1, 3, 4) has 1 neighbors.
+Dead cell (1, 3, 3) has 3 neighbors.
+Dead cell (3, 2, 0) has 2 neighbors.
+Dead cell (2, 2, 3) has 4 neighbors.
+Dead cell (2, 2, 1) has 4 neighbors.
+Dead cell (1, 4, 4) has 1 neighbors.
+Dead cell (1, 1, 4) has 3 neighbors.
+Dead cell (3, 0, 0) has 1 neighbors.
+Dead cell (2, 0, 3) has 4 neighbors.
+Dead cell (4, 3, 4) has 4 neighbors.
+Dead cell (2, 4, 0) has 5 neighbors.
+Dead cell (1, 4, 3) has 4 neighbors.
+Dead cell (3, 4, 3) has 3 neighbors.
+Dead cell (4, 4, 0) has 4 neighbors.
+Dead cell (0, 4, 4) has 2 neighbors.
+Dead cell (0, 3, 4) has 2 neighbors.
+Dead cell (3, 2, 4) has 5 neighbors.
+Dead cell (1, 3, 0) has 1 neighbors.
+Dead cell (0, 3, 3) has 4 neighbors.
+Dead cell (4, 2, 3) has 4 neighbors.
+Dead cell (1, 1, 3) has 5 neighbors.
+Dead cell (3, 1, 3) has 4 neighbors.
+Dead cell (0, 2, 2) has 5 neighbors.
+Dead cell (3, 1, 2) has 3 neighbors.
+Dead cell (0, 2, 1) has 4 neighbors.
+Dead cell (0, 2, 0) has 5 neighbors.
+Dead cell (3, 0, 4) has 4 neighbors.
+Dead cell (1, 1, 0) has 4 neighbors.
+Dead cell (0, 1, 4) has 3 neighbors.
+Dead cell (4, 0, 3) has 4 neighbors.
+Dead cell (0, 0, 4) has 3 neighbors.
+Dead cell (1, 0, 2) has 3 neighbors.
+Dead cell (4, 0, 0) has 5 neighbors.
+Dead cell (1, 0, 0) has 5 neighbors.
+Dead cell (0, 4, 1) has 4 neighbors.
+Dead cell (0, 0, 0) has 1 neighbors.
+Inserting (4, 4, 4)
+Inserting (3, 4, 2)
+Inserting (3, 3, 3)
+Inserting (2, 3, 4)
+Inserting (2, 4, 4)
+Inserting (2, 4, 2)
+Inserting (1, 3, 3)
+Inserting (3, 2, 0)
+Inserting (1, 1, 4)
+Inserting (3, 4, 3)
+Inserting (0, 4, 4)
+Inserting (0, 3, 4)
+Inserting (3, 1, 2)
+Inserting (0, 1, 4)
+Inserting (0, 0, 4)
+Inserting (1, 0, 2)
+Removing (0, 1, 1)
+Removing (0, 1, 2)
+Removing (0, 4, 2)
+Removing (1, 1, 1)
+Removing (1, 2, 2)
+Removing (2, 0, 1)
+Removing (2, 1, 1)
+Removing (2, 1, 4)
+Removing (2, 3, 3)
+Removing (2, 4, 3)
+Removing (3, 0, 3)
+Removing (3, 1, 4)
+Removing (3, 2, 3)
+Removing (3, 3, 4)
+Removing (3, 4, 0)
+Removing (4, 0, 1)
+Removing (4, 0, 4)
+Removing (4, 1, 1)
+Removing (4, 1, 2)
+Removing (4, 3, 1)
+Removing (4, 3, 2)
+Removing (4, 4, 2)
+------------------------
+------------------------
+Starting generation 2
+Counting neighbors for (0, 0, 1)
+    Dead cell (0, 0, 0) now has a count of 1.
+    Dead cell (4, 0, 1) now has a count of 1.
+    Dead cell (0, 1, 1) now has a count of 1.
+    Dead cell (0, 4, 1) now has a count of 1.
+Element (0, 0, 1) has 1 neighbors.
+Counting neighbors for (0, 0, 0)
+    Dead cell (1, 0, 0) now has a count of 1.
+    Dead cell (4, 0, 0) now has a count of 1.
+Element (0, 0, 0) has 2 neighbors.
+Counting neighbors for (0, 0, 2)
+    Dead cell (0, 1, 2) now has a count of 1.
+    Dead cell (0, 4, 2) now has a count of 1.
+Element (0, 0, 2) has 3 neighbors.
+Counting neighbors for (0, 0, 3)
+    Dead cell (4, 0, 3) now has a count of 1.
+Element (0, 0, 3) has 5 neighbors.
+Counting neighbors for (0, 0, 4)
+    Dead cell (4, 0, 4) now has a count of 1.
+Element (0, 0, 4) has 5 neighbors.
+Counting neighbors for (0, 1, 0)
+    Dead cell (1, 1, 0) now has a count of 1.
+    Dead cell (0, 2, 0) now has a count of 1.
+Element (0, 1, 0) has 3 neighbors.
+Counting neighbors for (0, 1, 3)
+    Dead cell (1, 1, 3) now has a count of 1.
+Element (0, 1, 3) has 4 neighbors.
+Counting neighbors for (0, 1, 4)
+    Dead cell (4, 1, 4) now has a count of 1.
+Element (0, 1, 4) has 5 neighbors.
+Counting neighbors for (0, 2, 3)
+    Dead cell (0, 2, 2) now has a count of 1.
+    Dead cell (4, 2, 3) now has a count of 1.
+    Dead cell (0, 3, 3) now has a count of 1.
+Element (0, 2, 3) has 3 neighbors.
+Counting neighbors for (0, 2, 4)
+    Dead cell (0, 2, 0) now has a count of 2.
+Element (0, 2, 4) has 5 neighbors.
+Counting neighbors for (0, 3, 0)
+    Dead cell (0, 2, 0) now has a count of 3.
+Element (0, 3, 0) has 5 neighbors.
+Counting neighbors for (0, 3, 1)
+    Dead cell (4, 3, 1) now has a count of 1.
+    Dead cell (0, 4, 1) now has a count of 2.
+    Dead cell (0, 2, 1) now has a count of 1.
+Element (0, 3, 1) has 3 neighbors.
+Counting neighbors for (0, 3, 2)
+    Dead cell (4, 3, 2) now has a count of 1.
+    Dead cell (0, 4, 2) now has a count of 2.
+    Dead cell (0, 2, 2) now has a count of 2.
+Element (0, 3, 2) has 2 neighbors.
+Counting neighbors for (0, 3, 4)
+    Dead cell (1, 3, 4) now has a count of 1.
+    Dead cell (4, 3, 4) now has a count of 1.
+Element (0, 3, 4) has 3 neighbors.
+Counting neighbors for (0, 4, 0)
+    Dead cell (4, 4, 0) now has a count of 1.
+Element (0, 4, 0) has 4 neighbors.
+Counting neighbors for (0, 4, 3)
+    Dead cell (1, 4, 3) now has a count of 1.
+    Dead cell (0, 3, 3) now has a count of 2.
+Element (0, 4, 3) has 3 neighbors.
+Counting neighbors for (0, 4, 4)
+    Dead cell (1, 4, 4) now has a count of 1.
+Element (0, 4, 4) has 5 neighbors.
+Counting neighbors for (1, 0, 1)
+    Dead cell (1, 0, 0) now has a count of 2.
+    Dead cell (2, 0, 1) now has a count of 1.
+    Dead cell (1, 1, 1) now has a count of 1.
+Element (1, 0, 1) has 3 neighbors.
+Counting neighbors for (1, 0, 2)
+    Dead cell (2, 0, 2) now has a count of 1.
+Element (1, 0, 2) has 5 neighbors.
+Counting neighbors for (1, 0, 3)
+    Dead cell (2, 0, 3) now has a count of 1.
+    Dead cell (1, 1, 3) now has a count of 2.
+    Dead cell (1, 4, 3) now has a count of 2.
+Element (1, 0, 3) has 3 neighbors.
+Counting neighbors for (1, 0, 4)
+    Dead cell (1, 0, 0) now has a count of 3.
+    Dead cell (1, 4, 4) now has a count of 2.
+Element (1, 0, 4) has 4 neighbors.
+Counting neighbors for (1, 1, 2)
+    Dead cell (1, 1, 1) now has a count of 2.
+    Dead cell (0, 1, 2) now has a count of 2.
+    Dead cell (1, 2, 2) now has a count of 1.
+Element (1, 1, 2) has 2 neighbors.
+Counting neighbors for (1, 1, 4)
+    Dead cell (1, 1, 0) now has a count of 2.
+    Dead cell (2, 1, 4) now has a count of 1.
+Element (1, 1, 4) has 3 neighbors.
+Counting neighbors for (1, 2, 0)
+    Dead cell (0, 2, 0) now has a count of 4.
+    Dead cell (1, 1, 0) now has a count of 3.
+Element (1, 2, 0) has 4 neighbors.
+Counting neighbors for (1, 2, 1)
+    Dead cell (2, 2, 1) now has a count of 1.
+    Dead cell (0, 2, 1) now has a count of 2.
+    Dead cell (1, 1, 1) now has a count of 3.
+Element (1, 2, 1) has 2 neighbors.
+Counting neighbors for (1, 2, 3)
+    Dead cell (2, 2, 3) now has a count of 1.
+    Dead cell (1, 1, 3) now has a count of 3.
+Element (1, 2, 3) has 3 neighbors.
+Counting neighbors for (1, 2, 4)
+    Dead cell (1, 3, 4) now has a count of 2.
+Element (1, 2, 4) has 5 neighbors.
+Counting neighbors for (1, 3, 1)
+    Dead cell (1, 3, 0) now has a count of 1.
+Element (1, 3, 1) has 4 neighbors.
+Counting neighbors for (1, 3, 0)
+Element (1, 3, 0) has 4 neighbors.
+Counting neighbors for (1, 3, 2)
+    Dead cell (1, 2, 2) now has a count of 2.
+Element (1, 3, 2) has 4 neighbors.
+Counting neighbors for (1, 3, 3)
+    Dead cell (1, 3, 4) now has a count of 3.
+    Dead cell (2, 3, 3) now has a count of 1.
+    Dead cell (0, 3, 3) now has a count of 3.
+    Dead cell (1, 4, 3) now has a count of 3.
+Element (1, 3, 3) has 2 neighbors.
+Counting neighbors for (1, 4, 1)
+    Dead cell (1, 4, 0) now has a count of 1.
+    Dead cell (0, 4, 1) now has a count of 3.
+Element (1, 4, 1) has 3 neighbors.
+Counting neighbors for (1, 4, 0)
+    Dead cell (2, 4, 0) now has a count of 1.
+    Dead cell (1, 0, 0) now has a count of 4.
+Element (1, 4, 0) has 2 neighbors.
+Counting neighbors for (1, 4, 2)
+    Dead cell (1, 4, 3) now has a count of 4.
+    Dead cell (0, 4, 2) now has a count of 3.
+Element (1, 4, 2) has 3 neighbors.
+Counting neighbors for (2, 0, 0)
+    Dead cell (1, 0, 0) now has a count of 5.
+    Dead cell (2, 4, 0) now has a count of 2.
+Element (2, 0, 0) has 3 neighbors.
+Counting neighbors for (2, 0, 4)
+    Dead cell (3, 0, 4) now has a count of 1.
+    Dead cell (2, 1, 4) now has a count of 2.
+Element (2, 0, 4) has 3 neighbors.
+Counting neighbors for (2, 1, 0)
+    Dead cell (2, 1, 4) now has a count of 3.
+    Dead cell (3, 1, 0) now has a count of 1.
+    Dead cell (1, 1, 0) now has a count of 4.
+Element (2, 1, 0) has 2 neighbors.
+Counting neighbors for (2, 1, 2)
+    Dead cell (2, 0, 2) now has a count of 2.
+Element (2, 1, 2) has 4 neighbors.
+Counting neighbors for (2, 1, 3)
+    Dead cell (2, 1, 4) now has a count of 4.
+    Dead cell (3, 1, 3) now has a count of 1.
+    Dead cell (1, 1, 3) now has a count of 4.
+    Dead cell (2, 2, 3) now has a count of 2.
+    Dead cell (2, 0, 3) now has a count of 2.
+Element (2, 1, 3) has 1 neighbors.
+Counting neighbors for (2, 2, 0)
+Element (2, 2, 0) has 5 neighbors.
+Counting neighbors for (2, 2, 2)
+    Dead cell (1, 2, 2) now has a count of 3.
+Element (2, 2, 2) has 3 neighbors.
+Counting neighbors for (2, 2, 4)
+    Dead cell (3, 2, 4) now has a count of 1.
+    Dead cell (2, 1, 4) now has a count of 5.
+Element (2, 2, 4) has 3 neighbors.
+Counting neighbors for (2, 3, 2)
+    Dead cell (2, 3, 1) now has a count of 1.
+Element (2, 3, 2) has 4 neighbors.
+Counting neighbors for (2, 3, 0)
+    Dead cell (3, 3, 0) now has a count of 1.
+    Dead cell (2, 4, 0) now has a count of 3.
+Element (2, 3, 0) has 3 neighbors.
+Counting neighbors for (2, 3, 1)
+    Dead cell (3, 3, 1) now has a count of 1.
+    Dead cell (2, 2, 1) now has a count of 2.
+Element (2, 3, 1) has 3 neighbors.
+Counting neighbors for (2, 3, 4)
+    Dead cell (3, 3, 4) now has a count of 1.
+    Dead cell (1, 3, 4) now has a count of 4.
+Element (2, 3, 4) has 3 neighbors.
+Counting neighbors for (2, 4, 1)
+    Dead cell (2, 4, 0) now has a count of 4.
+    Dead cell (2, 0, 1) now has a count of 2.
+Element (2, 4, 1) has 4 neighbors.
+Counting neighbors for (2, 4, 2)
+    Dead cell (2, 0, 2) now has a count of 3.
+Element (2, 4, 2) has 4 neighbors.
+Counting neighbors for (2, 4, 4)
+    Dead cell (2, 4, 0) now has a count of 5.
+    Dead cell (3, 4, 4) now has a count of 1.
+    Dead cell (1, 4, 4) now has a count of 3.
+Element (2, 4, 4) has 2 neighbors.
+Counting neighbors for (3, 0, 1)
+    Dead cell (3, 0, 0) now has a count of 1.
+    Dead cell (4, 0, 1) now has a count of 2.
+    Dead cell (2, 0, 1) now has a count of 3.
+Element (3, 0, 1) has 2 neighbors.
+Counting neighbors for (3, 0, 0)
+    Dead cell (3, 0, 1) now has a count of 1.
+    Dead cell (4, 0, 0) now has a count of 2.
+    Dead cell (3, 1, 0) now has a count of 2.
+    Dead cell (3, 4, 0) now has a count of 1.
+Element (3, 0, 0) has 1 neighbors.
+Counting neighbors for (3, 1, 1)
+    Dead cell (3, 1, 0) now has a count of 3.
+    Dead cell (4, 1, 1) now has a count of 1.
+    Dead cell (2, 1, 1) now has a count of 1.
+Element (3, 1, 1) has 3 neighbors.
+Counting neighbors for (3, 1, 2)
+    Dead cell (3, 1, 3) now has a count of 2.
+    Dead cell (4, 1, 2) now has a count of 1.
+    Dead cell (3, 0, 2) now has a count of 1.
+Element (3, 1, 2) has 3 neighbors.
+Counting neighbors for (3, 2, 2)
+    Dead cell (3, 2, 1) now has a count of 1.
+Element (3, 2, 2) has 4 neighbors.
+Counting neighbors for (3, 2, 0)
+    Dead cell (3, 3, 0) now has a count of 2.
+    Dead cell (3, 1, 0) now has a count of 4.
+Element (3, 2, 0) has 3 neighbors.
+Counting neighbors for (3, 2, 1)
+    Dead cell (3, 2, 2) now has a count of 1.
+    Dead cell (2, 2, 1) now has a count of 3.
+    Dead cell (3, 3, 1) now has a count of 2.
+Element (3, 2, 1) has 3 neighbors.
+Counting neighbors for (3, 3, 2)
+    Dead cell (3, 3, 1) now has a count of 3.
+    Dead cell (4, 3, 2) now has a count of 2.
+Element (3, 3, 2) has 4 neighbors.
+Counting neighbors for (3, 3, 3)
+    Dead cell (3, 3, 4) now has a count of 2.
+    Dead cell (2, 3, 3) now has a count of 2.
+    Dead cell (3, 2, 3) now has a count of 1.
+Element (3, 3, 3) has 3 neighbors.
+Counting neighbors for (3, 4, 1)
+    Dead cell (3, 4, 0) now has a count of 2.
+    Dead cell (3, 3, 1) now has a count of 4.
+Element (3, 4, 1) has 4 neighbors.
+Counting neighbors for (3, 4, 2)
+    Dead cell (4, 4, 2) now has a count of 1.
+    Dead cell (3, 0, 2) now has a count of 2.
+Element (3, 4, 2) has 4 neighbors.
+Counting neighbors for (3, 4, 3)
+    Dead cell (3, 4, 4) now has a count of 2.
+    Dead cell (2, 4, 3) now has a count of 1.
+    Dead cell (3, 0, 3) now has a count of 1.
+Element (3, 4, 3) has 3 neighbors.
+Counting neighbors for (4, 0, 2)
+    Dead cell (4, 0, 3) now has a count of 2.
+    Dead cell (4, 0, 1) now has a count of 3.
+    Dead cell (3, 0, 2) now has a count of 3.
+    Dead cell (4, 1, 2) now has a count of 2.
+    Dead cell (4, 4, 2) now has a count of 2.
+Element (4, 0, 2) has 1 neighbors.
+Counting neighbors for (4, 1, 0)
+    Dead cell (4, 1, 4) now has a count of 2.
+    Dead cell (3, 1, 0) now has a count of 5.
+    Dead cell (4, 0, 0) now has a count of 3.
+Element (4, 1, 0) has 2 neighbors.
+Counting neighbors for (4, 1, 3)
+    Dead cell (4, 1, 4) now has a count of 3.
+    Dead cell (3, 1, 3) now has a count of 3.
+    Dead cell (4, 2, 3) now has a count of 2.
+    Dead cell (4, 0, 3) now has a count of 3.
+Element (4, 1, 3) has 1 neighbors.
+Counting neighbors for (4, 2, 1)
+    Dead cell (4, 2, 0) now has a count of 1.
+    Dead cell (0, 2, 1) now has a count of 3.
+    Dead cell (4, 3, 1) now has a count of 2.
+    Dead cell (4, 1, 1) now has a count of 2.
+Element (4, 2, 1) has 1 neighbors.
+Counting neighbors for (4, 2, 0)
+    Dead cell (0, 2, 0) now has a count of 5.
+Element (4, 2, 0) has 3 neighbors.
+Counting neighbors for (4, 2, 2)
+    Dead cell (0, 2, 2) now has a count of 3.
+    Dead cell (4, 3, 2) now has a count of 3.
+    Dead cell (4, 1, 2) now has a count of 3.
+Element (4, 2, 2) has 1 neighbors.
+Counting neighbors for (4, 2, 4)
+    Dead cell (3, 2, 4) now has a count of 2.
+    Dead cell (4, 3, 4) now has a count of 2.
+    Dead cell (4, 1, 4) now has a count of 4.
+Element (4, 2, 4) has 2 neighbors.
+Counting neighbors for (4, 3, 0)
+    Dead cell (4, 3, 4) now has a count of 3.
+    Dead cell (3, 3, 0) now has a count of 3.
+    Dead cell (4, 4, 0) now has a count of 2.
+Element (4, 3, 0) has 2 neighbors.
+Counting neighbors for (4, 3, 3)
+    Dead cell (4, 3, 4) now has a count of 4.
+    Dead cell (0, 3, 3) now has a count of 4.
+    Dead cell (4, 2, 3) now has a count of 3.
+Element (4, 3, 3) has 2 neighbors.
+Counting neighbors for (4, 4, 1)
+    Dead cell (4, 4, 0) now has a count of 3.
+    Dead cell (0, 4, 1) now has a count of 4.
+    Dead cell (4, 0, 1) now has a count of 4.
+    Dead cell (4, 3, 1) now has a count of 3.
+Element (4, 4, 1) has 1 neighbors.
+Counting neighbors for (4, 4, 3)
+    Dead cell (4, 0, 3) now has a count of 4.
+Element (4, 4, 3) has 4 neighbors.
+Counting neighbors for (4, 4, 4)
+    Dead cell (4, 4, 0) now has a count of 4.
+    Dead cell (3, 4, 4) now has a count of 3.
+    Dead cell (4, 0, 4) now has a count of 2.
+    Dead cell (4, 3, 4) now has a count of 5.
+Element (4, 4, 4) has 2 neighbors.
+Dead cell (4, 4, 2) has 2 neighbors.
+Dead cell (4, 2, 0) has 1 neighbors.
+Dead cell (3, 2, 3) has 1 neighbors.
+Dead cell (3, 2, 2) has 1 neighbors.
+Dead cell (3, 2, 1) has 1 neighbors.
+Dead cell (4, 1, 2) has 3 neighbors.
+Dead cell (2, 1, 1) has 1 neighbors.
+Dead cell (4, 1, 1) has 2 neighbors.
+Dead cell (2, 4, 3) has 1 neighbors.
+Dead cell (3, 4, 0) has 2 neighbors.
+Dead cell (3, 0, 1) has 1 neighbors.
+Dead cell (3, 4, 4) has 3 neighbors.
+Dead cell (3, 3, 1) has 4 neighbors.
+Dead cell (3, 1, 0) has 5 neighbors.
+Dead cell (3, 3, 0) has 3 neighbors.
+Dead cell (2, 3, 3) has 2 neighbors.
+Dead cell (2, 2, 3) has 2 neighbors.
+Dead cell (2, 2, 1) has 3 neighbors.
+Dead cell (1, 2, 2) has 3 neighbors.
+Dead cell (3, 0, 0) has 1 neighbors.
+Dead cell (2, 0, 3) has 2 neighbors.
+Dead cell (2, 0, 2) has 3 neighbors.
+Dead cell (1, 1, 1) has 3 neighbors.
+Dead cell (2, 0, 1) has 3 neighbors.
+Dead cell (1, 4, 4) has 3 neighbors.
+Dead cell (4, 4, 0) has 4 neighbors.
+Dead cell (2, 4, 0) has 5 neighbors.
+Dead cell (1, 4, 3) has 4 neighbors.
+Dead cell (4, 3, 4) has 5 neighbors.
+Dead cell (2, 3, 1) has 1 neighbors.
+Dead cell (1, 3, 4) has 4 neighbors.
+Dead cell (4, 3, 2) has 3 neighbors.
+Dead cell (0, 2, 1) has 3 neighbors.
+Dead cell (3, 3, 4) has 2 neighbors.
+Dead cell (1, 4, 0) has 1 neighbors.
+Dead cell (4, 3, 1) has 3 neighbors.
+Dead cell (3, 2, 4) has 2 neighbors.
+Dead cell (1, 3, 0) has 1 neighbors.
+Dead cell (0, 3, 3) has 4 neighbors.
+Dead cell (4, 2, 3) has 3 neighbors.
+Dead cell (3, 1, 3) has 3 neighbors.
+Dead cell (0, 2, 2) has 3 neighbors.
+Dead cell (4, 1, 4) has 4 neighbors.
+Dead cell (2, 1, 4) has 5 neighbors.
+Dead cell (0, 2, 0) has 5 neighbors.
+Dead cell (1, 1, 3) has 4 neighbors.
+Dead cell (4, 0, 4) has 2 neighbors.
+Dead cell (4, 0, 3) has 4 neighbors.
+Dead cell (0, 4, 2) has 3 neighbors.
+Dead cell (3, 0, 3) has 1 neighbors.
+Dead cell (0, 1, 2) has 2 neighbors.
+Dead cell (4, 0, 0) has 3 neighbors.
+Dead cell (1, 0, 0) has 5 neighbors.
+Dead cell (0, 4, 1) has 4 neighbors.
+Dead cell (3, 0, 2) has 3 neighbors.
+Dead cell (0, 1, 1) has 1 neighbors.
+Dead cell (3, 0, 4) has 1 neighbors.
+Dead cell (1, 1, 0) has 4 neighbors.
+Dead cell (4, 0, 1) has 4 neighbors.
+Dead cell (0, 0, 0) has 1 neighbors.
+Inserting (4, 4, 2)
+Inserting (4, 1, 2)
+Inserting (4, 1, 1)
+Inserting (3, 4, 0)
+Inserting (3, 4, 4)
+Inserting (3, 3, 0)
+Inserting (2, 3, 3)
+Inserting (2, 2, 3)
+Inserting (2, 2, 1)
+Inserting (1, 2, 2)
+Inserting (2, 0, 3)
+Inserting (2, 0, 2)
+Inserting (1, 1, 1)
+Inserting (2, 0, 1)
+Inserting (1, 4, 4)
+Inserting (4, 3, 2)
+Inserting (0, 2, 1)
+Inserting (3, 3, 4)
+Inserting (4, 3, 1)
+Inserting (3, 2, 4)
+Inserting (4, 2, 3)
+Inserting (3, 1, 3)
+Inserting (0, 2, 2)
+Inserting (4, 0, 4)
+Inserting (0, 4, 2)
+Inserting (0, 1, 2)
+Inserting (4, 0, 0)
+Inserting (3, 0, 2)
+Removing (0, 0, 1)
+Removing (0, 0, 3)
+Removing (0, 0, 4)
+Removing (0, 1, 4)
+Removing (0, 2, 4)
+Removing (0, 3, 0)
+Removing (0, 4, 4)
+Removing (1, 0, 2)
+Removing (1, 2, 4)
+Removing (2, 1, 3)
+Removing (2, 2, 0)
+Removing (3, 0, 0)
+Removing (4, 0, 2)
+Removing (4, 1, 3)
+Removing (4, 2, 1)
+Removing (4, 2, 2)
+Removing (4, 4, 1)
+------------------------
+------------------------
+Starting generation 3
+Counting neighbors for (0, 0, 0)
+    Dead cell (0, 0, 4) now has a count of 1.
+    Dead cell (1, 0, 0) now has a count of 1.
+Element (0, 0, 0) has 3 neighbors.
+Counting neighbors for (0, 0, 2)
+    Dead cell (0, 0, 3) now has a count of 1.
+    Dead cell (1, 0, 2) now has a count of 1.
+    Dead cell (4, 0, 2) now has a count of 1.
+Element (0, 0, 2) has 2 neighbors.
+Counting neighbors for (0, 1, 0)
+    Dead cell (0, 1, 4) now has a count of 1.
+    Dead cell (1, 1, 0) now has a count of 1.
+    Dead cell (0, 2, 0) now has a count of 1.
+Element (0, 1, 0) has 2 neighbors.
+Counting neighbors for (0, 1, 2)
+Element (0, 1, 2) has 5 neighbors.
+Counting neighbors for (0, 1, 3)
+    Dead cell (0, 1, 4) now has a count of 2.
+    Dead cell (1, 1, 3) now has a count of 1.
+    Dead cell (4, 1, 3) now has a count of 1.
+    Dead cell (0, 0, 3) now has a count of 2.
+Element (0, 1, 3) has 2 neighbors.
+Counting neighbors for (0, 2, 3)
+    Dead cell (0, 2, 2) now has a count of 1.
+    Dead cell (0, 3, 3) now has a count of 1.
+Element (0, 2, 3) has 3 neighbors.
+Counting neighbors for (0, 2, 1)
+    Dead cell (4, 2, 1) now has a count of 1.
+    Dead cell (0, 1, 1) now has a count of 1.
+Element (0, 2, 1) has 3 neighbors.
+Counting neighbors for (0, 2, 2)
+    Dead cell (0, 2, 3) now has a count of 1.
+    Dead cell (4, 2, 2) now has a count of 1.
+Element (0, 2, 2) has 4 neighbors.
+Counting neighbors for (0, 3, 1)
+    Dead cell (0, 3, 0) now has a count of 1.
+    Dead cell (0, 4, 1) now has a count of 1.
+Element (0, 3, 1) has 4 neighbors.
+Counting neighbors for (0, 3, 2)
+Element (0, 3, 2) has 5 neighbors.
+Counting neighbors for (0, 3, 4)
+    Dead cell (0, 3, 0) now has a count of 2.
+    Dead cell (1, 3, 4) now has a count of 1.
+    Dead cell (4, 3, 4) now has a count of 1.
+    Dead cell (0, 4, 4) now has a count of 1.
+    Dead cell (0, 2, 4) now has a count of 1.
+Element (0, 3, 4) has 0 neighbors.
+Counting neighbors for (0, 4, 0)
+    Dead cell (0, 4, 4) now has a count of 2.
+    Dead cell (4, 4, 0) now has a count of 1.
+    Dead cell (0, 3, 0) now has a count of 3.
+Element (0, 4, 0) has 2 neighbors.
+Counting neighbors for (0, 4, 2)
+Element (0, 4, 2) has 5 neighbors.
+Counting neighbors for (0, 4, 3)
+    Dead cell (0, 4, 4) now has a count of 3.
+    Dead cell (1, 4, 3) now has a count of 1.
+    Dead cell (0, 0, 3) now has a count of 3.
+    Dead cell (0, 3, 3) now has a count of 2.
+Element (0, 4, 3) has 2 neighbors.
+Counting neighbors for (1, 0, 1)
+    Dead cell (1, 0, 0) now has a count of 2.
+    Dead cell (0, 0, 1) now has a count of 1.
+Element (1, 0, 1) has 3 neighbors.
+Counting neighbors for (1, 0, 3)
+    Dead cell (0, 0, 3) now has a count of 4.
+    Dead cell (1, 1, 3) now has a count of 2.
+    Dead cell (1, 4, 3) now has a count of 2.
+Element (1, 0, 3) has 2 neighbors.
+Counting neighbors for (1, 0, 4)
+    Dead cell (1, 0, 0) now has a count of 3.
+    Dead cell (0, 0, 4) now has a count of 2.
+Element (1, 0, 4) has 4 neighbors.
+Counting neighbors for (1, 1, 2)
+    Dead cell (1, 1, 1) now has a count of 1.
+    Dead cell (1, 0, 2) now has a count of 2.
+Element (1, 1, 2) has 3 neighbors.
+Counting neighbors for (1, 1, 1)
+    Dead cell (2, 1, 1) now has a count of 1.
+    Dead cell (0, 1, 1) now has a count of 2.
+Element (1, 1, 1) has 2 neighbors.
+Counting neighbors for (1, 1, 4)
+    Dead cell (1, 1, 0) now has a count of 2.
+    Dead cell (2, 1, 4) now has a count of 1.
+    Dead cell (0, 1, 4) now has a count of 3.
+    Dead cell (1, 2, 4) now has a count of 1.
+Element (1, 1, 4) has 1 neighbors.
+Counting neighbors for (1, 2, 0)
+    Dead cell (1, 2, 4) now has a count of 2.
+    Dead cell (2, 2, 0) now has a count of 1.
+    Dead cell (0, 2, 0) now has a count of 2.
+    Dead cell (1, 1, 0) now has a count of 3.
+Element (1, 2, 0) has 2 neighbors.
+Counting neighbors for (1, 2, 1)
+Element (1, 2, 1) has 6 neighbors.
+Counting neighbors for (1, 2, 2)
+Element (1, 2, 2) has 6 neighbors.
+Counting neighbors for (1, 2, 3)
+    Dead cell (1, 2, 4) now has a count of 3.
+    Dead cell (1, 1, 3) now has a count of 3.
+Element (1, 2, 3) has 4 neighbors.
+Counting neighbors for (1, 3, 1)
+    Dead cell (1, 3, 0) now has a count of 1.
+Element (1, 3, 1) has 4 neighbors.
+Counting neighbors for (1, 3, 0)
+    Dead cell (0, 3, 0) now has a count of 4.
+Element (1, 3, 0) has 3 neighbors.
+Counting neighbors for (1, 3, 2)
+Element (1, 3, 2) has 5 neighbors.
+Counting neighbors for (1, 3, 3)
+    Dead cell (1, 3, 4) now has a count of 2.
+    Dead cell (0, 3, 3) now has a count of 3.
+    Dead cell (1, 4, 3) now has a count of 3.
+Element (1, 3, 3) has 3 neighbors.
+Counting neighbors for (1, 4, 1)
+    Dead cell (1, 4, 0) now has a count of 1.
+    Dead cell (0, 4, 1) now has a count of 2.
+Element (1, 4, 1) has 3 neighbors.
+Counting neighbors for (1, 4, 0)
+    Dead cell (2, 4, 0) now has a count of 1.
+    Dead cell (1, 0, 0) now has a count of 4.
+Element (1, 4, 0) has 2 neighbors.
+Counting neighbors for (1, 4, 2)
+    Dead cell (1, 0, 2) now has a count of 3.
+Element (1, 4, 2) has 3 neighbors.
+Counting neighbors for (1, 4, 4)
+    Dead cell (0, 4, 4) now has a count of 4.
+    Dead cell (1, 3, 4) now has a count of 3.
+Element (1, 4, 4) has 3 neighbors.
+Counting neighbors for (2, 0, 0)
+    Dead cell (3, 0, 0) now has a count of 1.
+    Dead cell (1, 0, 0) now has a count of 5.
+    Dead cell (2, 4, 0) now has a count of 2.
+Element (2, 0, 0) has 3 neighbors.
+Counting neighbors for (2, 0, 1)
+    Dead cell (2, 1, 1) now has a count of 2.
+Element (2, 0, 1) has 5 neighbors.
+Counting neighbors for (2, 0, 2)
+    Dead cell (1, 0, 2) now has a count of 4.
+Element (2, 0, 2) has 5 neighbors.
+Counting neighbors for (2, 0, 3)
+    Dead cell (3, 0, 3) now has a count of 1.
+    Dead cell (2, 1, 3) now has a count of 1.
+    Dead cell (2, 4, 3) now has a count of 1.
+Element (2, 0, 3) has 3 neighbors.
+Counting neighbors for (2, 0, 4)
+    Dead cell (3, 0, 4) now has a count of 1.
+    Dead cell (2, 1, 4) now has a count of 2.
+Element (2, 0, 4) has 4 neighbors.
+Counting neighbors for (2, 1, 0)
+    Dead cell (2, 1, 4) now has a count of 3.
+    Dead cell (3, 1, 0) now has a count of 1.
+    Dead cell (1, 1, 0) now has a count of 4.
+    Dead cell (2, 2, 0) now has a count of 2.
+Element (2, 1, 0) has 1 neighbors.
+Counting neighbors for (2, 1, 2)
+    Dead cell (2, 1, 3) now has a count of 2.
+Element (2, 1, 2) has 4 neighbors.
+Counting neighbors for (2, 2, 1)
+    Dead cell (2, 2, 0) now has a count of 3.
+    Dead cell (2, 1, 1) now has a count of 3.
+Element (2, 2, 1) has 4 neighbors.
+Counting neighbors for (2, 2, 2)
+Element (2, 2, 2) has 6 neighbors.
+Counting neighbors for (2, 2, 3)
+    Dead cell (3, 2, 3) now has a count of 1.
+    Dead cell (2, 1, 3) now has a count of 3.
+Element (2, 2, 3) has 4 neighbors.
+Counting neighbors for (2, 2, 4)
+    Dead cell (2, 2, 0) now has a count of 4.
+    Dead cell (1, 2, 4) now has a count of 4.
+    Dead cell (2, 1, 4) now has a count of 4.
+Element (2, 2, 4) has 3 neighbors.
+Counting neighbors for (2, 3, 2)
+    Dead cell (2, 3, 1) now has a count of 1.
+Element (2, 3, 2) has 4 neighbors.
+Counting neighbors for (2, 3, 0)
+    Dead cell (2, 4, 0) now has a count of 3.
+    Dead cell (2, 2, 0) now has a count of 5.
+Element (2, 3, 0) has 3 neighbors.
+Counting neighbors for (2, 3, 1)
+    Dead cell (3, 3, 1) now has a count of 1.
+Element (2, 3, 1) has 4 neighbors.
+Counting neighbors for (2, 3, 3)
+    Dead cell (2, 4, 3) now has a count of 2.
+Element (2, 3, 3) has 4 neighbors.
+Counting neighbors for (2, 3, 4)
+    Dead cell (1, 3, 4) now has a count of 4.
+Element (2, 3, 4) has 5 neighbors.
+Counting neighbors for (2, 4, 1)
+    Dead cell (2, 4, 0) now has a count of 4.
+Element (2, 4, 1) has 5 neighbors.
+Counting neighbors for (2, 4, 2)
+Element (2, 4, 2) has 5 neighbors.
+Counting neighbors for (2, 4, 4)
+    Dead cell (2, 4, 0) now has a count of 5.
+Element (2, 4, 4) has 4 neighbors.
+Counting neighbors for (3, 0, 1)
+    Dead cell (3, 0, 0) now has a count of 2.
+    Dead cell (4, 0, 1) now has a count of 1.
+Element (3, 0, 1) has 4 neighbors.
+Counting neighbors for (3, 0, 2)
+    Dead cell (3, 0, 3) now has a count of 2.
+    Dead cell (4, 0, 2) now has a count of 2.
+Element (3, 0, 2) has 4 neighbors.
+Counting neighbors for (3, 1, 1)
+    Dead cell (3, 1, 0) now has a count of 2.
+    Dead cell (2, 1, 1) now has a count of 4.
+Element (3, 1, 1) has 4 neighbors.
+Counting neighbors for (3, 1, 2)
+Element (3, 1, 2) has 6 neighbors.
+Counting neighbors for (3, 1, 3)
+    Dead cell (3, 1, 4) now has a count of 1.
+    Dead cell (4, 1, 3) now has a count of 2.
+    Dead cell (2, 1, 3) now has a count of 4.
+    Dead cell (3, 2, 3) now has a count of 2.
+    Dead cell (3, 0, 3) now has a count of 3.
+Element (3, 1, 3) has 1 neighbors.
+Counting neighbors for (3, 2, 2)
+    Dead cell (3, 2, 1) now has a count of 1.
+    Dead cell (4, 2, 2) now has a count of 2.
+Element (3, 2, 2) has 3 neighbors.
+Counting neighbors for (3, 2, 0)
+    Dead cell (2, 2, 0) now has a count of 6.
+    Dead cell (3, 1, 0) now has a count of 3.
+Element (3, 2, 0) has 3 neighbors.
+Counting neighbors for (3, 2, 1)
+    Dead cell (4, 2, 1) now has a count of 2.
+    Dead cell (3, 3, 1) now has a count of 2.
+Element (3, 2, 1) has 3 neighbors.
+Counting neighbors for (3, 2, 4)
+    Dead cell (3, 1, 4) now has a count of 2.
+Element (3, 2, 4) has 4 neighbors.
+Counting neighbors for (3, 3, 2)
+    Dead cell (3, 3, 1) now has a count of 3.
+Element (3, 3, 2) has 4 neighbors.
+Counting neighbors for (3, 3, 0)
+Element (3, 3, 0) has 4 neighbors.
+Counting neighbors for (3, 3, 3)
+    Dead cell (3, 2, 3) now has a count of 3.
+Element (3, 3, 3) has 4 neighbors.
+Counting neighbors for (3, 3, 4)
+    Dead cell (4, 3, 4) now has a count of 2.
+Element (3, 3, 4) has 5 neighbors.
+Counting neighbors for (3, 4, 1)
+    Dead cell (3, 4, 0) now has a count of 1.
+    Dead cell (4, 4, 1) now has a count of 1.
+    Dead cell (3, 3, 1) now has a count of 4.
+Element (3, 4, 1) has 2 neighbors.
+Counting neighbors for (3, 4, 0)
+    Dead cell (4, 4, 0) now has a count of 2.
+    Dead cell (2, 4, 0) now has a count of 6.
+    Dead cell (3, 0, 0) now has a count of 3.
+Element (3, 4, 0) has 1 neighbors.
+Counting neighbors for (3, 4, 2)
+Element (3, 4, 2) has 5 neighbors.
+Counting neighbors for (3, 4, 3)
+    Dead cell (2, 4, 3) now has a count of 3.
+    Dead cell (3, 0, 3) now has a count of 4.
+Element (3, 4, 3) has 4 neighbors.
+Counting neighbors for (3, 4, 4)
+    Dead cell (3, 0, 4) now has a count of 2.
+Element (3, 4, 4) has 5 neighbors.
+Counting neighbors for (4, 0, 0)
+    Dead cell (3, 0, 0) now has a count of 4.
+    Dead cell (4, 4, 0) now has a count of 3.
+Element (4, 0, 0) has 3 neighbors.
+Counting neighbors for (4, 0, 4)
+    Dead cell (0, 0, 4) now has a count of 3.
+    Dead cell (3, 0, 4) now has a count of 3.
+    Dead cell (4, 1, 4) now has a count of 1.
+Element (4, 0, 4) has 2 neighbors.
+Counting neighbors for (4, 1, 0)
+    Dead cell (4, 1, 4) now has a count of 2.
+    Dead cell (3, 1, 0) now has a count of 4.
+Element (4, 1, 0) has 4 neighbors.
+Counting neighbors for (4, 1, 1)
+    Dead cell (0, 1, 1) now has a count of 3.
+    Dead cell (4, 2, 1) now has a count of 3.
+    Dead cell (4, 0, 1) now has a count of 2.
+Element (4, 1, 1) has 3 neighbors.
+Counting neighbors for (4, 1, 2)
+    Dead cell (4, 1, 3) now has a count of 3.
+    Dead cell (4, 2, 2) now has a count of 3.
+    Dead cell (4, 0, 2) now has a count of 3.
+Element (4, 1, 2) has 3 neighbors.
+Counting neighbors for (4, 2, 0)
+    Dead cell (0, 2, 0) now has a count of 3.
+Element (4, 2, 0) has 4 neighbors.
+Counting neighbors for (4, 2, 3)
+    Dead cell (3, 2, 3) now has a count of 4.
+    Dead cell (4, 1, 3) now has a count of 4.
+Element (4, 2, 3) has 3 neighbors.
+Counting neighbors for (4, 2, 4)
+    Dead cell (0, 2, 4) now has a count of 2.
+    Dead cell (4, 3, 4) now has a count of 3.
+    Dead cell (4, 1, 4) now has a count of 3.
+Element (4, 2, 4) has 3 neighbors.
+Counting neighbors for (4, 3, 0)
+    Dead cell (4, 3, 4) now has a count of 4.
+    Dead cell (0, 3, 0) now has a count of 5.
+    Dead cell (4, 4, 0) now has a count of 4.
+Element (4, 3, 0) has 3 neighbors.
+Counting neighbors for (4, 3, 1)
+    Dead cell (3, 3, 1) now has a count of 5.
+    Dead cell (4, 4, 1) now has a count of 2.
+    Dead cell (4, 2, 1) now has a count of 4.
+Element (4, 3, 1) has 3 neighbors.
+Counting neighbors for (4, 3, 2)
+    Dead cell (4, 2, 2) now has a count of 4.
+Element (4, 3, 2) has 5 neighbors.
+Counting neighbors for (4, 3, 3)
+    Dead cell (4, 3, 4) now has a count of 5.
+    Dead cell (0, 3, 3) now has a count of 4.
+Element (4, 3, 3) has 4 neighbors.
+Counting neighbors for (4, 4, 2)
+    Dead cell (4, 4, 1) now has a count of 3.
+    Dead cell (4, 0, 2) now has a count of 4.
+Element (4, 4, 2) has 4 neighbors.
+Counting neighbors for (4, 4, 3)
+    Dead cell (4, 0, 3) now has a count of 1.
+Element (4, 4, 3) has 5 neighbors.
+Counting neighbors for (4, 4, 4)
+    Dead cell (4, 4, 0) now has a count of 5.
+    Dead cell (0, 4, 4) now has a count of 5.
+    Dead cell (4, 3, 4) now has a count of 6.
+Element (4, 4, 4) has 3 neighbors.
+Dead cell (4, 0, 3) has 1 neighbors.
+Dead cell (4, 4, 1) has 3 neighbors.
+Dead cell (3, 3, 1) has 5 neighbors.
+Dead cell (3, 2, 3) has 4 neighbors.
+Dead cell (3, 4, 0) has 1 neighbors.
+Dead cell (2, 4, 3) has 3 neighbors.
+Dead cell (3, 1, 0) has 4 neighbors.
+Dead cell (2, 1, 3) has 4 neighbors.
+Dead cell (3, 0, 3) has 4 neighbors.
+Dead cell (3, 0, 0) has 4 neighbors.
+Dead cell (1, 4, 0) has 1 neighbors.
+Dead cell (4, 1, 4) has 3 neighbors.
+Dead cell (2, 2, 0) has 6 neighbors.
+Dead cell (1, 2, 4) has 4 neighbors.
+Dead cell (2, 1, 1) has 4 neighbors.
+Dead cell (0, 0, 1) has 1 neighbors.
+Dead cell (4, 4, 0) has 5 neighbors.
+Dead cell (0, 2, 4) has 2 neighbors.
+Dead cell (0, 4, 4) has 5 neighbors.
+Dead cell (2, 4, 0) has 6 neighbors.
+Dead cell (1, 4, 3) has 3 neighbors.
+Dead cell (4, 3, 4) has 6 neighbors.
+Dead cell (2, 3, 1) has 1 neighbors.
+Dead cell (1, 3, 4) has 4 neighbors.
+Dead cell (0, 4, 1) has 2 neighbors.
+Dead cell (3, 2, 1) has 1 neighbors.
+Dead cell (0, 3, 0) has 5 neighbors.
+Dead cell (4, 2, 2) has 4 neighbors.
+Dead cell (3, 1, 4) has 2 neighbors.
+Dead cell (0, 2, 3) has 1 neighbors.
+Dead cell (0, 1, 1) has 3 neighbors.
+Dead cell (1, 3, 0) has 1 neighbors.
+Dead cell (4, 2, 1) has 4 neighbors.
+Dead cell (0, 3, 3) has 4 neighbors.
+Dead cell (0, 2, 2) has 1 neighbors.
+Dead cell (4, 1, 3) has 4 neighbors.
+Dead cell (1, 1, 3) has 3 neighbors.
+Dead cell (2, 1, 4) has 4 neighbors.
+Dead cell (0, 2, 0) has 3 neighbors.
+Dead cell (4, 0, 1) has 2 neighbors.
+Dead cell (3, 0, 4) has 3 neighbors.
+Dead cell (1, 1, 0) has 4 neighbors.
+Dead cell (1, 1, 1) has 1 neighbors.
+Dead cell (0, 1, 4) has 3 neighbors.
+Dead cell (4, 0, 2) has 4 neighbors.
+Dead cell (1, 0, 2) has 4 neighbors.
+Dead cell (0, 0, 3) has 4 neighbors.
+Dead cell (1, 0, 0) has 5 neighbors.
+Dead cell (0, 0, 4) has 3 neighbors.
+Inserting (4, 4, 1)
+Inserting (2, 4, 3)
+Inserting (4, 1, 4)
+Inserting (0, 2, 4)
+Inserting (1, 4, 3)
+Inserting (0, 4, 1)
+Inserting (3, 1, 4)
+Inserting (0, 1, 1)
+Inserting (1, 1, 3)
+Inserting (0, 2, 0)
+Inserting (4, 0, 1)
+Inserting (3, 0, 4)
+Inserting (0, 1, 4)
+Inserting (0, 0, 4)
+Removing (0, 1, 2)
+Removing (0, 3, 2)
+Removing (0, 3, 4)
+Removing (0, 4, 2)
+Removing (1, 1, 4)
+Removing (1, 2, 1)
+Removing (1, 2, 2)
+Removing (1, 3, 2)
+Removing (2, 0, 1)
+Removing (2, 0, 2)
+Removing (2, 1, 0)
+Removing (2, 2, 2)
+Removing (2, 3, 4)
+Removing (2, 4, 1)
+Removing (2, 4, 2)
+Removing (3, 1, 2)
+Removing (3, 1, 3)
+Removing (3, 3, 4)
+Removing (3, 4, 0)
+Removing (3, 4, 2)
+Removing (3, 4, 4)
+Removing (4, 3, 2)
+Removing (4, 4, 3)
+------------------------
+------------------------
+Starting generation 4
+Counting neighbors for (0, 0, 0)
+    Dead cell (1, 0, 0) now has a count of 1.
+Element (0, 0, 0) has 4 neighbors.
+Counting neighbors for (0, 0, 2)
+    Dead cell (1, 0, 2) now has a count of 1.
+    Dead cell (4, 0, 2) now has a count of 1.
+    Dead cell (0, 1, 2) now has a count of 1.
+    Dead cell (0, 4, 2) now has a count of 1.
+Element (0, 0, 2) has 0 neighbors.
+Counting neighbors for (0, 0, 4)
+    Dead cell (0, 4, 4) now has a count of 1.
+Element (0, 0, 4) has 4 neighbors.
+Counting neighbors for (0, 1, 0)
+    Dead cell (1, 1, 0) now has a count of 1.
+Element (0, 1, 0) has 5 neighbors.
+Counting neighbors for (0, 1, 1)
+    Dead cell (0, 0, 1) now has a count of 1.
+Element (0, 1, 1) has 4 neighbors.
+Counting neighbors for (0, 1, 3)
+    Dead cell (4, 1, 3) now has a count of 1.
+    Dead cell (0, 0, 3) now has a count of 1.
+Element (0, 1, 3) has 3 neighbors.
+Counting neighbors for (0, 1, 4)
+    Dead cell (1, 1, 4) now has a count of 1.
+Element (0, 1, 4) has 5 neighbors.
+Counting neighbors for (0, 2, 3)
+    Dead cell (0, 2, 2) now has a count of 1.
+    Dead cell (0, 3, 3) now has a count of 1.
+Element (0, 2, 3) has 3 neighbors.
+Counting neighbors for (0, 2, 0)
+    Dead cell (0, 3, 0) now has a count of 1.
+Element (0, 2, 0) has 4 neighbors.
+Counting neighbors for (0, 2, 1)
+    Dead cell (1, 2, 1) now has a count of 1.
+    Dead cell (4, 2, 1) now has a count of 1.
+Element (0, 2, 1) has 4 neighbors.
+Counting neighbors for (0, 2, 2)
+    Dead cell (1, 2, 2) now has a count of 1.
+    Dead cell (4, 2, 2) now has a count of 1.
+    Dead cell (0, 3, 2) now has a count of 1.
+    Dead cell (0, 1, 2) now has a count of 2.
+Element (0, 2, 2) has 1 neighbors.
+Counting neighbors for (0, 2, 4)
+    Dead cell (1, 2, 4) now has a count of 1.
+    Dead cell (0, 3, 4) now has a count of 1.
+Element (0, 2, 4) has 3 neighbors.
+Counting neighbors for (0, 3, 1)
+    Dead cell (0, 3, 2) now has a count of 2.
+    Dead cell (0, 3, 0) now has a count of 2.
+Element (0, 3, 1) has 4 neighbors.
+Counting neighbors for (0, 4, 0)
+    Dead cell (0, 4, 4) now has a count of 2.
+    Dead cell (4, 4, 0) now has a count of 1.
+    Dead cell (0, 3, 0) now has a count of 3.
+Element (0, 4, 0) has 3 neighbors.
+Counting neighbors for (0, 4, 1)
+    Dead cell (0, 0, 1) now has a count of 2.
+Element (0, 4, 1) has 4 neighbors.
+Counting neighbors for (0, 4, 3)
+    Dead cell (0, 4, 4) now has a count of 3.
+    Dead cell (4, 4, 3) now has a count of 1.
+    Dead cell (0, 0, 3) now has a count of 2.
+    Dead cell (0, 3, 3) now has a count of 2.
+Element (0, 4, 3) has 1 neighbors.
+Counting neighbors for (1, 0, 1)
+    Dead cell (1, 0, 0) now has a count of 2.
+    Dead cell (2, 0, 1) now has a count of 1.
+    Dead cell (0, 0, 1) now has a count of 3.
+Element (1, 0, 1) has 2 neighbors.
+Counting neighbors for (1, 0, 3)
+    Dead cell (0, 0, 3) now has a count of 3.
+Element (1, 0, 3) has 4 neighbors.
+Counting neighbors for (1, 0, 4)
+    Dead cell (1, 0, 0) now has a count of 3.
+    Dead cell (1, 1, 4) now has a count of 2.
+Element (1, 0, 4) has 4 neighbors.
+Counting neighbors for (1, 1, 2)
+    Dead cell (1, 1, 1) now has a count of 1.
+    Dead cell (0, 1, 2) now has a count of 3.
+    Dead cell (1, 2, 2) now has a count of 2.
+    Dead cell (1, 0, 2) now has a count of 2.
+Element (1, 1, 2) has 1 neighbors.
+Counting neighbors for (1, 1, 1)
+    Dead cell (2, 1, 1) now has a count of 1.
+    Dead cell (1, 2, 1) now has a count of 2.
+Element (1, 1, 1) has 2 neighbors.
+Counting neighbors for (1, 1, 3)
+    Dead cell (1, 1, 4) now has a count of 3.
+    Dead cell (2, 1, 3) now has a count of 1.
+Element (1, 1, 3) has 3 neighbors.
+Counting neighbors for (1, 2, 0)
+    Dead cell (1, 2, 4) now has a count of 2.
+    Dead cell (2, 2, 0) now has a count of 1.
+    Dead cell (1, 1, 0) now has a count of 2.
+Element (1, 2, 0) has 2 neighbors.
+Counting neighbors for (1, 2, 3)
+    Dead cell (1, 2, 4) now has a count of 3.
+Element (1, 2, 3) has 4 neighbors.
+Counting neighbors for (1, 3, 1)
+    Dead cell (1, 3, 0) now has a count of 1.
+    Dead cell (1, 2, 1) now has a count of 3.
+Element (1, 3, 1) has 3 neighbors.
+Counting neighbors for (1, 3, 0)
+    Dead cell (0, 3, 0) now has a count of 4.
+Element (1, 3, 0) has 3 neighbors.
+Counting neighbors for (1, 3, 3)
+    Dead cell (1, 3, 4) now has a count of 1.
+    Dead cell (0, 3, 3) now has a count of 3.
+Element (1, 3, 3) has 3 neighbors.
+Counting neighbors for (1, 4, 1)
+    Dead cell (1, 4, 0) now has a count of 1.
+    Dead cell (2, 4, 1) now has a count of 1.
+Element (1, 4, 1) has 3 neighbors.
+Counting neighbors for (1, 4, 0)
+    Dead cell (2, 4, 0) now has a count of 1.
+    Dead cell (1, 0, 0) now has a count of 4.
+Element (1, 4, 0) has 2 neighbors.
+Counting neighbors for (1, 4, 2)
+    Dead cell (2, 4, 2) now has a count of 1.
+    Dead cell (0, 4, 2) now has a count of 2.
+    Dead cell (1, 0, 2) now has a count of 3.
+    Dead cell (1, 3, 2) now has a count of 1.
+Element (1, 4, 2) has 1 neighbors.
+Counting neighbors for (1, 4, 3)
+Element (1, 4, 3) has 6 neighbors.
+Counting neighbors for (1, 4, 4)
+    Dead cell (0, 4, 4) now has a count of 4.
+    Dead cell (1, 3, 4) now has a count of 2.
+Element (1, 4, 4) has 4 neighbors.
+Counting neighbors for (2, 0, 0)
+    Dead cell (3, 0, 0) now has a count of 1.
+    Dead cell (1, 0, 0) now has a count of 5.
+    Dead cell (2, 1, 0) now has a count of 1.
+    Dead cell (2, 4, 0) now has a count of 2.
+Element (2, 0, 0) has 1 neighbors.
+Counting neighbors for (2, 0, 3)
+    Dead cell (3, 0, 3) now has a count of 1.
+    Dead cell (2, 1, 3) now has a count of 2.
+Element (2, 0, 3) has 3 neighbors.
+Counting neighbors for (2, 0, 4)
+    Dead cell (2, 1, 4) now has a count of 1.
+Element (2, 0, 4) has 5 neighbors.
+Counting neighbors for (2, 1, 2)
+    Dead cell (2, 1, 3) now has a count of 3.
+    Dead cell (2, 1, 1) now has a count of 2.
+    Dead cell (3, 1, 2) now has a count of 1.
+    Dead cell (2, 2, 2) now has a count of 1.
+    Dead cell (2, 0, 2) now has a count of 1.
+Element (2, 1, 2) has 1 neighbors.
+Counting neighbors for (2, 2, 1)
+    Dead cell (2, 2, 0) now has a count of 2.
+    Dead cell (1, 2, 1) now has a count of 4.
+    Dead cell (2, 1, 1) now has a count of 3.
+Element (2, 2, 1) has 2 neighbors.
+Counting neighbors for (2, 2, 3)
+    Dead cell (3, 2, 3) now has a count of 1.
+    Dead cell (2, 1, 3) now has a count of 4.
+Element (2, 2, 3) has 3 neighbors.
+Counting neighbors for (2, 2, 4)
+    Dead cell (2, 2, 0) now has a count of 3.
+    Dead cell (1, 2, 4) now has a count of 4.
+    Dead cell (2, 3, 4) now has a count of 1.
+    Dead cell (2, 1, 4) now has a count of 2.
+Element (2, 2, 4) has 2 neighbors.
+Counting neighbors for (2, 3, 2)
+    Dead cell (2, 3, 1) now has a count of 1.
+    Dead cell (1, 3, 2) now has a count of 2.
+    Dead cell (2, 4, 2) now has a count of 2.
+    Dead cell (2, 2, 2) now has a count of 2.
+Element (2, 3, 2) has 1 neighbors.
+Counting neighbors for (2, 3, 0)
+    Dead cell (2, 4, 0) now has a count of 3.
+    Dead cell (2, 2, 0) now has a count of 4.
+Element (2, 3, 0) has 3 neighbors.
+Counting neighbors for (2, 3, 1)
+    Dead cell (3, 3, 1) now has a count of 1.
+    Dead cell (2, 4, 1) now has a count of 2.
+Element (2, 3, 1) has 3 neighbors.
+Counting neighbors for (2, 3, 3)
+    Dead cell (2, 3, 4) now has a count of 2.
+Element (2, 3, 3) has 4 neighbors.
+Counting neighbors for (2, 4, 3)
+    Dead cell (2, 4, 2) now has a count of 3.
+Element (2, 4, 3) has 5 neighbors.
+Counting neighbors for (2, 4, 4)
+    Dead cell (2, 4, 0) now has a count of 4.
+    Dead cell (3, 4, 4) now has a count of 1.
+    Dead cell (2, 3, 4) now has a count of 3.
+Element (2, 4, 4) has 3 neighbors.
+Counting neighbors for (3, 0, 1)
+    Dead cell (3, 0, 0) now has a count of 2.
+    Dead cell (2, 0, 1) now has a count of 2.
+Element (3, 0, 1) has 4 neighbors.
+Counting neighbors for (3, 0, 2)
+    Dead cell (4, 0, 2) now has a count of 2.
+    Dead cell (2, 0, 2) now has a count of 2.
+    Dead cell (3, 1, 2) now has a count of 2.
+    Dead cell (3, 4, 2) now has a count of 1.
+Element (3, 0, 2) has 1 neighbors.
+Counting neighbors for (3, 0, 4)
+    Dead cell (3, 0, 0) now has a count of 3.
+    Dead cell (3, 4, 4) now has a count of 2.
+Element (3, 0, 4) has 3 neighbors.
+Counting neighbors for (3, 1, 1)
+    Dead cell (3, 1, 0) now has a count of 1.
+    Dead cell (2, 1, 1) now has a count of 4.
+Element (3, 1, 1) has 3 neighbors.
+Counting neighbors for (3, 1, 4)
+    Dead cell (3, 1, 0) now has a count of 2.
+    Dead cell (2, 1, 4) now has a count of 3.
+Element (3, 1, 4) has 3 neighbors.
+Counting neighbors for (3, 2, 2)
+    Dead cell (3, 2, 1) now has a count of 1.
+    Dead cell (4, 2, 2) now has a count of 2.
+    Dead cell (2, 2, 2) now has a count of 3.
+    Dead cell (3, 1, 2) now has a count of 3.
+Element (3, 2, 2) has 1 neighbors.
+Counting neighbors for (3, 2, 0)
+    Dead cell (2, 2, 0) now has a count of 5.
+    Dead cell (3, 1, 0) now has a count of 3.
+Element (3, 2, 0) has 3 neighbors.
+Counting neighbors for (3, 2, 1)
+    Dead cell (4, 2, 1) now has a count of 2.
+    Dead cell (3, 3, 1) now has a count of 2.
+Element (3, 2, 1) has 3 neighbors.
+Counting neighbors for (3, 2, 4)
+    Dead cell (3, 3, 4) now has a count of 1.
+Element (3, 2, 4) has 4 neighbors.
+Counting neighbors for (3, 3, 2)
+    Dead cell (3, 3, 1) now has a count of 3.
+    Dead cell (4, 3, 2) now has a count of 1.
+    Dead cell (3, 4, 2) now has a count of 2.
+Element (3, 3, 2) has 2 neighbors.
+Counting neighbors for (3, 3, 0)
+    Dead cell (3, 4, 0) now has a count of 1.
+Element (3, 3, 0) has 3 neighbors.
+Counting neighbors for (3, 3, 3)
+    Dead cell (3, 3, 4) now has a count of 2.
+    Dead cell (3, 2, 3) now has a count of 2.
+Element (3, 3, 3) has 3 neighbors.
+Counting neighbors for (3, 4, 1)
+    Dead cell (3, 4, 0) now has a count of 2.
+    Dead cell (2, 4, 1) now has a count of 3.
+    Dead cell (3, 3, 1) now has a count of 4.
+Element (3, 4, 1) has 2 neighbors.
+Counting neighbors for (3, 4, 3)
+    Dead cell (3, 4, 4) now has a count of 3.
+    Dead cell (4, 4, 3) now has a count of 2.
+    Dead cell (3, 0, 3) now has a count of 2.
+Element (3, 4, 3) has 2 neighbors.
+Counting neighbors for (4, 0, 0)
+    Dead cell (3, 0, 0) now has a count of 4.
+    Dead cell (4, 4, 0) now has a count of 2.
+Element (4, 0, 0) has 4 neighbors.
+Counting neighbors for (4, 0, 1)
+    Dead cell (0, 0, 1) now has a count of 4.
+Element (4, 0, 1) has 4 neighbors.
+Counting neighbors for (4, 0, 4)
+Element (4, 0, 4) has 5 neighbors.
+Counting neighbors for (4, 1, 0)
+    Dead cell (3, 1, 0) now has a count of 4.
+Element (4, 1, 0) has 5 neighbors.
+Counting neighbors for (4, 1, 1)
+    Dead cell (4, 2, 1) now has a count of 3.
+Element (4, 1, 1) has 5 neighbors.
+Counting neighbors for (4, 1, 2)
+    Dead cell (0, 1, 2) now has a count of 4.
+    Dead cell (3, 1, 2) now has a count of 4.
+    Dead cell (4, 2, 2) now has a count of 3.
+    Dead cell (4, 0, 2) now has a count of 3.
+Element (4, 1, 2) has 1 neighbors.
+Counting neighbors for (4, 1, 4)
+Element (4, 1, 4) has 5 neighbors.
+Counting neighbors for (4, 2, 0)
+Element (4, 2, 0) has 5 neighbors.
+Counting neighbors for (4, 2, 3)
+    Dead cell (3, 2, 3) now has a count of 3.
+    Dead cell (4, 1, 3) now has a count of 2.
+Element (4, 2, 3) has 3 neighbors.
+Counting neighbors for (4, 2, 4)
+    Dead cell (4, 3, 4) now has a count of 1.
+Element (4, 2, 4) has 5 neighbors.
+Counting neighbors for (4, 3, 0)
+    Dead cell (4, 3, 4) now has a count of 2.
+    Dead cell (0, 3, 0) now has a count of 5.
+    Dead cell (4, 4, 0) now has a count of 3.
+Element (4, 3, 0) has 3 neighbors.
+Counting neighbors for (4, 3, 1)
+    Dead cell (3, 3, 1) now has a count of 5.
+    Dead cell (4, 2, 1) now has a count of 4.
+Element (4, 3, 1) has 3 neighbors.
+Counting neighbors for (4, 3, 3)
+    Dead cell (4, 3, 4) now has a count of 3.
+    Dead cell (0, 3, 3) now has a count of 4.
+    Dead cell (4, 4, 3) now has a count of 3.
+Element (4, 3, 3) has 2 neighbors.
+Counting neighbors for (4, 4, 2)
+    Dead cell (4, 4, 1) now has a count of 1.
+    Dead cell (0, 4, 2) now has a count of 3.
+    Dead cell (3, 4, 2) now has a count of 3.
+    Dead cell (4, 0, 2) now has a count of 4.
+    Dead cell (4, 3, 2) now has a count of 2.
+Element (4, 4, 2) has 0 neighbors.
+Counting neighbors for (4, 4, 1)
+Element (4, 4, 1) has 4 neighbors.
+Counting neighbors for (4, 4, 4)
+    Dead cell (4, 4, 0) now has a count of 4.
+    Dead cell (0, 4, 4) now has a count of 5.
+    Dead cell (3, 4, 4) now has a count of 4.
+    Dead cell (4, 3, 4) now has a count of 4.
+Element (4, 4, 4) has 1 neighbors.
+Dead cell (3, 4, 0) has 2 neighbors.
+Dead cell (3, 4, 2) has 3 neighbors.
+Dead cell (4, 4, 1) has 1 neighbors.
+Dead cell (3, 4, 4) has 4 neighbors.
+Dead cell (3, 3, 1) has 5 neighbors.
+Dead cell (2, 3, 4) has 3 neighbors.
+Dead cell (2, 0, 2) has 2 neighbors.
+Dead cell (2, 2, 2) has 3 neighbors.
+Dead cell (3, 1, 2) has 4 neighbors.
+Dead cell (2, 1, 4) has 3 neighbors.
+Dead cell (2, 1, 0) has 1 neighbors.
+Dead cell (3, 0, 0) has 4 neighbors.
+Dead cell (1, 3, 2) has 2 neighbors.
+Dead cell (2, 4, 2) has 3 neighbors.
+Dead cell (4, 3, 4) has 4 neighbors.
+Dead cell (2, 4, 0) has 4 neighbors.
+Dead cell (2, 4, 1) has 3 neighbors.
+Dead cell (3, 3, 4) has 2 neighbors.
+Dead cell (1, 4, 0) has 1 neighbors.
+Dead cell (2, 3, 1) has 1 neighbors.
+Dead cell (1, 3, 4) has 2 neighbors.
+Dead cell (2, 2, 0) has 5 neighbors.
+Dead cell (3, 1, 0) has 4 neighbors.
+Dead cell (2, 1, 3) has 4 neighbors.
+Dead cell (2, 0, 1) has 2 neighbors.
+Dead cell (4, 4, 3) has 3 neighbors.
+Dead cell (4, 4, 0) has 4 neighbors.
+Dead cell (1, 2, 4) has 4 neighbors.
+Dead cell (3, 2, 3) has 3 neighbors.
+Dead cell (0, 3, 2) has 2 neighbors.
+Dead cell (0, 3, 4) has 1 neighbors.
+Dead cell (4, 2, 2) has 3 neighbors.
+Dead cell (1, 2, 1) has 4 neighbors.
+Dead cell (3, 2, 1) has 1 neighbors.
+Dead cell (0, 3, 0) has 5 neighbors.
+Dead cell (1, 3, 0) has 1 neighbors.
+Dead cell (4, 2, 1) has 4 neighbors.
+Dead cell (0, 3, 3) has 4 neighbors.
+Dead cell (0, 2, 2) has 1 neighbors.
+Dead cell (2, 1, 1) has 4 neighbors.
+Dead cell (1, 1, 4) has 3 neighbors.
+Dead cell (1, 2, 2) has 2 neighbors.
+Dead cell (4, 1, 3) has 2 neighbors.
+Dead cell (0, 0, 1) has 4 neighbors.
+Dead cell (1, 1, 0) has 2 neighbors.
+Dead cell (4, 3, 2) has 2 neighbors.
+Dead cell (0, 4, 4) has 5 neighbors.
+Dead cell (0, 4, 2) has 3 neighbors.
+Dead cell (3, 0, 3) has 2 neighbors.
+Dead cell (0, 1, 2) has 4 neighbors.
+Dead cell (1, 1, 1) has 1 neighbors.
+Dead cell (4, 0, 2) has 4 neighbors.
+Dead cell (1, 0, 2) has 3 neighbors.
+Dead cell (0, 0, 3) has 3 neighbors.
+Dead cell (1, 0, 0) has 5 neighbors.
+Inserting (3, 4, 0)
+Inserting (3, 4, 2)
+Inserting (2, 3, 4)
+Inserting (2, 0, 2)
+Inserting (2, 2, 2)
+Inserting (2, 1, 4)
+Inserting (1, 3, 2)
+Inserting (2, 4, 2)
+Inserting (2, 4, 1)
+Inserting (3, 3, 4)
+Inserting (1, 3, 4)
+Inserting (2, 0, 1)
+Inserting (4, 4, 3)
+Inserting (3, 2, 3)
+Inserting (0, 3, 2)
+Inserting (4, 2, 2)
+Inserting (1, 1, 4)
+Inserting (1, 2, 2)
+Inserting (4, 1, 3)
+Inserting (1, 1, 0)
+Inserting (4, 3, 2)
+Inserting (0, 4, 2)
+Inserting (3, 0, 3)
+Inserting (1, 0, 2)
+Inserting (0, 0, 3)
+Removing (0, 0, 2)
+Removing (0, 1, 0)
+Removing (0, 1, 4)
+Removing (0, 2, 2)
+Removing (0, 4, 3)
+Removing (1, 1, 2)
+Removing (1, 4, 2)
+Removing (1, 4, 3)
+Removing (2, 0, 0)
+Removing (2, 0, 4)
+Removing (2, 1, 2)
+Removing (2, 3, 2)
+Removing (2, 4, 3)
+Removing (3, 0, 2)
+Removing (3, 2, 2)
+Removing (4, 0, 4)
+Removing (4, 1, 0)
+Removing (4, 1, 1)
+Removing (4, 1, 2)
+Removing (4, 1, 4)
+Removing (4, 2, 0)
+Removing (4, 2, 4)
+Removing (4, 4, 2)
+Removing (4, 4, 4)
+------------------------
+------------------------
+Starting generation 5
+Counting neighbors for (0, 0, 0)
+    Dead cell (1, 0, 0) now has a count of 1.
+    Dead cell (0, 1, 0) now has a count of 1.
+Element (0, 0, 0) has 3 neighbors.
+Counting neighbors for (0, 0, 3)
+    Dead cell (4, 0, 3) now has a count of 1.
+    Dead cell (0, 4, 3) now has a count of 1.
+Element (0, 0, 3) has 3 neighbors.
+Counting neighbors for (0, 0, 4)
+    Dead cell (4, 0, 4) now has a count of 1.
+    Dead cell (0, 1, 4) now has a count of 1.
+    Dead cell (0, 4, 4) now has a count of 1.
+Element (0, 0, 4) has 3 neighbors.
+Counting neighbors for (0, 1, 1)
+    Dead cell (0, 1, 0) now has a count of 2.
+    Dead cell (4, 1, 1) now has a count of 1.
+    Dead cell (0, 0, 1) now has a count of 1.
+Element (0, 1, 1) has 2 neighbors.
+Counting neighbors for (0, 1, 3)
+    Dead cell (0, 1, 4) now has a count of 2.
+Element (0, 1, 3) has 4 neighbors.
+Counting neighbors for (0, 2, 3)
+    Dead cell (0, 2, 2) now has a count of 1.
+    Dead cell (0, 3, 3) now has a count of 1.
+Element (0, 2, 3) has 3 neighbors.
+Counting neighbors for (0, 2, 0)
+    Dead cell (4, 2, 0) now has a count of 1.
+    Dead cell (0, 3, 0) now has a count of 1.
+    Dead cell (0, 1, 0) now has a count of 3.
+Element (0, 2, 0) has 2 neighbors.
+Counting neighbors for (0, 2, 1)
+    Dead cell (1, 2, 1) now has a count of 1.
+    Dead cell (4, 2, 1) now has a count of 1.
+Element (0, 2, 1) has 3 neighbors.
+Counting neighbors for (0, 2, 4)
+    Dead cell (1, 2, 4) now has a count of 1.
+    Dead cell (4, 2, 4) now has a count of 1.
+    Dead cell (0, 3, 4) now has a count of 1.
+    Dead cell (0, 1, 4) now has a count of 3.
+Element (0, 2, 4) has 1 neighbors.
+Counting neighbors for (0, 3, 1)
+    Dead cell (0, 3, 0) now has a count of 2.
+Element (0, 3, 1) has 5 neighbors.
+Counting neighbors for (0, 3, 2)
+    Dead cell (0, 3, 3) now has a count of 2.
+    Dead cell (0, 2, 2) now has a count of 2.
+Element (0, 3, 2) has 4 neighbors.
+Counting neighbors for (0, 4, 0)
+    Dead cell (0, 4, 4) now has a count of 2.
+    Dead cell (4, 4, 0) now has a count of 1.
+    Dead cell (0, 3, 0) now has a count of 3.
+Element (0, 4, 0) has 3 neighbors.
+Counting neighbors for (0, 4, 1)
+    Dead cell (0, 0, 1) now has a count of 2.
+Element (0, 4, 1) has 5 neighbors.
+Counting neighbors for (0, 4, 2)
+    Dead cell (0, 4, 3) now has a count of 2.
+    Dead cell (1, 4, 2) now has a count of 1.
+    Dead cell (4, 4, 2) now has a count of 1.
+    Dead cell (0, 0, 2) now has a count of 1.
+Element (0, 4, 2) has 2 neighbors.
+Counting neighbors for (1, 0, 1)
+    Dead cell (1, 0, 0) now has a count of 2.
+    Dead cell (0, 0, 1) now has a count of 3.
+Element (1, 0, 1) has 4 neighbors.
+Counting neighbors for (1, 0, 2)
+    Dead cell (0, 0, 2) now has a count of 2.
+    Dead cell (1, 1, 2) now has a count of 1.
+    Dead cell (1, 4, 2) now has a count of 2.
+Element (1, 0, 2) has 3 neighbors.
+Counting neighbors for (1, 0, 3)
+    Dead cell (1, 4, 3) now has a count of 1.
+Element (1, 0, 3) has 5 neighbors.
+Counting neighbors for (1, 0, 4)
+    Dead cell (1, 0, 0) now has a count of 3.
+    Dead cell (2, 0, 4) now has a count of 1.
+Element (1, 0, 4) has 4 neighbors.
+Counting neighbors for (1, 1, 0)
+    Dead cell (2, 1, 0) now has a count of 1.
+    Dead cell (0, 1, 0) now has a count of 4.
+    Dead cell (1, 0, 0) now has a count of 4.
+Element (1, 1, 0) has 3 neighbors.
+Counting neighbors for (1, 1, 1)
+    Dead cell (2, 1, 1) now has a count of 1.
+    Dead cell (1, 2, 1) now has a count of 2.
+Element (1, 1, 1) has 3 neighbors.
+Counting neighbors for (1, 1, 3)
+    Dead cell (2, 1, 3) now has a count of 1.
+Element (1, 1, 3) has 4 neighbors.
+Counting neighbors for (1, 1, 4)
+    Dead cell (0, 1, 4) now has a count of 4.
+    Dead cell (1, 2, 4) now has a count of 2.
+Element (1, 1, 4) has 4 neighbors.
+Counting neighbors for (1, 2, 0)
+    Dead cell (1, 2, 4) now has a count of 3.
+    Dead cell (2, 2, 0) now has a count of 1.
+Element (1, 2, 0) has 3 neighbors.
+Counting neighbors for (1, 2, 2)
+    Dead cell (0, 2, 2) now has a count of 3.
+    Dead cell (1, 1, 2) now has a count of 2.
+Element (1, 2, 2) has 3 neighbors.
+Counting neighbors for (1, 2, 3)
+    Dead cell (1, 2, 4) now has a count of 4.
+Element (1, 2, 3) has 5 neighbors.
+Counting neighbors for (1, 3, 1)
+    Dead cell (1, 3, 0) now has a count of 1.
+    Dead cell (1, 2, 1) now has a count of 3.
+Element (1, 3, 1) has 3 neighbors.
+Counting neighbors for (1, 3, 0)
+    Dead cell (0, 3, 0) now has a count of 4.
+Element (1, 3, 0) has 3 neighbors.
+Counting neighbors for (1, 3, 2)
+    Dead cell (2, 3, 2) now has a count of 1.
+    Dead cell (1, 4, 2) now has a count of 3.
+Element (1, 3, 2) has 3 neighbors.
+Counting neighbors for (1, 3, 3)
+    Dead cell (0, 3, 3) now has a count of 3.
+    Dead cell (1, 4, 3) now has a count of 2.
+Element (1, 3, 3) has 4 neighbors.
+Counting neighbors for (1, 3, 4)
+    Dead cell (0, 3, 4) now has a count of 2.
+    Dead cell (1, 2, 4) now has a count of 5.
+Element (1, 3, 4) has 4 neighbors.
+Counting neighbors for (1, 4, 1)
+    Dead cell (1, 4, 0) now has a count of 1.
+Element (1, 4, 1) has 4 neighbors.
+Counting neighbors for (1, 4, 0)
+    Dead cell (2, 4, 0) now has a count of 1.
+    Dead cell (1, 0, 0) now has a count of 5.
+Element (1, 4, 0) has 2 neighbors.
+Counting neighbors for (1, 4, 4)
+    Dead cell (0, 4, 4) now has a count of 3.
+Element (1, 4, 4) has 4 neighbors.
+Counting neighbors for (2, 0, 1)
+    Dead cell (2, 0, 0) now has a count of 1.
+    Dead cell (2, 1, 1) now has a count of 2.
+Element (2, 0, 1) has 4 neighbors.
+Counting neighbors for (2, 0, 2)
+    Dead cell (3, 0, 2) now has a count of 1.
+    Dead cell (2, 1, 2) now has a count of 1.
+Element (2, 0, 2) has 4 neighbors.
+Counting neighbors for (2, 0, 3)
+    Dead cell (2, 0, 4) now has a count of 2.
+    Dead cell (2, 1, 3) now has a count of 2.
+    Dead cell (2, 4, 3) now has a count of 1.
+Element (2, 0, 3) has 3 neighbors.
+Counting neighbors for (2, 1, 4)
+    Dead cell (2, 1, 0) now has a count of 2.
+    Dead cell (2, 1, 3) now has a count of 3.
+    Dead cell (2, 0, 4) now has a count of 3.
+Element (2, 1, 4) has 3 neighbors.
+Counting neighbors for (2, 2, 1)
+    Dead cell (2, 2, 0) now has a count of 2.
+    Dead cell (1, 2, 1) now has a count of 4.
+    Dead cell (2, 1, 1) now has a count of 3.
+Element (2, 2, 1) has 3 neighbors.
+Counting neighbors for (2, 2, 2)
+    Dead cell (3, 2, 2) now has a count of 1.
+    Dead cell (2, 3, 2) now has a count of 2.
+    Dead cell (2, 1, 2) now has a count of 2.
+Element (2, 2, 2) has 3 neighbors.
+Counting neighbors for (2, 2, 3)
+    Dead cell (2, 1, 3) now has a count of 4.
+Element (2, 2, 3) has 5 neighbors.
+Counting neighbors for (2, 2, 4)
+    Dead cell (2, 2, 0) now has a count of 3.
+    Dead cell (1, 2, 4) now has a count of 6.
+Element (2, 2, 4) has 4 neighbors.
+Counting neighbors for (2, 3, 0)
+    Dead cell (2, 4, 0) now has a count of 2.
+    Dead cell (2, 2, 0) now has a count of 4.
+Element (2, 3, 0) has 4 neighbors.
+Counting neighbors for (2, 3, 1)
+    Dead cell (3, 3, 1) now has a count of 1.
+Element (2, 3, 1) has 4 neighbors.
+Counting neighbors for (2, 3, 3)
+    Dead cell (2, 4, 3) now has a count of 2.
+Element (2, 3, 3) has 4 neighbors.
+Counting neighbors for (2, 3, 4)
+Element (2, 3, 4) has 6 neighbors.
+Counting neighbors for (2, 4, 1)
+    Dead cell (2, 4, 0) now has a count of 3.
+Element (2, 4, 1) has 5 neighbors.
+Counting neighbors for (2, 4, 2)
+    Dead cell (1, 4, 2) now has a count of 4.
+    Dead cell (2, 3, 2) now has a count of 3.
+Element (2, 4, 2) has 3 neighbors.
+Counting neighbors for (2, 4, 4)
+    Dead cell (2, 4, 0) now has a count of 4.
+    Dead cell (3, 4, 4) now has a count of 1.
+    Dead cell (2, 0, 4) now has a count of 4.
+Element (2, 4, 4) has 2 neighbors.
+Counting neighbors for (3, 0, 1)
+    Dead cell (3, 0, 0) now has a count of 1.
+Element (3, 0, 1) has 4 neighbors.
+Counting neighbors for (3, 0, 3)
+    Dead cell (4, 0, 3) now has a count of 2.
+    Dead cell (3, 1, 3) now has a count of 1.
+Element (3, 0, 3) has 3 neighbors.
+Counting neighbors for (3, 0, 4)
+    Dead cell (3, 0, 0) now has a count of 2.
+    Dead cell (4, 0, 4) now has a count of 2.
+    Dead cell (2, 0, 4) now has a count of 5.
+    Dead cell (3, 4, 4) now has a count of 2.
+Element (3, 0, 4) has 2 neighbors.
+Counting neighbors for (3, 1, 1)
+    Dead cell (3, 1, 0) now has a count of 1.
+    Dead cell (4, 1, 1) now has a count of 2.
+    Dead cell (2, 1, 1) now has a count of 4.
+Element (3, 1, 1) has 2 neighbors.
+Counting neighbors for (3, 1, 4)
+    Dead cell (3, 1, 0) now has a count of 2.
+    Dead cell (4, 1, 4) now has a count of 1.
+Element (3, 1, 4) has 3 neighbors.
+Counting neighbors for (3, 2, 0)
+    Dead cell (4, 2, 0) now has a count of 2.
+    Dead cell (2, 2, 0) now has a count of 5.
+    Dead cell (3, 1, 0) now has a count of 3.
+Element (3, 2, 0) has 3 neighbors.
+Counting neighbors for (3, 2, 1)
+    Dead cell (4, 2, 1) now has a count of 2.
+    Dead cell (3, 3, 1) now has a count of 2.
+Element (3, 2, 1) has 3 neighbors.
+Counting neighbors for (3, 2, 3)
+    Dead cell (3, 1, 3) now has a count of 2.
+Element (3, 2, 3) has 4 neighbors.
+Counting neighbors for (3, 2, 4)
+    Dead cell (4, 2, 4) now has a count of 2.
+Element (3, 2, 4) has 5 neighbors.
+Counting neighbors for (3, 3, 2)
+    Dead cell (3, 3, 1) now has a count of 3.
+    Dead cell (2, 3, 2) now has a count of 4.
+    Dead cell (3, 2, 2) now has a count of 2.
+Element (3, 3, 2) has 2 neighbors.
+Counting neighbors for (3, 3, 0)
+Element (3, 3, 0) has 4 neighbors.
+Counting neighbors for (3, 3, 3)
+Element (3, 3, 3) has 5 neighbors.
+Counting neighbors for (3, 3, 4)
+    Dead cell (4, 3, 4) now has a count of 1.
+    Dead cell (3, 4, 4) now has a count of 3.
+Element (3, 3, 4) has 4 neighbors.
+Counting neighbors for (3, 4, 1)
+    Dead cell (3, 4, 0) now has a count of 1.
+    Dead cell (3, 3, 1) now has a count of 4.
+Element (3, 4, 1) has 3 neighbors.
+Counting neighbors for (3, 4, 0)
+    Dead cell (4, 4, 0) now has a count of 2.
+    Dead cell (2, 4, 0) now has a count of 5.
+    Dead cell (3, 0, 0) now has a count of 3.
+Element (3, 4, 0) has 1 neighbors.
+Counting neighbors for (3, 4, 2)
+    Dead cell (4, 4, 2) now has a count of 2.
+    Dead cell (3, 0, 2) now has a count of 2.
+Element (3, 4, 2) has 3 neighbors.
+Counting neighbors for (3, 4, 3)
+    Dead cell (3, 4, 4) now has a count of 4.
+    Dead cell (2, 4, 3) now has a count of 3.
+Element (3, 4, 3) has 4 neighbors.
+Counting neighbors for (4, 0, 0)
+    Dead cell (4, 0, 4) now has a count of 3.
+    Dead cell (3, 0, 0) now has a count of 4.
+    Dead cell (4, 1, 0) now has a count of 1.
+    Dead cell (4, 4, 0) now has a count of 3.
+Element (4, 0, 0) has 2 neighbors.
+Counting neighbors for (4, 0, 1)
+    Dead cell (4, 0, 2) now has a count of 1.
+    Dead cell (0, 0, 1) now has a count of 4.
+    Dead cell (4, 1, 1) now has a count of 3.
+Element (4, 0, 1) has 3 neighbors.
+Counting neighbors for (4, 1, 3)
+    Dead cell (4, 1, 4) now has a count of 2.
+    Dead cell (4, 1, 2) now has a count of 1.
+    Dead cell (3, 1, 3) now has a count of 3.
+    Dead cell (4, 0, 3) now has a count of 3.
+Element (4, 1, 3) has 2 neighbors.
+Counting neighbors for (4, 2, 2)
+    Dead cell (4, 2, 1) now has a count of 3.
+    Dead cell (0, 2, 2) now has a count of 4.
+    Dead cell (3, 2, 2) now has a count of 3.
+    Dead cell (4, 1, 2) now has a count of 2.
+Element (4, 2, 2) has 2 neighbors.
+Counting neighbors for (4, 2, 3)
+    Dead cell (4, 2, 4) now has a count of 3.
+Element (4, 2, 3) has 5 neighbors.
+Counting neighbors for (4, 3, 0)
+    Dead cell (4, 3, 4) now has a count of 2.
+    Dead cell (0, 3, 0) now has a count of 5.
+    Dead cell (4, 4, 0) now has a count of 4.
+    Dead cell (4, 2, 0) now has a count of 3.
+Element (4, 3, 0) has 2 neighbors.
+Counting neighbors for (4, 3, 1)
+    Dead cell (3, 3, 1) now has a count of 5.
+    Dead cell (4, 2, 1) now has a count of 4.
+Element (4, 3, 1) has 4 neighbors.
+Counting neighbors for (4, 3, 2)
+    Dead cell (4, 4, 2) now has a count of 3.
+Element (4, 3, 2) has 5 neighbors.
+Counting neighbors for (4, 3, 3)
+    Dead cell (4, 3, 4) now has a count of 3.
+    Dead cell (0, 3, 3) now has a count of 4.
+Element (4, 3, 3) has 4 neighbors.
+Counting neighbors for (4, 4, 1)
+    Dead cell (4, 4, 0) now has a count of 5.
+Element (4, 4, 1) has 4 neighbors.
+Counting neighbors for (4, 4, 3)
+    Dead cell (4, 4, 4) now has a count of 1.
+    Dead cell (0, 4, 3) now has a count of 3.
+    Dead cell (4, 0, 3) now has a count of 4.
+Element (4, 4, 3) has 2 neighbors.
+Dead cell (4, 4, 4) has 1 neighbors.
+Dead cell (3, 0, 0) has 4 neighbors.
+Dead cell (3, 4, 4) has 4 neighbors.
+Dead cell (3, 3, 1) has 5 neighbors.
+Dead cell (3, 2, 2) has 3 neighbors.
+Dead cell (3, 4, 0) has 1 neighbors.
+Dead cell (2, 4, 3) has 3 neighbors.
+Dead cell (2, 1, 2) has 2 neighbors.
+Dead cell (3, 0, 2) has 2 neighbors.
+Dead cell (2, 0, 0) has 1 neighbors.
+Dead cell (2, 3, 2) has 4 neighbors.
+Dead cell (4, 1, 4) has 2 neighbors.
+Dead cell (2, 2, 0) has 5 neighbors.
+Dead cell (3, 1, 0) has 3 neighbors.
+Dead cell (2, 1, 3) has 4 neighbors.
+Dead cell (2, 1, 1) has 4 neighbors.
+Dead cell (4, 3, 4) has 3 neighbors.
+Dead cell (2, 4, 0) has 5 neighbors.
+Dead cell (1, 4, 3) has 2 neighbors.
+Dead cell (0, 0, 2) has 2 neighbors.
+Dead cell (4, 4, 2) has 3 neighbors.
+Dead cell (1, 4, 2) has 4 neighbors.
+Dead cell (4, 4, 0) has 5 neighbors.
+Dead cell (0, 3, 4) has 2 neighbors.
+Dead cell (4, 2, 4) has 3 neighbors.
+Dead cell (1, 2, 4) has 6 neighbors.
+Dead cell (4, 1, 2) has 2 neighbors.
+Dead cell (1, 2, 1) has 4 neighbors.
+Dead cell (0, 3, 0) has 5 neighbors.
+Dead cell (4, 2, 0) has 3 neighbors.
+Dead cell (1, 3, 0) has 1 neighbors.
+Dead cell (4, 2, 1) has 4 neighbors.
+Dead cell (0, 3, 3) has 4 neighbors.
+Dead cell (4, 1, 0) has 1 neighbors.
+Dead cell (3, 1, 3) has 3 neighbors.
+Dead cell (0, 2, 2) has 4 neighbors.
+Dead cell (0, 0, 1) has 4 neighbors.
+Dead cell (4, 1, 1) has 3 neighbors.
+Dead cell (0, 4, 4) has 3 neighbors.
+Dead cell (4, 0, 2) has 1 neighbors.
+Dead cell (0, 1, 4) has 4 neighbors.
+Dead cell (2, 1, 0) has 2 neighbors.
+Dead cell (4, 0, 4) has 3 neighbors.
+Dead cell (1, 4, 0) has 1 neighbors.
+Dead cell (0, 4, 3) has 3 neighbors.
+Dead cell (1, 1, 2) has 2 neighbors.
+Dead cell (4, 0, 3) has 4 neighbors.
+Dead cell (2, 0, 4) has 5 neighbors.
+Dead cell (0, 1, 0) has 4 neighbors.
+Dead cell (1, 0, 0) has 5 neighbors.
+Inserting (3, 2, 2)
+Inserting (2, 4, 3)
+Inserting (2, 1, 2)
+Inserting (3, 0, 2)
+Inserting (4, 1, 4)
+Inserting (3, 1, 0)
+Inserting (4, 3, 4)
+Inserting (1, 4, 3)
+Inserting (0, 0, 2)
+Inserting (4, 4, 2)
+Inserting (0, 3, 4)
+Inserting (4, 2, 4)
+Inserting (4, 1, 2)
+Inserting (4, 2, 0)
+Inserting (3, 1, 3)
+Inserting (4, 1, 1)
+Inserting (0, 4, 4)
+Inserting (2, 1, 0)
+Inserting (4, 0, 4)
+Inserting (0, 4, 3)
+Inserting (1, 1, 2)
+Removing (0, 2, 4)
+Removing (0, 3, 1)
+Removing (0, 4, 1)
+Removing (1, 0, 3)
+Removing (1, 2, 3)
+Removing (2, 2, 3)
+Removing (2, 3, 4)
+Removing (2, 4, 1)
+Removing (3, 2, 4)
+Removing (3, 3, 3)
+Removing (3, 4, 0)
+Removing (4, 2, 3)
+Removing (4, 3, 2)
+------------------------
+------------------------
+Starting generation 6
+Counting neighbors for (0, 0, 0)
+    Dead cell (1, 0, 0) now has a count of 1.
+    Dead cell (0, 1, 0) now has a count of 1.
+Element (0, 0, 0) has 3 neighbors.
+Counting neighbors for (0, 0, 2)
+    Dead cell (4, 0, 2) now has a count of 1.
+    Dead cell (0, 1, 2) now has a count of 1.
+Element (0, 0, 2) has 3 neighbors.
+Counting neighbors for (0, 0, 3)
+    Dead cell (1, 0, 3) now has a count of 1.
+    Dead cell (4, 0, 3) now has a count of 1.
+Element (0, 0, 3) has 4 neighbors.
+Counting neighbors for (0, 0, 4)
+    Dead cell (0, 1, 4) now has a count of 1.
+Element (0, 0, 4) has 5 neighbors.
+Counting neighbors for (0, 1, 1)
+    Dead cell (0, 1, 0) now has a count of 2.
+    Dead cell (0, 0, 1) now has a count of 1.
+Element (0, 1, 1) has 3 neighbors.
+Counting neighbors for (0, 1, 3)
+    Dead cell (0, 1, 4) now has a count of 2.
+Element (0, 1, 3) has 4 neighbors.
+Counting neighbors for (0, 2, 3)
+    Dead cell (0, 2, 2) now has a count of 1.
+    Dead cell (1, 2, 3) now has a count of 1.
+    Dead cell (4, 2, 3) now has a count of 1.
+    Dead cell (0, 3, 3) now has a count of 1.
+Element (0, 2, 3) has 1 neighbors.
+Counting neighbors for (0, 2, 0)
+    Dead cell (0, 3, 0) now has a count of 1.
+    Dead cell (0, 1, 0) now has a count of 3.
+Element (0, 2, 0) has 3 neighbors.
+Counting neighbors for (0, 2, 1)
+    Dead cell (0, 2, 2) now has a count of 2.
+    Dead cell (1, 2, 1) now has a count of 1.
+    Dead cell (4, 2, 1) now has a count of 1.
+    Dead cell (0, 3, 1) now has a count of 1.
+Element (0, 2, 1) has 2 neighbors.
+Counting neighbors for (0, 3, 2)
+    Dead cell (0, 3, 1) now has a count of 2.
+    Dead cell (4, 3, 2) now has a count of 1.
+    Dead cell (0, 2, 2) now has a count of 3.
+Element (0, 3, 2) has 2 neighbors.
+Counting neighbors for (0, 3, 4)
+    Dead cell (0, 3, 0) now has a count of 2.
+    Dead cell (0, 2, 4) now has a count of 1.
+Element (0, 3, 4) has 3 neighbors.
+Counting neighbors for (0, 4, 0)
+    Dead cell (4, 4, 0) now has a count of 1.
+    Dead cell (0, 3, 0) now has a count of 3.
+Element (0, 4, 0) has 3 neighbors.
+Counting neighbors for (0, 4, 2)
+    Dead cell (1, 4, 2) now has a count of 1.
+Element (0, 4, 2) has 4 neighbors.
+Counting neighbors for (0, 4, 3)
+    Dead cell (0, 3, 3) now has a count of 2.
+Element (0, 4, 3) has 5 neighbors.
+Counting neighbors for (0, 4, 4)
+    Dead cell (4, 4, 4) now has a count of 1.
+Element (0, 4, 4) has 5 neighbors.
+Counting neighbors for (1, 0, 1)
+    Dead cell (1, 0, 0) now has a count of 2.
+    Dead cell (0, 0, 1) now has a count of 2.
+Element (1, 0, 1) has 4 neighbors.
+Counting neighbors for (1, 0, 2)
+    Dead cell (1, 4, 2) now has a count of 2.
+Element (1, 0, 2) has 4 neighbors.
+Counting neighbors for (1, 0, 4)
+    Dead cell (1, 0, 0) now has a count of 3.
+    Dead cell (2, 0, 4) now has a count of 1.
+Element (1, 0, 4) has 3 neighbors.
+Counting neighbors for (1, 1, 0)
+    Dead cell (0, 1, 0) now has a count of 4.
+    Dead cell (1, 0, 0) now has a count of 4.
+Element (1, 1, 0) has 4 neighbors.
+Counting neighbors for (1, 1, 1)
+    Dead cell (2, 1, 1) now has a count of 1.
+    Dead cell (1, 2, 1) now has a count of 2.
+Element (1, 1, 1) has 4 neighbors.
+Counting neighbors for (1, 1, 2)
+    Dead cell (0, 1, 2) now has a count of 2.
+Element (1, 1, 2) has 5 neighbors.
+Counting neighbors for (1, 1, 3)
+    Dead cell (2, 1, 3) now has a count of 1.
+    Dead cell (1, 2, 3) now has a count of 2.
+    Dead cell (1, 0, 3) now has a count of 2.
+Element (1, 1, 3) has 3 neighbors.
+Counting neighbors for (1, 1, 4)
+    Dead cell (0, 1, 4) now has a count of 3.
+    Dead cell (1, 2, 4) now has a count of 1.
+Element (1, 1, 4) has 4 neighbors.
+Counting neighbors for (1, 2, 0)
+    Dead cell (1, 2, 4) now has a count of 2.
+    Dead cell (2, 2, 0) now has a count of 1.
+Element (1, 2, 0) has 3 neighbors.
+Counting neighbors for (1, 2, 2)
+    Dead cell (1, 2, 3) now has a count of 3.
+    Dead cell (0, 2, 2) now has a count of 4.
+Element (1, 2, 2) has 3 neighbors.
+Counting neighbors for (1, 3, 1)
+    Dead cell (1, 3, 0) now has a count of 1.
+    Dead cell (0, 3, 1) now has a count of 3.
+    Dead cell (1, 2, 1) now has a count of 3.
+Element (1, 3, 1) has 2 neighbors.
+Counting neighbors for (1, 3, 0)
+    Dead cell (0, 3, 0) now has a count of 4.
+Element (1, 3, 0) has 3 neighbors.
+Counting neighbors for (1, 3, 2)
+    Dead cell (2, 3, 2) now has a count of 1.
+    Dead cell (1, 4, 2) now has a count of 3.
+Element (1, 3, 2) has 3 neighbors.
+Counting neighbors for (1, 3, 3)
+    Dead cell (0, 3, 3) now has a count of 3.
+    Dead cell (1, 2, 3) now has a count of 4.
+Element (1, 3, 3) has 4 neighbors.
+Counting neighbors for (1, 3, 4)
+    Dead cell (2, 3, 4) now has a count of 1.
+    Dead cell (1, 2, 4) now has a count of 3.
+Element (1, 3, 4) has 4 neighbors.
+Counting neighbors for (1, 4, 1)
+    Dead cell (1, 4, 0) now has a count of 1.
+    Dead cell (2, 4, 1) now has a count of 1.
+    Dead cell (0, 4, 1) now has a count of 1.
+Element (1, 4, 1) has 2 neighbors.
+Counting neighbors for (1, 4, 0)
+    Dead cell (2, 4, 0) now has a count of 1.
+    Dead cell (1, 0, 0) now has a count of 5.
+Element (1, 4, 0) has 2 neighbors.
+Counting neighbors for (1, 4, 3)
+    Dead cell (1, 0, 3) now has a count of 3.
+Element (1, 4, 3) has 4 neighbors.
+Counting neighbors for (1, 4, 4)
+Element (1, 4, 4) has 6 neighbors.
+Counting neighbors for (2, 0, 1)
+    Dead cell (2, 0, 0) now has a count of 1.
+    Dead cell (2, 1, 1) now has a count of 2.
+    Dead cell (2, 4, 1) now has a count of 2.
+Element (2, 0, 1) has 3 neighbors.
+Counting neighbors for (2, 0, 2)
+Element (2, 0, 2) has 6 neighbors.
+Counting neighbors for (2, 0, 3)
+    Dead cell (2, 0, 4) now has a count of 2.
+    Dead cell (1, 0, 3) now has a count of 4.
+    Dead cell (2, 1, 3) now has a count of 2.
+Element (2, 0, 3) has 3 neighbors.
+Counting neighbors for (2, 1, 4)
+    Dead cell (2, 1, 3) now has a count of 3.
+    Dead cell (2, 0, 4) now has a count of 3.
+Element (2, 1, 4) has 3 neighbors.
+Counting neighbors for (2, 1, 0)
+    Dead cell (2, 2, 0) now has a count of 2.
+    Dead cell (2, 0, 0) now has a count of 2.
+Element (2, 1, 0) has 2 neighbors.
+Counting neighbors for (2, 1, 2)
+    Dead cell (2, 1, 3) now has a count of 4.
+    Dead cell (3, 1, 2) now has a count of 1.
+Element (2, 1, 2) has 3 neighbors.
+Counting neighbors for (2, 2, 1)
+    Dead cell (2, 2, 0) now has a count of 3.
+    Dead cell (1, 2, 1) now has a count of 4.
+    Dead cell (2, 1, 1) now has a count of 3.
+Element (2, 2, 1) has 3 neighbors.
+Counting neighbors for (2, 2, 2)
+    Dead cell (2, 3, 2) now has a count of 2.
+Element (2, 2, 2) has 4 neighbors.
+Counting neighbors for (2, 2, 4)
+    Dead cell (2, 2, 0) now has a count of 4.
+    Dead cell (3, 2, 4) now has a count of 1.
+    Dead cell (1, 2, 4) now has a count of 4.
+    Dead cell (2, 3, 4) now has a count of 2.
+Element (2, 2, 4) has 1 neighbors.
+Counting neighbors for (2, 3, 0)
+    Dead cell (2, 3, 4) now has a count of 3.
+    Dead cell (2, 4, 0) now has a count of 2.
+    Dead cell (2, 2, 0) now has a count of 5.
+Element (2, 3, 0) has 3 neighbors.
+Counting neighbors for (2, 3, 1)
+    Dead cell (3, 3, 1) now has a count of 1.
+    Dead cell (2, 4, 1) now has a count of 3.
+Element (2, 3, 1) has 3 neighbors.
+Counting neighbors for (2, 3, 3)
+    Dead cell (2, 3, 4) now has a count of 4.
+    Dead cell (3, 3, 3) now has a count of 1.
+    Dead cell (2, 2, 3) now has a count of 1.
+Element (2, 3, 3) has 2 neighbors.
+Counting neighbors for (2, 4, 2)
+    Dead cell (2, 4, 1) now has a count of 4.
+    Dead cell (1, 4, 2) now has a count of 4.
+    Dead cell (2, 3, 2) now has a count of 3.
+Element (2, 4, 2) has 3 neighbors.
+Counting neighbors for (2, 4, 3)
+Element (2, 4, 3) has 6 neighbors.
+Counting neighbors for (2, 4, 4)
+    Dead cell (2, 4, 0) now has a count of 3.
+    Dead cell (3, 4, 4) now has a count of 1.
+    Dead cell (2, 0, 4) now has a count of 4.
+    Dead cell (2, 3, 4) now has a count of 5.
+Element (2, 4, 4) has 2 neighbors.
+Counting neighbors for (3, 0, 1)
+    Dead cell (3, 0, 0) now has a count of 1.
+Element (3, 0, 1) has 5 neighbors.
+Counting neighbors for (3, 0, 2)
+    Dead cell (4, 0, 2) now has a count of 2.
+    Dead cell (3, 1, 2) now has a count of 2.
+Element (3, 0, 2) has 4 neighbors.
+Counting neighbors for (3, 0, 3)
+    Dead cell (4, 0, 3) now has a count of 2.
+Element (3, 0, 3) has 5 neighbors.
+Counting neighbors for (3, 0, 4)
+    Dead cell (3, 0, 0) now has a count of 2.
+    Dead cell (2, 0, 4) now has a count of 5.
+    Dead cell (3, 4, 4) now has a count of 2.
+Element (3, 0, 4) has 3 neighbors.
+Counting neighbors for (3, 1, 1)
+    Dead cell (3, 1, 0) now has a count of 1.
+    Dead cell (2, 1, 1) now has a count of 4.
+Element (3, 1, 1) has 3 neighbors.
+Counting neighbors for (3, 1, 0)
+    Dead cell (4, 1, 0) now has a count of 1.
+    Dead cell (3, 0, 0) now has a count of 3.
+Element (3, 1, 0) has 2 neighbors.
+Counting neighbors for (3, 1, 3)
+    Dead cell (2, 1, 3) now has a count of 5.
+Element (3, 1, 3) has 4 neighbors.
+Counting neighbors for (3, 1, 4)
+    Dead cell (3, 2, 4) now has a count of 2.
+Element (3, 1, 4) has 5 neighbors.
+Counting neighbors for (3, 2, 0)
+    Dead cell (3, 2, 4) now has a count of 3.
+    Dead cell (2, 2, 0) now has a count of 6.
+Element (3, 2, 0) has 4 neighbors.
+Counting neighbors for (3, 2, 1)
+    Dead cell (4, 2, 1) now has a count of 2.
+    Dead cell (3, 3, 1) now has a count of 2.
+Element (3, 2, 1) has 4 neighbors.
+Counting neighbors for (3, 2, 2)
+    Dead cell (3, 1, 2) now has a count of 3.
+Element (3, 2, 2) has 5 neighbors.
+Counting neighbors for (3, 2, 3)
+    Dead cell (3, 2, 4) now has a count of 4.
+    Dead cell (4, 2, 3) now has a count of 2.
+    Dead cell (2, 2, 3) now has a count of 2.
+    Dead cell (3, 3, 3) now has a count of 2.
+Element (3, 2, 3) has 2 neighbors.
+Counting neighbors for (3, 3, 2)
+    Dead cell (3, 3, 1) now has a count of 3.
+    Dead cell (4, 3, 2) now has a count of 2.
+    Dead cell (2, 3, 2) now has a count of 4.
+Element (3, 3, 2) has 2 neighbors.
+Counting neighbors for (3, 3, 0)
+    Dead cell (3, 4, 0) now has a count of 1.
+Element (3, 3, 0) has 3 neighbors.
+Counting neighbors for (3, 3, 4)
+    Dead cell (2, 3, 4) now has a count of 6.
+    Dead cell (3, 4, 4) now has a count of 3.
+    Dead cell (3, 2, 4) now has a count of 5.
+Element (3, 3, 4) has 2 neighbors.
+Counting neighbors for (3, 4, 1)
+    Dead cell (3, 4, 0) now has a count of 2.
+    Dead cell (2, 4, 1) now has a count of 5.
+    Dead cell (3, 3, 1) now has a count of 4.
+Element (3, 4, 1) has 3 neighbors.
+Counting neighbors for (3, 4, 2)
+Element (3, 4, 2) has 6 neighbors.
+Counting neighbors for (3, 4, 3)
+    Dead cell (3, 4, 4) now has a count of 4.
+    Dead cell (3, 3, 3) now has a count of 3.
+Element (3, 4, 3) has 4 neighbors.
+Counting neighbors for (4, 0, 0)
+    Dead cell (3, 0, 0) now has a count of 4.
+    Dead cell (4, 1, 0) now has a count of 2.
+    Dead cell (4, 4, 0) now has a count of 2.
+Element (4, 0, 0) has 3 neighbors.
+Counting neighbors for (4, 0, 1)
+    Dead cell (0, 0, 1) now has a count of 3.
+Element (4, 0, 1) has 4 neighbors.
+Counting neighbors for (4, 0, 4)
+    Dead cell (4, 4, 4) now has a count of 2.
+Element (4, 0, 4) has 4 neighbors.
+Counting neighbors for (4, 1, 3)
+    Dead cell (4, 1, 2) now has a count of 1.
+    Dead cell (4, 2, 3) now has a count of 3.
+    Dead cell (4, 0, 3) now has a count of 3.
+Element (4, 1, 3) has 2 neighbors.
+Counting neighbors for (4, 1, 1)
+    Dead cell (4, 2, 1) now has a count of 3.
+Element (4, 1, 1) has 4 neighbors.
+Counting neighbors for (4, 1, 2)
+    Dead cell (0, 1, 2) now has a count of 3.
+    Dead cell (3, 1, 2) now has a count of 4.
+    Dead cell (4, 0, 2) now has a count of 3.
+Element (4, 1, 2) has 2 neighbors.
+Counting neighbors for (4, 1, 4)
+    Dead cell (4, 1, 0) now has a count of 3.
+    Dead cell (0, 1, 4) now has a count of 4.
+Element (4, 1, 4) has 3 neighbors.
+Counting neighbors for (4, 2, 2)
+    Dead cell (4, 2, 1) now has a count of 4.
+    Dead cell (0, 2, 2) now has a count of 5.
+    Dead cell (4, 3, 2) now has a count of 3.
+Element (4, 2, 2) has 2 neighbors.
+Counting neighbors for (4, 2, 0)
+    Dead cell (4, 1, 0) now has a count of 4.
+Element (4, 2, 0) has 3 neighbors.
+Counting neighbors for (4, 2, 4)
+    Dead cell (0, 2, 4) now has a count of 2.
+    Dead cell (3, 2, 4) now has a count of 6.
+Element (4, 2, 4) has 3 neighbors.
+Counting neighbors for (4, 3, 0)
+    Dead cell (0, 3, 0) now has a count of 5.
+    Dead cell (4, 4, 0) now has a count of 3.
+Element (4, 3, 0) has 4 neighbors.
+Counting neighbors for (4, 3, 1)
+    Dead cell (0, 3, 1) now has a count of 4.
+    Dead cell (3, 3, 1) now has a count of 5.
+    Dead cell (4, 2, 1) now has a count of 5.
+Element (4, 3, 1) has 2 neighbors.
+Counting neighbors for (4, 3, 3)
+    Dead cell (0, 3, 3) now has a count of 4.
+    Dead cell (3, 3, 3) now has a count of 4.
+    Dead cell (4, 2, 3) now has a count of 4.
+Element (4, 3, 3) has 2 neighbors.
+Counting neighbors for (4, 3, 4)
+    Dead cell (4, 4, 4) now has a count of 3.
+Element (4, 3, 4) has 5 neighbors.
+Counting neighbors for (4, 4, 1)
+    Dead cell (4, 4, 0) now has a count of 4.
+    Dead cell (0, 4, 1) now has a count of 2.
+Element (4, 4, 1) has 4 neighbors.
+Counting neighbors for (4, 4, 2)
+    Dead cell (4, 0, 2) now has a count of 4.
+    Dead cell (4, 3, 2) now has a count of 4.
+Element (4, 4, 2) has 4 neighbors.
+Counting neighbors for (4, 4, 3)
+    Dead cell (4, 4, 4) now has a count of 4.
+    Dead cell (4, 0, 3) now has a count of 4.
+Element (4, 4, 3) has 4 neighbors.
+Dead cell (3, 4, 0) has 2 neighbors.
+Dead cell (3, 0, 0) has 4 neighbors.
+Dead cell (3, 4, 4) has 4 neighbors.
+Dead cell (2, 2, 3) has 2 neighbors.
+Dead cell (3, 3, 3) has 4 neighbors.
+Dead cell (3, 1, 2) has 4 neighbors.
+Dead cell (2, 4, 0) has 3 neighbors.
+Dead cell (0, 4, 1) has 2 neighbors.
+Dead cell (2, 4, 1) has 5 neighbors.
+Dead cell (1, 4, 0) has 1 neighbors.
+Dead cell (3, 3, 1) has 5 neighbors.
+Dead cell (2, 3, 4) has 6 neighbors.
+Dead cell (2, 3, 2) has 4 neighbors.
+Dead cell (1, 2, 4) has 4 neighbors.
+Dead cell (3, 1, 0) has 1 neighbors.
+Dead cell (2, 1, 3) has 5 neighbors.
+Dead cell (2, 1, 1) has 4 neighbors.
+Dead cell (4, 4, 4) has 4 neighbors.
+Dead cell (1, 4, 2) has 4 neighbors.
+Dead cell (4, 4, 0) has 4 neighbors.
+Dead cell (4, 3, 2) has 4 neighbors.
+Dead cell (0, 3, 1) has 4 neighbors.
+Dead cell (4, 1, 2) has 1 neighbors.
+Dead cell (0, 2, 4) has 2 neighbors.
+Dead cell (1, 2, 1) has 4 neighbors.
+Dead cell (0, 3, 0) has 5 neighbors.
+Dead cell (3, 2, 4) has 6 neighbors.
+Dead cell (1, 3, 0) has 1 neighbors.
+Dead cell (4, 2, 1) has 5 neighbors.
+Dead cell (0, 3, 3) has 4 neighbors.
+Dead cell (4, 2, 3) has 4 neighbors.
+Dead cell (2, 2, 0) has 6 neighbors.
+Dead cell (1, 2, 3) has 4 neighbors.
+Dead cell (4, 1, 0) has 4 neighbors.
+Dead cell (0, 2, 2) has 5 neighbors.
+Dead cell (0, 0, 1) has 3 neighbors.
+Dead cell (4, 0, 3) has 4 neighbors.
+Dead cell (2, 0, 0) has 2 neighbors.
+Dead cell (1, 0, 3) has 4 neighbors.
+Dead cell (0, 1, 2) has 3 neighbors.
+Dead cell (0, 1, 4) has 4 neighbors.
+Dead cell (4, 0, 2) has 4 neighbors.
+Dead cell (2, 0, 4) has 5 neighbors.
+Dead cell (0, 1, 0) has 4 neighbors.
+Dead cell (1, 0, 0) has 5 neighbors.
+Inserting (3, 4, 0)
+Inserting (2, 2, 3)
+Inserting (2, 4, 0)
+Inserting (0, 4, 1)
+Inserting (0, 2, 4)
+Inserting (0, 0, 1)
+Inserting (2, 0, 0)
+Inserting (0, 1, 2)
+Removing (0, 0, 4)
+Removing (0, 2, 3)
+Removing (0, 4, 3)
+Removing (0, 4, 4)
+Removing (1, 1, 2)
+Removing (1, 4, 4)
+Removing (2, 0, 2)
+Removing (2, 2, 4)
+Removing (2, 4, 3)
+Removing (3, 0, 1)
+Removing (3, 0, 3)
+Removing (3, 1, 4)
+Removing (3, 2, 2)
+Removing (3, 4, 2)
+Removing (4, 3, 4)
+------------------------
+------------------------
+Starting generation 7
+Counting neighbors for (0, 0, 0)
+    Dead cell (0, 0, 4) now has a count of 1.
+    Dead cell (1, 0, 0) now has a count of 1.
+    Dead cell (0, 1, 0) now has a count of 1.
+Element (0, 0, 0) has 3 neighbors.
+Counting neighbors for (0, 0, 1)
+Element (0, 0, 1) has 6 neighbors.
+Counting neighbors for (0, 0, 2)
+    Dead cell (4, 0, 2) now has a count of 1.
+Element (0, 0, 2) has 5 neighbors.
+Counting neighbors for (0, 0, 3)
+    Dead cell (0, 0, 4) now has a count of 2.
+    Dead cell (1, 0, 3) now has a count of 1.
+    Dead cell (4, 0, 3) now has a count of 1.
+    Dead cell (0, 4, 3) now has a count of 1.
+Element (0, 0, 3) has 2 neighbors.
+Counting neighbors for (0, 1, 1)
+    Dead cell (0, 1, 0) now has a count of 2.
+Element (0, 1, 1) has 5 neighbors.
+Counting neighbors for (0, 1, 2)
+    Dead cell (1, 1, 2) now has a count of 1.
+    Dead cell (0, 2, 2) now has a count of 1.
+Element (0, 1, 2) has 4 neighbors.
+Counting neighbors for (0, 1, 3)
+    Dead cell (0, 1, 4) now has a count of 1.
+    Dead cell (0, 2, 3) now has a count of 1.
+Element (0, 1, 3) has 4 neighbors.
+Counting neighbors for (0, 2, 0)
+    Dead cell (0, 3, 0) now has a count of 1.
+    Dead cell (0, 1, 0) now has a count of 3.
+Element (0, 2, 0) has 4 neighbors.
+Counting neighbors for (0, 2, 1)
+    Dead cell (1, 2, 1) now has a count of 1.
+    Dead cell (4, 2, 1) now has a count of 1.
+    Dead cell (0, 3, 1) now has a count of 1.
+Element (0, 2, 1) has 2 neighbors.
+Counting neighbors for (0, 2, 4)
+    Dead cell (1, 2, 4) now has a count of 1.
+    Dead cell (0, 1, 4) now has a count of 2.
+Element (0, 2, 4) has 3 neighbors.
+Counting neighbors for (0, 3, 2)
+    Dead cell (0, 3, 1) now has a count of 2.
+    Dead cell (4, 3, 2) now has a count of 1.
+    Dead cell (0, 2, 2) now has a count of 2.
+Element (0, 3, 2) has 2 neighbors.
+Counting neighbors for (0, 3, 4)
+    Dead cell (0, 3, 0) now has a count of 2.
+    Dead cell (4, 3, 4) now has a count of 1.
+    Dead cell (0, 4, 4) now has a count of 1.
+Element (0, 3, 4) has 2 neighbors.
+Counting neighbors for (0, 4, 0)
+    Dead cell (0, 4, 4) now has a count of 2.
+    Dead cell (4, 4, 0) now has a count of 1.
+    Dead cell (0, 3, 0) now has a count of 3.
+Element (0, 4, 0) has 3 neighbors.
+Counting neighbors for (0, 4, 1)
+    Dead cell (0, 3, 1) now has a count of 3.
+Element (0, 4, 1) has 5 neighbors.
+Counting neighbors for (0, 4, 2)
+    Dead cell (0, 4, 3) now has a count of 2.
+    Dead cell (1, 4, 2) now has a count of 1.
+Element (0, 4, 2) has 4 neighbors.
+Counting neighbors for (1, 0, 1)
+    Dead cell (1, 0, 0) now has a count of 2.
+Element (1, 0, 1) has 5 neighbors.
+Counting neighbors for (1, 0, 2)
+    Dead cell (2, 0, 2) now has a count of 1.
+    Dead cell (1, 1, 2) now has a count of 2.
+    Dead cell (1, 4, 2) now has a count of 2.
+Element (1, 0, 2) has 2 neighbors.
+Counting neighbors for (1, 0, 4)
+    Dead cell (1, 0, 0) now has a count of 3.
+    Dead cell (2, 0, 4) now has a count of 1.
+    Dead cell (0, 0, 4) now has a count of 3.
+    Dead cell (1, 4, 4) now has a count of 1.
+Element (1, 0, 4) has 1 neighbors.
+Counting neighbors for (1, 1, 0)
+    Dead cell (0, 1, 0) now has a count of 4.
+    Dead cell (1, 0, 0) now has a count of 4.
+Element (1, 1, 0) has 4 neighbors.
+Counting neighbors for (1, 1, 1)
+    Dead cell (2, 1, 1) now has a count of 1.
+    Dead cell (1, 2, 1) now has a count of 2.
+Element (1, 1, 1) has 3 neighbors.
+Counting neighbors for (1, 1, 3)
+    Dead cell (2, 1, 3) now has a count of 1.
+    Dead cell (1, 2, 3) now has a count of 1.
+    Dead cell (1, 0, 3) now has a count of 2.
+Element (1, 1, 3) has 2 neighbors.
+Counting neighbors for (1, 1, 4)
+    Dead cell (0, 1, 4) now has a count of 3.
+    Dead cell (1, 2, 4) now has a count of 2.
+Element (1, 1, 4) has 4 neighbors.
+Counting neighbors for (1, 2, 0)
+    Dead cell (1, 2, 4) now has a count of 3.
+    Dead cell (2, 2, 0) now has a count of 1.
+Element (1, 2, 0) has 3 neighbors.
+Counting neighbors for (1, 2, 2)
+    Dead cell (1, 2, 3) now has a count of 2.
+    Dead cell (0, 2, 2) now has a count of 3.
+    Dead cell (1, 1, 2) now has a count of 3.
+Element (1, 2, 2) has 2 neighbors.
+Counting neighbors for (1, 3, 1)
+    Dead cell (1, 3, 0) now has a count of 1.
+    Dead cell (0, 3, 1) now has a count of 4.
+    Dead cell (1, 2, 1) now has a count of 3.
+Element (1, 3, 1) has 2 neighbors.
+Counting neighbors for (1, 3, 0)
+    Dead cell (0, 3, 0) now has a count of 4.
+Element (1, 3, 0) has 3 neighbors.
+Counting neighbors for (1, 3, 2)
+    Dead cell (2, 3, 2) now has a count of 1.
+    Dead cell (1, 4, 2) now has a count of 3.
+Element (1, 3, 2) has 3 neighbors.
+Counting neighbors for (1, 3, 3)
+    Dead cell (0, 3, 3) now has a count of 1.
+    Dead cell (1, 2, 3) now has a count of 3.
+Element (1, 3, 3) has 4 neighbors.
+Counting neighbors for (1, 3, 4)
+    Dead cell (2, 3, 4) now has a count of 1.
+    Dead cell (1, 4, 4) now has a count of 2.
+    Dead cell (1, 2, 4) now has a count of 4.
+Element (1, 3, 4) has 3 neighbors.
+Counting neighbors for (1, 4, 1)
+    Dead cell (1, 4, 0) now has a count of 1.
+    Dead cell (2, 4, 1) now has a count of 1.
+Element (1, 4, 1) has 3 neighbors.
+Counting neighbors for (1, 4, 0)
+    Dead cell (1, 0, 0) now has a count of 5.
+Element (1, 4, 0) has 3 neighbors.
+Counting neighbors for (1, 4, 3)
+    Dead cell (1, 4, 4) now has a count of 3.
+    Dead cell (2, 4, 3) now has a count of 1.
+    Dead cell (0, 4, 3) now has a count of 3.
+    Dead cell (1, 0, 3) now has a count of 3.
+Element (1, 4, 3) has 1 neighbors.
+Counting neighbors for (2, 0, 1)
+    Dead cell (2, 0, 0) now has a count of 1.
+    Dead cell (3, 0, 1) now has a count of 1.
+    Dead cell (2, 1, 1) now has a count of 2.
+    Dead cell (2, 4, 1) now has a count of 2.
+Element (2, 0, 1) has 1 neighbors.
+Counting neighbors for (2, 0, 0)
+    Dead cell (3, 0, 0) now has a count of 1.
+    Dead cell (1, 0, 0) now has a count of 6.
+Element (2, 0, 0) has 2 neighbors.
+Counting neighbors for (2, 0, 3)
+    Dead cell (2, 0, 4) now has a count of 2.
+    Dead cell (3, 0, 3) now has a count of 1.
+    Dead cell (1, 0, 3) now has a count of 4.
+    Dead cell (2, 1, 3) now has a count of 2.
+    Dead cell (2, 4, 3) now has a count of 2.
+Element (2, 0, 3) has 0 neighbors.
+Counting neighbors for (2, 1, 4)
+    Dead cell (2, 1, 3) now has a count of 3.
+    Dead cell (3, 1, 4) now has a count of 1.
+    Dead cell (2, 2, 4) now has a count of 1.
+    Dead cell (2, 0, 4) now has a count of 3.
+Element (2, 1, 4) has 1 neighbors.
+Counting neighbors for (2, 1, 0)
+    Dead cell (2, 2, 0) now has a count of 2.
+Element (2, 1, 0) has 3 neighbors.
+Counting neighbors for (2, 1, 2)
+    Dead cell (2, 1, 3) now has a count of 4.
+    Dead cell (3, 1, 2) now has a count of 1.
+    Dead cell (1, 1, 2) now has a count of 4.
+    Dead cell (2, 0, 2) now has a count of 2.
+Element (2, 1, 2) has 1 neighbors.
+Counting neighbors for (2, 2, 1)
+    Dead cell (2, 2, 0) now has a count of 3.
+    Dead cell (1, 2, 1) now has a count of 4.
+    Dead cell (2, 1, 1) now has a count of 3.
+Element (2, 2, 1) has 3 neighbors.
+Counting neighbors for (2, 2, 2)
+    Dead cell (3, 2, 2) now has a count of 1.
+    Dead cell (2, 3, 2) now has a count of 2.
+Element (2, 2, 2) has 4 neighbors.
+Counting neighbors for (2, 2, 3)
+    Dead cell (2, 2, 4) now has a count of 2.
+    Dead cell (1, 2, 3) now has a count of 4.
+    Dead cell (2, 1, 3) now has a count of 5.
+Element (2, 2, 3) has 3 neighbors.
+Counting neighbors for (2, 3, 0)
+    Dead cell (2, 3, 4) now has a count of 2.
+    Dead cell (2, 2, 0) now has a count of 4.
+Element (2, 3, 0) has 4 neighbors.
+Counting neighbors for (2, 3, 1)
+    Dead cell (3, 3, 1) now has a count of 1.
+    Dead cell (2, 4, 1) now has a count of 3.
+Element (2, 3, 1) has 3 neighbors.
+Counting neighbors for (2, 3, 3)
+    Dead cell (2, 3, 4) now has a count of 3.
+    Dead cell (3, 3, 3) now has a count of 1.
+    Dead cell (2, 4, 3) now has a count of 3.
+Element (2, 3, 3) has 2 neighbors.
+Counting neighbors for (2, 4, 2)
+    Dead cell (2, 4, 1) now has a count of 4.
+    Dead cell (3, 4, 2) now has a count of 1.
+    Dead cell (1, 4, 2) now has a count of 4.
+    Dead cell (2, 0, 2) now has a count of 3.
+    Dead cell (2, 3, 2) now has a count of 3.
+Element (2, 4, 2) has 0 neighbors.
+Counting neighbors for (2, 4, 0)
+Element (2, 4, 0) has 4 neighbors.
+Counting neighbors for (2, 4, 4)
+    Dead cell (3, 4, 4) now has a count of 1.
+    Dead cell (1, 4, 4) now has a count of 4.
+    Dead cell (2, 0, 4) now has a count of 4.
+    Dead cell (2, 3, 4) now has a count of 4.
+Element (2, 4, 4) has 1 neighbors.
+Counting neighbors for (3, 0, 2)
+    Dead cell (3, 0, 1) now has a count of 2.
+    Dead cell (4, 0, 2) now has a count of 2.
+    Dead cell (2, 0, 2) now has a count of 4.
+    Dead cell (3, 1, 2) now has a count of 2.
+    Dead cell (3, 4, 2) now has a count of 2.
+Element (3, 0, 2) has 0 neighbors.
+Counting neighbors for (3, 0, 4)
+    Dead cell (3, 0, 0) now has a count of 2.
+    Dead cell (2, 0, 4) now has a count of 5.
+    Dead cell (3, 1, 4) now has a count of 2.
+    Dead cell (3, 4, 4) now has a count of 2.
+Element (3, 0, 4) has 1 neighbors.
+Counting neighbors for (3, 1, 1)
+    Dead cell (3, 1, 0) now has a count of 1.
+    Dead cell (2, 1, 1) now has a count of 4.
+    Dead cell (3, 0, 1) now has a count of 3.
+Element (3, 1, 1) has 2 neighbors.
+Counting neighbors for (3, 1, 0)
+    Dead cell (4, 1, 0) now has a count of 1.
+    Dead cell (3, 0, 0) now has a count of 3.
+Element (3, 1, 0) has 2 neighbors.
+Counting neighbors for (3, 1, 3)
+    Dead cell (3, 1, 4) now has a count of 3.
+    Dead cell (2, 1, 3) now has a count of 6.
+    Dead cell (3, 0, 3) now has a count of 2.
+Element (3, 1, 3) has 2 neighbors.
+Counting neighbors for (3, 2, 0)
+    Dead cell (3, 2, 4) now has a count of 1.
+    Dead cell (2, 2, 0) now has a count of 5.
+Element (3, 2, 0) has 4 neighbors.
+Counting neighbors for (3, 2, 1)
+    Dead cell (4, 2, 1) now has a count of 2.
+    Dead cell (3, 3, 1) now has a count of 2.
+Element (3, 2, 1) has 3 neighbors.
+Counting neighbors for (3, 2, 3)
+    Dead cell (3, 2, 4) now has a count of 2.
+    Dead cell (4, 2, 3) now has a count of 1.
+    Dead cell (3, 3, 3) now has a count of 2.
+Element (3, 2, 3) has 2 neighbors.
+Counting neighbors for (3, 3, 2)
+    Dead cell (3, 3, 1) now has a count of 3.
+    Dead cell (4, 3, 2) now has a count of 2.
+    Dead cell (2, 3, 2) now has a count of 4.
+    Dead cell (3, 4, 2) now has a count of 3.
+    Dead cell (3, 2, 2) now has a count of 2.
+Element (3, 3, 2) has 0 neighbors.
+Counting neighbors for (3, 3, 0)
+Element (3, 3, 0) has 4 neighbors.
+Counting neighbors for (3, 3, 4)
+    Dead cell (4, 3, 4) now has a count of 2.
+    Dead cell (2, 3, 4) now has a count of 5.
+    Dead cell (3, 4, 4) now has a count of 3.
+    Dead cell (3, 2, 4) now has a count of 3.
+Element (3, 3, 4) has 1 neighbors.
+Counting neighbors for (3, 4, 1)
+    Dead cell (3, 4, 0) now has a count of 1.
+    Dead cell (2, 4, 1) now has a count of 5.
+    Dead cell (3, 0, 1) now has a count of 4.
+    Dead cell (3, 3, 1) now has a count of 4.
+Element (3, 4, 1) has 1 neighbors.
+Counting neighbors for (3, 4, 0)
+    Dead cell (4, 4, 0) now has a count of 2.
+    Dead cell (3, 0, 0) now has a count of 4.
+Element (3, 4, 0) has 2 neighbors.
+Counting neighbors for (3, 4, 3)
+    Dead cell (3, 4, 4) now has a count of 4.
+    Dead cell (2, 4, 3) now has a count of 4.
+    Dead cell (3, 0, 3) now has a count of 3.
+    Dead cell (3, 3, 3) now has a count of 3.
+Element (3, 4, 3) has 1 neighbors.
+Counting neighbors for (4, 0, 0)
+    Dead cell (3, 0, 0) now has a count of 5.
+    Dead cell (4, 1, 0) now has a count of 2.
+    Dead cell (4, 4, 0) now has a count of 3.
+Element (4, 0, 0) has 3 neighbors.
+Counting neighbors for (4, 0, 1)
+    Dead cell (3, 0, 1) now has a count of 5.
+Element (4, 0, 1) has 4 neighbors.
+Counting neighbors for (4, 0, 4)
+    Dead cell (0, 0, 4) now has a count of 4.
+    Dead cell (4, 4, 4) now has a count of 1.
+Element (4, 0, 4) has 3 neighbors.
+Counting neighbors for (4, 1, 3)
+    Dead cell (4, 1, 2) now has a count of 1.
+    Dead cell (4, 2, 3) now has a count of 2.
+    Dead cell (4, 0, 3) now has a count of 2.
+Element (4, 1, 3) has 2 neighbors.
+Counting neighbors for (4, 1, 1)
+    Dead cell (4, 2, 1) now has a count of 3.
+Element (4, 1, 1) has 4 neighbors.
+Counting neighbors for (4, 1, 2)
+    Dead cell (3, 1, 2) now has a count of 3.
+    Dead cell (4, 0, 2) now has a count of 3.
+Element (4, 1, 2) has 3 neighbors.
+Counting neighbors for (4, 1, 4)
+    Dead cell (4, 1, 0) now has a count of 3.
+    Dead cell (0, 1, 4) now has a count of 4.
+    Dead cell (3, 1, 4) now has a count of 4.
+Element (4, 1, 4) has 2 neighbors.
+Counting neighbors for (4, 2, 2)
+    Dead cell (4, 2, 1) now has a count of 4.
+    Dead cell (0, 2, 2) now has a count of 4.
+    Dead cell (3, 2, 2) now has a count of 3.
+    Dead cell (4, 3, 2) now has a count of 3.
+Element (4, 2, 2) has 1 neighbors.
+Counting neighbors for (4, 2, 0)
+    Dead cell (4, 1, 0) now has a count of 4.
+Element (4, 2, 0) has 3 neighbors.
+Counting neighbors for (4, 2, 4)
+    Dead cell (3, 2, 4) now has a count of 4.
+    Dead cell (4, 3, 4) now has a count of 3.
+Element (4, 2, 4) has 3 neighbors.
+Counting neighbors for (4, 3, 0)
+    Dead cell (4, 3, 4) now has a count of 4.
+    Dead cell (0, 3, 0) now has a count of 5.
+    Dead cell (4, 4, 0) now has a count of 4.
+Element (4, 3, 0) has 3 neighbors.
+Counting neighbors for (4, 3, 1)
+    Dead cell (0, 3, 1) now has a count of 5.
+    Dead cell (3, 3, 1) now has a count of 5.
+    Dead cell (4, 2, 1) now has a count of 5.
+Element (4, 3, 1) has 2 neighbors.
+Counting neighbors for (4, 3, 3)
+    Dead cell (4, 3, 4) now has a count of 5.
+    Dead cell (0, 3, 3) now has a count of 2.
+    Dead cell (3, 3, 3) now has a count of 4.
+    Dead cell (4, 2, 3) now has a count of 3.
+Element (4, 3, 3) has 1 neighbors.
+Counting neighbors for (4, 4, 1)
+    Dead cell (4, 4, 0) now has a count of 5.
+Element (4, 4, 1) has 5 neighbors.
+Counting neighbors for (4, 4, 2)
+    Dead cell (3, 4, 2) now has a count of 4.
+    Dead cell (4, 0, 2) now has a count of 4.
+    Dead cell (4, 3, 2) now has a count of 4.
+Element (4, 4, 2) has 3 neighbors.
+Counting neighbors for (4, 4, 3)
+    Dead cell (4, 4, 4) now has a count of 2.
+    Dead cell (0, 4, 3) now has a count of 4.
+    Dead cell (4, 0, 3) now has a count of 3.
+Element (4, 4, 3) has 3 neighbors.
+Dead cell (4, 4, 4) has 2 neighbors.
+Dead cell (4, 2, 3) has 3 neighbors.
+Dead cell (3, 4, 4) has 4 neighbors.
+Dead cell (3, 4, 2) has 4 neighbors.
+Dead cell (3, 3, 3) has 4 neighbors.
+Dead cell (3, 1, 2) has 3 neighbors.
+Dead cell (3, 0, 3) has 3 neighbors.
+Dead cell (3, 0, 0) has 5 neighbors.
+Dead cell (3, 4, 0) has 1 neighbors.
+Dead cell (2, 4, 3) has 4 neighbors.
+Dead cell (3, 3, 1) has 5 neighbors.
+Dead cell (2, 3, 4) has 5 neighbors.
+Dead cell (2, 3, 2) has 4 neighbors.
+Dead cell (2, 2, 0) has 5 neighbors.
+Dead cell (1, 2, 3) has 4 neighbors.
+Dead cell (3, 1, 0) has 1 neighbors.
+Dead cell (2, 1, 3) has 6 neighbors.
+Dead cell (2, 1, 1) has 4 neighbors.
+Dead cell (2, 4, 1) has 5 neighbors.
+Dead cell (1, 4, 4) has 4 neighbors.
+Dead cell (2, 0, 2) has 4 neighbors.
+Dead cell (1, 4, 2) has 4 neighbors.
+Dead cell (4, 4, 0) has 5 neighbors.
+Dead cell (4, 3, 4) has 5 neighbors.
+Dead cell (0, 4, 4) has 2 neighbors.
+Dead cell (4, 3, 2) has 4 neighbors.
+Dead cell (1, 2, 4) has 4 neighbors.
+Dead cell (3, 2, 2) has 3 neighbors.
+Dead cell (0, 3, 1) has 5 neighbors.
+Dead cell (3, 2, 4) has 4 neighbors.
+Dead cell (0, 3, 3) has 2 neighbors.
+Dead cell (1, 3, 0) has 1 neighbors.
+Dead cell (4, 2, 1) has 5 neighbors.
+Dead cell (4, 1, 2) has 1 neighbors.
+Dead cell (1, 2, 1) has 4 neighbors.
+Dead cell (2, 2, 4) has 2 neighbors.
+Dead cell (0, 3, 0) has 5 neighbors.
+Dead cell (3, 1, 4) has 4 neighbors.
+Dead cell (0, 2, 3) has 1 neighbors.
+Dead cell (4, 1, 0) has 4 neighbors.
+Dead cell (0, 2, 2) has 4 neighbors.
+Dead cell (1, 4, 0) has 1 neighbors.
+Dead cell (0, 4, 3) has 4 neighbors.
+Dead cell (1, 1, 2) has 4 neighbors.
+Dead cell (4, 0, 3) has 3 neighbors.
+Dead cell (2, 0, 0) has 1 neighbors.
+Dead cell (1, 0, 3) has 4 neighbors.
+Dead cell (0, 1, 4) has 4 neighbors.
+Dead cell (4, 0, 2) has 4 neighbors.
+Dead cell (3, 0, 1) has 5 neighbors.
+Dead cell (2, 0, 4) has 5 neighbors.
+Dead cell (0, 1, 0) has 4 neighbors.
+Dead cell (1, 0, 0) has 6 neighbors.
+Dead cell (0, 0, 4) has 4 neighbors.
+Inserting (4, 4, 4)
+Inserting (4, 2, 3)
+Inserting (3, 1, 2)
+Inserting (3, 0, 3)
+Inserting (0, 4, 4)
+Inserting (3, 2, 2)
+Inserting (0, 3, 3)
+Inserting (2, 2, 4)
+Inserting (4, 0, 3)
+Removing (0, 0, 1)
+Removing (0, 0, 2)
+Removing (0, 1, 1)
+Removing (0, 4, 1)
+Removing (1, 0, 1)
+Removing (1, 0, 4)
+Removing (1, 4, 3)
+Removing (2, 0, 1)
+Removing (2, 0, 3)
+Removing (2, 1, 2)
+Removing (2, 1, 4)
+Removing (2, 4, 2)
+Removing (2, 4, 4)
+Removing (3, 0, 2)
+Removing (3, 0, 4)
+Removing (3, 3, 2)
+Removing (3, 3, 4)
+Removing (3, 4, 1)
+Removing (3, 4, 3)
+Removing (4, 2, 2)
+Removing (4, 3, 3)
+Removing (4, 4, 1)
+------------------------
+------------------------
+Starting generation 8
+Counting neighbors for (0, 0, 0)
+    Dead cell (0, 0, 4) now has a count of 1.
+    Dead cell (1, 0, 0) now has a count of 1.
+    Dead cell (0, 1, 0) now has a count of 1.
+Element (0, 0, 0) has 2 neighbors.
+Counting neighbors for (0, 0, 3)
+    Dead cell (0, 0, 4) now has a count of 2.
+    Dead cell (1, 0, 3) now has a count of 1.
+    Dead cell (0, 4, 3) now has a count of 1.
+Element (0, 0, 3) has 2 neighbors.
+Counting neighbors for (0, 1, 2)
+    Dead cell (0, 1, 1) now has a count of 1.
+    Dead cell (1, 1, 2) now has a count of 1.
+    Dead cell (0, 2, 2) now has a count of 1.
+    Dead cell (0, 0, 2) now has a count of 1.
+Element (0, 1, 2) has 2 neighbors.
+Counting neighbors for (0, 1, 3)
+    Dead cell (0, 1, 4) now has a count of 1.
+    Dead cell (0, 2, 3) now has a count of 1.
+Element (0, 1, 3) has 4 neighbors.
+Counting neighbors for (0, 2, 0)
+    Dead cell (0, 3, 0) now has a count of 1.
+    Dead cell (0, 1, 0) now has a count of 2.
+Element (0, 2, 0) has 4 neighbors.
+Counting neighbors for (0, 2, 1)
+    Dead cell (1, 2, 1) now has a count of 1.
+    Dead cell (4, 2, 1) now has a count of 1.
+    Dead cell (0, 3, 1) now has a count of 1.
+    Dead cell (0, 1, 1) now has a count of 2.
+Element (0, 2, 1) has 1 neighbors.
+Counting neighbors for (0, 2, 4)
+    Dead cell (1, 2, 4) now has a count of 1.
+    Dead cell (0, 1, 4) now has a count of 2.
+Element (0, 2, 4) has 3 neighbors.
+Counting neighbors for (0, 3, 2)
+    Dead cell (0, 3, 1) now has a count of 2.
+    Dead cell (4, 3, 2) now has a count of 1.
+    Dead cell (0, 2, 2) now has a count of 2.
+Element (0, 3, 2) has 3 neighbors.
+Counting neighbors for (0, 3, 3)
+    Dead cell (4, 3, 3) now has a count of 1.
+    Dead cell (0, 4, 3) now has a count of 2.
+    Dead cell (0, 2, 3) now has a count of 2.
+Element (0, 3, 3) has 3 neighbors.
+Counting neighbors for (0, 3, 4)
+    Dead cell (0, 3, 0) now has a count of 2.
+    Dead cell (4, 3, 4) now has a count of 1.
+Element (0, 3, 4) has 4 neighbors.
+Counting neighbors for (0, 4, 0)
+    Dead cell (4, 4, 0) now has a count of 1.
+    Dead cell (0, 3, 0) now has a count of 3.
+Element (0, 4, 0) has 3 neighbors.
+Counting neighbors for (0, 4, 2)
+    Dead cell (1, 4, 2) now has a count of 1.
+    Dead cell (0, 0, 2) now has a count of 2.
+Element (0, 4, 2) has 2 neighbors.
+Counting neighbors for (0, 4, 4)
+    Dead cell (1, 4, 4) now has a count of 1.
+    Dead cell (0, 0, 4) now has a count of 3.
+Element (0, 4, 4) has 3 neighbors.
+Counting neighbors for (1, 0, 2)
+    Dead cell (1, 0, 3) now has a count of 2.
+    Dead cell (1, 0, 1) now has a count of 1.
+    Dead cell (2, 0, 2) now has a count of 1.
+    Dead cell (0, 0, 2) now has a count of 3.
+    Dead cell (1, 1, 2) now has a count of 2.
+    Dead cell (1, 4, 2) now has a count of 2.
+Element (1, 0, 2) has 0 neighbors.
+Counting neighbors for (1, 1, 0)
+    Dead cell (0, 1, 0) now has a count of 3.
+    Dead cell (1, 0, 0) now has a count of 2.
+Element (1, 1, 0) has 4 neighbors.
+Counting neighbors for (1, 1, 1)
+    Dead cell (2, 1, 1) now has a count of 1.
+    Dead cell (0, 1, 1) now has a count of 3.
+    Dead cell (1, 2, 1) now has a count of 2.
+    Dead cell (1, 0, 1) now has a count of 2.
+Element (1, 1, 1) has 1 neighbors.
+Counting neighbors for (1, 1, 3)
+    Dead cell (2, 1, 3) now has a count of 1.
+    Dead cell (1, 2, 3) now has a count of 1.
+    Dead cell (1, 0, 3) now has a count of 3.
+Element (1, 1, 3) has 2 neighbors.
+Counting neighbors for (1, 1, 4)
+    Dead cell (2, 1, 4) now has a count of 1.
+    Dead cell (0, 1, 4) now has a count of 3.
+    Dead cell (1, 2, 4) now has a count of 2.
+    Dead cell (1, 0, 4) now has a count of 1.
+Element (1, 1, 4) has 2 neighbors.
+Counting neighbors for (1, 2, 0)
+    Dead cell (1, 2, 4) now has a count of 3.
+    Dead cell (2, 2, 0) now has a count of 1.
+Element (1, 2, 0) has 3 neighbors.
+Counting neighbors for (1, 2, 2)
+    Dead cell (1, 2, 3) now has a count of 2.
+    Dead cell (0, 2, 2) now has a count of 3.
+    Dead cell (1, 1, 2) now has a count of 3.
+Element (1, 2, 2) has 2 neighbors.
+Counting neighbors for (1, 3, 1)
+    Dead cell (1, 3, 0) now has a count of 1.
+    Dead cell (0, 3, 1) now has a count of 3.
+    Dead cell (1, 2, 1) now has a count of 3.
+Element (1, 3, 1) has 2 neighbors.
+Counting neighbors for (1, 3, 0)
+    Dead cell (0, 3, 0) now has a count of 4.
+Element (1, 3, 0) has 3 neighbors.
+Counting neighbors for (1, 3, 2)
+    Dead cell (2, 3, 2) now has a count of 1.
+    Dead cell (1, 4, 2) now has a count of 3.
+Element (1, 3, 2) has 3 neighbors.
+Counting neighbors for (1, 3, 3)
+    Dead cell (1, 4, 3) now has a count of 1.
+    Dead cell (1, 2, 3) now has a count of 3.
+Element (1, 3, 3) has 4 neighbors.
+Counting neighbors for (1, 3, 4)
+    Dead cell (2, 3, 4) now has a count of 1.
+    Dead cell (1, 4, 4) now has a count of 2.
+    Dead cell (1, 2, 4) now has a count of 4.
+Element (1, 3, 4) has 3 neighbors.
+Counting neighbors for (1, 4, 1)
+    Dead cell (1, 4, 0) now has a count of 1.
+    Dead cell (2, 4, 1) now has a count of 1.
+    Dead cell (0, 4, 1) now has a count of 1.
+    Dead cell (1, 0, 1) now has a count of 3.
+Element (1, 4, 1) has 1 neighbors.
+Counting neighbors for (1, 4, 0)
+    Dead cell (1, 4, 1) now has a count of 1.
+    Dead cell (1, 0, 0) now has a count of 3.
+Element (1, 4, 0) has 3 neighbors.
+Counting neighbors for (2, 0, 0)
+    Dead cell (2, 0, 1) now has a count of 1.
+    Dead cell (2, 0, 4) now has a count of 1.
+    Dead cell (3, 0, 0) now has a count of 1.
+    Dead cell (1, 0, 0) now has a count of 4.
+Element (2, 0, 0) has 2 neighbors.
+Counting neighbors for (2, 1, 0)
+    Dead cell (2, 1, 1) now has a count of 2.
+    Dead cell (2, 1, 4) now has a count of 2.
+    Dead cell (2, 2, 0) now has a count of 2.
+Element (2, 1, 0) has 3 neighbors.
+Counting neighbors for (2, 2, 1)
+    Dead cell (2, 2, 0) now has a count of 3.
+    Dead cell (1, 2, 1) now has a count of 4.
+    Dead cell (2, 1, 1) now has a count of 3.
+Element (2, 2, 1) has 3 neighbors.
+Counting neighbors for (2, 2, 2)
+    Dead cell (2, 3, 2) now has a count of 2.
+    Dead cell (2, 1, 2) now has a count of 1.
+Element (2, 2, 2) has 4 neighbors.
+Counting neighbors for (2, 2, 3)
+    Dead cell (1, 2, 3) now has a count of 4.
+    Dead cell (2, 1, 3) now has a count of 2.
+Element (2, 2, 3) has 4 neighbors.
+Counting neighbors for (2, 2, 4)
+    Dead cell (2, 2, 0) now has a count of 4.
+    Dead cell (3, 2, 4) now has a count of 1.
+    Dead cell (1, 2, 4) now has a count of 5.
+    Dead cell (2, 3, 4) now has a count of 2.
+    Dead cell (2, 1, 4) now has a count of 3.
+Element (2, 2, 4) has 1 neighbors.
+Counting neighbors for (2, 3, 0)
+    Dead cell (2, 3, 4) now has a count of 3.
+    Dead cell (2, 2, 0) now has a count of 5.
+Element (2, 3, 0) has 4 neighbors.
+Counting neighbors for (2, 3, 1)
+    Dead cell (3, 3, 1) now has a count of 1.
+    Dead cell (2, 4, 1) now has a count of 2.
+Element (2, 3, 1) has 3 neighbors.
+Counting neighbors for (2, 3, 3)
+    Dead cell (2, 3, 4) now has a count of 4.
+    Dead cell (3, 3, 3) now has a count of 1.
+    Dead cell (2, 4, 3) now has a count of 1.
+Element (2, 3, 3) has 2 neighbors.
+Counting neighbors for (2, 4, 0)
+    Dead cell (2, 4, 1) now has a count of 3.
+    Dead cell (2, 4, 4) now has a count of 1.
+Element (2, 4, 0) has 4 neighbors.
+Counting neighbors for (3, 0, 3)
+    Dead cell (3, 0, 4) now has a count of 1.
+    Dead cell (3, 0, 2) now has a count of 1.
+    Dead cell (2, 0, 3) now has a count of 1.
+    Dead cell (3, 4, 3) now has a count of 1.
+Element (3, 0, 3) has 2 neighbors.
+Counting neighbors for (3, 1, 1)
+    Dead cell (3, 1, 0) now has a count of 1.
+    Dead cell (2, 1, 1) now has a count of 4.
+    Dead cell (3, 0, 1) now has a count of 1.
+Element (3, 1, 1) has 2 neighbors.
+Counting neighbors for (3, 1, 0)
+    Dead cell (4, 1, 0) now has a count of 1.
+    Dead cell (3, 0, 0) now has a count of 2.
+Element (3, 1, 0) has 2 neighbors.
+Counting neighbors for (3, 1, 2)
+    Dead cell (2, 1, 2) now has a count of 2.
+    Dead cell (3, 0, 2) now has a count of 2.
+Element (3, 1, 2) has 3 neighbors.
+Counting neighbors for (3, 1, 3)
+    Dead cell (3, 1, 4) now has a count of 1.
+    Dead cell (2, 1, 3) now has a count of 3.
+Element (3, 1, 3) has 4 neighbors.
+Counting neighbors for (3, 2, 0)
+    Dead cell (3, 2, 4) now has a count of 2.
+    Dead cell (2, 2, 0) now has a count of 6.
+Element (3, 2, 0) has 4 neighbors.
+Counting neighbors for (3, 2, 1)
+    Dead cell (4, 2, 1) now has a count of 2.
+    Dead cell (3, 3, 1) now has a count of 2.
+Element (3, 2, 1) has 4 neighbors.
+Counting neighbors for (3, 2, 2)
+    Dead cell (4, 2, 2) now has a count of 1.
+    Dead cell (3, 3, 2) now has a count of 1.
+Element (3, 2, 2) has 4 neighbors.
+Counting neighbors for (3, 2, 3)
+    Dead cell (3, 2, 4) now has a count of 3.
+    Dead cell (3, 3, 3) now has a count of 2.
+Element (3, 2, 3) has 4 neighbors.
+Counting neighbors for (3, 3, 0)
+    Dead cell (3, 3, 1) now has a count of 3.
+    Dead cell (3, 3, 4) now has a count of 1.
+Element (3, 3, 0) has 4 neighbors.
+Counting neighbors for (3, 4, 0)
+    Dead cell (3, 4, 1) now has a count of 1.
+    Dead cell (3, 4, 4) now has a count of 1.
+    Dead cell (4, 4, 0) now has a count of 2.
+    Dead cell (3, 0, 0) now has a count of 3.
+Element (3, 4, 0) has 2 neighbors.
+Counting neighbors for (4, 0, 0)
+    Dead cell (3, 0, 0) now has a count of 4.
+    Dead cell (4, 1, 0) now has a count of 2.
+    Dead cell (4, 4, 0) now has a count of 3.
+Element (4, 0, 0) has 3 neighbors.
+Counting neighbors for (4, 0, 1)
+    Dead cell (0, 0, 1) now has a count of 1.
+    Dead cell (3, 0, 1) now has a count of 2.
+    Dead cell (4, 4, 1) now has a count of 1.
+Element (4, 0, 1) has 2 neighbors.
+Counting neighbors for (4, 0, 3)
+Element (4, 0, 3) has 5 neighbors.
+Counting neighbors for (4, 0, 4)
+    Dead cell (0, 0, 4) now has a count of 4.
+    Dead cell (3, 0, 4) now has a count of 2.
+Element (4, 0, 4) has 4 neighbors.
+Counting neighbors for (4, 1, 3)
+    Dead cell (4, 1, 2) now has a count of 1.
+Element (4, 1, 3) has 4 neighbors.
+Counting neighbors for (4, 1, 1)
+    Dead cell (0, 1, 1) now has a count of 4.
+    Dead cell (4, 2, 1) now has a count of 3.
+Element (4, 1, 1) has 3 neighbors.
+Counting neighbors for (4, 1, 2)
+    Dead cell (4, 2, 2) now has a count of 2.
+    Dead cell (4, 0, 2) now has a count of 1.
+Element (4, 1, 2) has 3 neighbors.
+Counting neighbors for (4, 1, 4)
+    Dead cell (4, 1, 0) now has a count of 3.
+    Dead cell (0, 1, 4) now has a count of 4.
+    Dead cell (3, 1, 4) now has a count of 2.
+Element (4, 1, 4) has 2 neighbors.
+Counting neighbors for (4, 2, 0)
+    Dead cell (4, 1, 0) now has a count of 4.
+Element (4, 2, 0) has 4 neighbors.
+Counting neighbors for (4, 2, 3)
+    Dead cell (0, 2, 3) now has a count of 3.
+    Dead cell (4, 3, 3) now has a count of 2.
+Element (4, 2, 3) has 3 neighbors.
+Counting neighbors for (4, 2, 4)
+    Dead cell (3, 2, 4) now has a count of 4.
+    Dead cell (4, 3, 4) now has a count of 2.
+Element (4, 2, 4) has 4 neighbors.
+Counting neighbors for (4, 3, 0)
+    Dead cell (4, 3, 4) now has a count of 3.
+    Dead cell (0, 3, 0) now has a count of 5.
+    Dead cell (4, 4, 0) now has a count of 4.
+Element (4, 3, 0) has 3 neighbors.
+Counting neighbors for (4, 3, 1)
+    Dead cell (4, 3, 2) now has a count of 2.
+    Dead cell (0, 3, 1) now has a count of 4.
+    Dead cell (3, 3, 1) now has a count of 4.
+    Dead cell (4, 4, 1) now has a count of 2.
+    Dead cell (4, 2, 1) now has a count of 4.
+Element (4, 3, 1) has 1 neighbors.
+Counting neighbors for (4, 4, 2)
+    Dead cell (4, 4, 1) now has a count of 3.
+    Dead cell (3, 4, 2) now has a count of 1.
+    Dead cell (4, 0, 2) now has a count of 2.
+    Dead cell (4, 3, 2) now has a count of 3.
+Element (4, 4, 2) has 2 neighbors.
+Counting neighbors for (4, 4, 3)
+    Dead cell (0, 4, 3) now has a count of 3.
+    Dead cell (3, 4, 3) now has a count of 2.
+    Dead cell (4, 3, 3) now has a count of 3.
+Element (4, 4, 3) has 3 neighbors.
+Counting neighbors for (4, 4, 4)
+    Dead cell (4, 4, 0) now has a count of 5.
+    Dead cell (3, 4, 4) now has a count of 2.
+    Dead cell (4, 3, 4) now has a count of 4.
+Element (4, 4, 4) has 3 neighbors.
+Dead cell (3, 4, 2) has 1 neighbors.
+Dead cell (0, 0, 1) has 1 neighbors.
+Dead cell (4, 4, 1) has 3 neighbors.
+Dead cell (3, 4, 4) has 2 neighbors.
+Dead cell (4, 2, 2) has 2 neighbors.
+Dead cell (3, 0, 4) has 2 neighbors.
+Dead cell (3, 4, 1) has 1 neighbors.
+Dead cell (2, 4, 4) has 1 neighbors.
+Dead cell (2, 4, 3) has 1 neighbors.
+Dead cell (3, 3, 3) has 2 neighbors.
+Dead cell (2, 1, 2) has 2 neighbors.
+Dead cell (2, 0, 3) has 1 neighbors.
+Dead cell (3, 0, 0) has 4 neighbors.
+Dead cell (3, 3, 2) has 1 neighbors.
+Dead cell (0, 4, 1) has 1 neighbors.
+Dead cell (3, 3, 1) has 4 neighbors.
+Dead cell (2, 3, 4) has 4 neighbors.
+Dead cell (2, 3, 2) has 2 neighbors.
+Dead cell (2, 0, 1) has 1 neighbors.
+Dead cell (1, 0, 4) has 1 neighbors.
+Dead cell (2, 1, 4) has 3 neighbors.
+Dead cell (2, 2, 0) has 6 neighbors.
+Dead cell (1, 2, 3) has 4 neighbors.
+Dead cell (3, 1, 0) has 1 neighbors.
+Dead cell (2, 1, 3) has 3 neighbors.
+Dead cell (2, 1, 1) has 4 neighbors.
+Dead cell (2, 0, 2) has 1 neighbors.
+Dead cell (2, 4, 1) has 3 neighbors.
+Dead cell (1, 4, 4) has 2 neighbors.
+Dead cell (3, 4, 3) has 2 neighbors.
+Dead cell (4, 4, 0) has 5 neighbors.
+Dead cell (1, 4, 3) has 1 neighbors.
+Dead cell (4, 3, 4) has 4 neighbors.
+Dead cell (1, 4, 2) has 3 neighbors.
+Dead cell (4, 3, 3) has 3 neighbors.
+Dead cell (1, 4, 1) has 1 neighbors.
+Dead cell (4, 3, 2) has 3 neighbors.
+Dead cell (1, 2, 4) has 5 neighbors.
+Dead cell (0, 3, 1) has 4 neighbors.
+Dead cell (3, 2, 4) has 4 neighbors.
+Dead cell (1, 3, 0) has 1 neighbors.
+Dead cell (4, 2, 1) has 4 neighbors.
+Dead cell (4, 1, 2) has 1 neighbors.
+Dead cell (1, 2, 1) has 4 neighbors.
+Dead cell (0, 3, 0) has 5 neighbors.
+Dead cell (3, 1, 4) has 2 neighbors.
+Dead cell (0, 2, 3) has 3 neighbors.
+Dead cell (4, 0, 2) has 2 neighbors.
+Dead cell (0, 1, 4) has 4 neighbors.
+Dead cell (0, 0, 2) has 3 neighbors.
+Dead cell (4, 1, 0) has 4 neighbors.
+Dead cell (0, 2, 2) has 3 neighbors.
+Dead cell (1, 1, 2) has 3 neighbors.
+Dead cell (3, 0, 2) has 2 neighbors.
+Dead cell (0, 1, 1) has 4 neighbors.
+Dead cell (3, 3, 4) has 1 neighbors.
+Dead cell (1, 4, 0) has 1 neighbors.
+Dead cell (0, 4, 3) has 3 neighbors.
+Dead cell (1, 0, 3) has 3 neighbors.
+Dead cell (3, 0, 1) has 2 neighbors.
+Dead cell (2, 0, 4) has 1 neighbors.
+Dead cell (0, 1, 0) has 3 neighbors.
+Dead cell (1, 0, 0) has 4 neighbors.
+Dead cell (1, 0, 1) has 3 neighbors.
+Dead cell (0, 0, 4) has 4 neighbors.
+Inserting (4, 4, 1)
+Inserting (3, 4, 4)
+Inserting (4, 2, 2)
+Inserting (3, 0, 4)
+Inserting (3, 3, 3)
+Inserting (2, 1, 2)
+Inserting (2, 3, 2)
+Inserting (2, 1, 4)
+Inserting (2, 1, 3)
+Inserting (2, 4, 1)
+Inserting (1, 4, 4)
+Inserting (3, 4, 3)
+Inserting (1, 4, 2)
+Inserting (4, 3, 3)
+Inserting (4, 3, 2)
+Inserting (3, 1, 4)
+Inserting (0, 2, 3)
+Inserting (4, 0, 2)
+Inserting (0, 0, 2)
+Inserting (0, 2, 2)
+Inserting (1, 1, 2)
+Inserting (3, 0, 2)
+Inserting (0, 4, 3)
+Inserting (1, 0, 3)
+Inserting (3, 0, 1)
+Inserting (0, 1, 0)
+Inserting (1, 0, 1)
+Removing (0, 2, 1)
+Removing (1, 0, 2)
+Removing (1, 1, 1)
+Removing (1, 4, 1)
+Removing (2, 2, 4)
+Removing (4, 0, 3)
+Removing (4, 3, 1)
+------------------------
+------------------------
+Starting generation 9
+Counting neighbors for (0, 0, 0)
+    Dead cell (0, 0, 4) now has a count of 1.
+    Dead cell (1, 0, 0) now has a count of 1.
+Element (0, 0, 0) has 3 neighbors.
+Counting neighbors for (0, 0, 2)
+    Dead cell (1, 0, 2) now has a count of 1.
+Element (0, 0, 2) has 4 neighbors.
+Counting neighbors for (0, 0, 3)
+    Dead cell (0, 0, 4) now has a count of 2.
+    Dead cell (4, 0, 3) now has a count of 1.
+Element (0, 0, 3) has 4 neighbors.
+Counting neighbors for (0, 1, 2)
+    Dead cell (0, 1, 1) now has a count of 1.
+Element (0, 1, 2) has 4 neighbors.
+Counting neighbors for (0, 1, 0)
+    Dead cell (4, 1, 0) now has a count of 1.
+Element (0, 1, 0) has 3 neighbors.
+Counting neighbors for (0, 1, 3)
+    Dead cell (0, 1, 4) now has a count of 1.
+Element (0, 1, 3) has 4 neighbors.
+Counting neighbors for (0, 2, 0)
+    Dead cell (0, 3, 0) now has a count of 1.
+Element (0, 2, 0) has 4 neighbors.
+Counting neighbors for (0, 2, 2)
+Element (0, 2, 2) has 5 neighbors.
+Counting neighbors for (0, 2, 3)
+    Dead cell (1, 2, 3) now has a count of 1.
+Element (0, 2, 3) has 5 neighbors.
+Counting neighbors for (0, 2, 4)
+    Dead cell (1, 2, 4) now has a count of 1.
+    Dead cell (0, 1, 4) now has a count of 2.
+Element (0, 2, 4) has 4 neighbors.
+Counting neighbors for (0, 3, 2)
+    Dead cell (0, 3, 1) now has a count of 1.
+Element (0, 3, 2) has 5 neighbors.
+Counting neighbors for (0, 3, 3)
+Element (0, 3, 3) has 6 neighbors.
+Counting neighbors for (0, 3, 4)
+    Dead cell (0, 3, 0) now has a count of 2.
+    Dead cell (4, 3, 4) now has a count of 1.
+Element (0, 3, 4) has 4 neighbors.
+Counting neighbors for (0, 4, 0)
+    Dead cell (4, 4, 0) now has a count of 1.
+    Dead cell (0, 3, 0) now has a count of 3.
+Element (0, 4, 0) has 3 neighbors.
+Counting neighbors for (0, 4, 2)
+Element (0, 4, 2) has 5 neighbors.
+Counting neighbors for (0, 4, 3)
+    Dead cell (1, 4, 3) now has a count of 1.
+Element (0, 4, 3) has 5 neighbors.
+Counting neighbors for (0, 4, 4)
+    Dead cell (0, 0, 4) now has a count of 3.
+Element (0, 4, 4) has 5 neighbors.
+Counting neighbors for (1, 0, 1)
+    Dead cell (1, 0, 0) now has a count of 2.
+    Dead cell (2, 0, 1) now has a count of 1.
+    Dead cell (0, 0, 1) now has a count of 1.
+    Dead cell (1, 1, 1) now has a count of 1.
+    Dead cell (1, 4, 1) now has a count of 1.
+Element (1, 0, 1) has 0 neighbors.
+Counting neighbors for (1, 0, 3)
+    Dead cell (1, 0, 4) now has a count of 1.
+    Dead cell (2, 0, 3) now has a count of 1.
+    Dead cell (1, 4, 3) now has a count of 2.
+Element (1, 0, 3) has 2 neighbors.
+Counting neighbors for (1, 1, 0)
+    Dead cell (1, 0, 0) now has a count of 3.
+Element (1, 1, 0) has 4 neighbors.
+Counting neighbors for (1, 1, 2)
+    Dead cell (1, 0, 2) now has a count of 2.
+Element (1, 1, 2) has 4 neighbors.
+Counting neighbors for (1, 1, 3)
+    Dead cell (1, 2, 3) now has a count of 2.
+Element (1, 1, 3) has 5 neighbors.
+Counting neighbors for (1, 1, 4)
+    Dead cell (0, 1, 4) now has a count of 3.
+    Dead cell (1, 2, 4) now has a count of 2.
+    Dead cell (1, 0, 4) now has a count of 2.
+Element (1, 1, 4) has 3 neighbors.
+Counting neighbors for (1, 2, 0)
+    Dead cell (1, 2, 4) now has a count of 3.
+    Dead cell (2, 2, 0) now has a count of 1.
+Element (1, 2, 0) has 3 neighbors.
+Counting neighbors for (1, 2, 2)
+    Dead cell (1, 2, 3) now has a count of 3.
+Element (1, 2, 2) has 4 neighbors.
+Counting neighbors for (1, 3, 1)
+    Dead cell (1, 3, 0) now has a count of 1.
+    Dead cell (0, 3, 1) now has a count of 2.
+    Dead cell (1, 4, 1) now has a count of 2.
+    Dead cell (1, 2, 1) now has a count of 1.
+Element (1, 3, 1) has 1 neighbors.
+Counting neighbors for (1, 3, 0)
+    Dead cell (0, 3, 0) now has a count of 4.
+Element (1, 3, 0) has 3 neighbors.
+Counting neighbors for (1, 3, 2)
+Element (1, 3, 2) has 5 neighbors.
+Counting neighbors for (1, 3, 3)
+    Dead cell (1, 4, 3) now has a count of 3.
+    Dead cell (1, 2, 3) now has a count of 4.
+Element (1, 3, 3) has 4 neighbors.
+Counting neighbors for (1, 3, 4)
+    Dead cell (2, 3, 4) now has a count of 1.
+    Dead cell (1, 2, 4) now has a count of 4.
+Element (1, 3, 4) has 4 neighbors.
+Counting neighbors for (1, 4, 0)
+    Dead cell (1, 0, 0) now has a count of 4.
+Element (1, 4, 0) has 4 neighbors.
+Counting neighbors for (1, 4, 2)
+    Dead cell (2, 4, 2) now has a count of 1.
+    Dead cell (1, 0, 2) now has a count of 3.
+Element (1, 4, 2) has 2 neighbors.
+Counting neighbors for (1, 4, 4)
+    Dead cell (2, 4, 4) now has a count of 1.
+    Dead cell (1, 0, 4) now has a count of 3.
+Element (1, 4, 4) has 3 neighbors.
+Counting neighbors for (2, 0, 0)
+    Dead cell (2, 0, 1) now has a count of 2.
+    Dead cell (2, 0, 4) now has a count of 1.
+    Dead cell (3, 0, 0) now has a count of 1.
+    Dead cell (1, 0, 0) now has a count of 5.
+Element (2, 0, 0) has 2 neighbors.
+Counting neighbors for (2, 1, 0)
+    Dead cell (2, 2, 0) now has a count of 2.
+Element (2, 1, 0) has 4 neighbors.
+Counting neighbors for (2, 1, 2)
+    Dead cell (2, 0, 2) now has a count of 1.
+Element (2, 1, 2) has 4 neighbors.
+Counting neighbors for (2, 1, 3)
+    Dead cell (2, 0, 3) now has a count of 2.
+Element (2, 1, 3) has 5 neighbors.
+Counting neighbors for (2, 1, 4)
+    Dead cell (2, 2, 4) now has a count of 1.
+    Dead cell (2, 0, 4) now has a count of 2.
+Element (2, 1, 4) has 4 neighbors.
+Counting neighbors for (2, 2, 1)
+    Dead cell (2, 2, 0) now has a count of 3.
+    Dead cell (1, 2, 1) now has a count of 2.
+    Dead cell (2, 1, 1) now has a count of 1.
+Element (2, 2, 1) has 3 neighbors.
+Counting neighbors for (2, 2, 2)
+Element (2, 2, 2) has 6 neighbors.
+Counting neighbors for (2, 2, 3)
+    Dead cell (2, 2, 4) now has a count of 2.
+    Dead cell (1, 2, 3) now has a count of 5.
+Element (2, 2, 3) has 4 neighbors.
+Counting neighbors for (2, 3, 0)
+    Dead cell (2, 3, 4) now has a count of 2.
+    Dead cell (2, 2, 0) now has a count of 4.
+Element (2, 3, 0) has 4 neighbors.
+Counting neighbors for (2, 3, 1)
+    Dead cell (3, 3, 1) now has a count of 1.
+Element (2, 3, 1) has 5 neighbors.
+Counting neighbors for (2, 3, 2)
+    Dead cell (3, 3, 2) now has a count of 1.
+    Dead cell (2, 4, 2) now has a count of 2.
+Element (2, 3, 2) has 4 neighbors.
+Counting neighbors for (2, 3, 3)
+    Dead cell (2, 3, 4) now has a count of 3.
+    Dead cell (2, 4, 3) now has a count of 1.
+Element (2, 3, 3) has 4 neighbors.
+Counting neighbors for (2, 4, 0)
+    Dead cell (2, 4, 4) now has a count of 2.
+Element (2, 4, 0) has 5 neighbors.
+Counting neighbors for (2, 4, 1)
+    Dead cell (2, 4, 2) now has a count of 3.
+    Dead cell (3, 4, 1) now has a count of 1.
+    Dead cell (1, 4, 1) now has a count of 3.
+    Dead cell (2, 0, 1) now has a count of 3.
+Element (2, 4, 1) has 2 neighbors.
+Counting neighbors for (3, 0, 3)
+    Dead cell (3, 0, 2) now has a count of 1.
+    Dead cell (4, 0, 3) now has a count of 2.
+    Dead cell (2, 0, 3) now has a count of 3.
+Element (3, 0, 3) has 2 neighbors.
+Counting neighbors for (3, 0, 1)
+    Dead cell (2, 0, 1) now has a count of 4.
+    Dead cell (3, 4, 1) now has a count of 2.
+Element (3, 0, 1) has 3 neighbors.
+Counting neighbors for (3, 0, 2)
+    Dead cell (2, 0, 2) now has a count of 2.
+    Dead cell (3, 4, 2) now has a count of 1.
+Element (3, 0, 2) has 3 neighbors.
+Counting neighbors for (3, 0, 4)
+    Dead cell (3, 0, 0) now has a count of 2.
+    Dead cell (2, 0, 4) now has a count of 3.
+Element (3, 0, 4) has 3 neighbors.
+Counting neighbors for (3, 1, 1)
+    Dead cell (3, 1, 0) now has a count of 1.
+    Dead cell (2, 1, 1) now has a count of 2.
+Element (3, 1, 1) has 3 neighbors.
+Counting neighbors for (3, 1, 0)
+    Dead cell (4, 1, 0) now has a count of 2.
+    Dead cell (3, 0, 0) now has a count of 3.
+Element (3, 1, 0) has 2 neighbors.
+Counting neighbors for (3, 1, 2)
+Element (3, 1, 2) has 5 neighbors.
+Counting neighbors for (3, 1, 3)
+Element (3, 1, 3) has 6 neighbors.
+Counting neighbors for (3, 1, 4)
+    Dead cell (3, 2, 4) now has a count of 1.
+Element (3, 1, 4) has 5 neighbors.
+Counting neighbors for (3, 2, 0)
+    Dead cell (3, 2, 4) now has a count of 2.
+    Dead cell (2, 2, 0) now has a count of 5.
+Element (3, 2, 0) has 4 neighbors.
+Counting neighbors for (3, 2, 1)
+    Dead cell (4, 2, 1) now has a count of 1.
+    Dead cell (3, 3, 1) now has a count of 2.
+Element (3, 2, 1) has 4 neighbors.
+Counting neighbors for (3, 2, 2)
+    Dead cell (3, 3, 2) now has a count of 2.
+Element (3, 2, 2) has 5 neighbors.
+Counting neighbors for (3, 2, 3)
+    Dead cell (3, 2, 4) now has a count of 3.
+Element (3, 2, 3) has 5 neighbors.
+Counting neighbors for (3, 3, 0)
+    Dead cell (3, 3, 4) now has a count of 1.
+Element (3, 3, 0) has 4 neighbors.
+Counting neighbors for (3, 3, 3)
+    Dead cell (3, 3, 4) now has a count of 2.
+Element (3, 3, 3) has 4 neighbors.
+Counting neighbors for (3, 4, 0)
+    Dead cell (4, 4, 0) now has a count of 2.
+    Dead cell (3, 0, 0) now has a count of 4.
+Element (3, 4, 0) has 3 neighbors.
+Counting neighbors for (3, 4, 3)
+    Dead cell (2, 4, 3) now has a count of 2.
+Element (3, 4, 3) has 4 neighbors.
+Counting neighbors for (3, 4, 4)
+    Dead cell (2, 4, 4) now has a count of 3.
+    Dead cell (3, 3, 4) now has a count of 3.
+Element (3, 4, 4) has 4 neighbors.
+Counting neighbors for (4, 0, 0)
+    Dead cell (3, 0, 0) now has a count of 5.
+    Dead cell (4, 1, 0) now has a count of 3.
+    Dead cell (4, 4, 0) now has a count of 3.
+Element (4, 0, 0) has 3 neighbors.
+Counting neighbors for (4, 0, 1)
+    Dead cell (0, 0, 1) now has a count of 2.
+Element (4, 0, 1) has 5 neighbors.
+Counting neighbors for (4, 0, 2)
+Element (4, 0, 2) has 5 neighbors.
+Counting neighbors for (4, 0, 4)
+    Dead cell (0, 0, 4) now has a count of 4.
+Element (4, 0, 4) has 4 neighbors.
+Counting neighbors for (4, 1, 3)
+    Dead cell (4, 1, 2) now has a count of 1.
+    Dead cell (4, 0, 3) now has a count of 3.
+Element (4, 1, 3) has 3 neighbors.
+Counting neighbors for (4, 1, 1)
+    Dead cell (0, 1, 1) now has a count of 2.
+    Dead cell (4, 2, 1) now has a count of 2.
+Element (4, 1, 1) has 3 neighbors.
+Counting neighbors for (4, 1, 2)
+Element (4, 1, 2) has 5 neighbors.
+Counting neighbors for (4, 1, 4)
+    Dead cell (4, 1, 0) now has a count of 4.
+    Dead cell (0, 1, 4) now has a count of 4.
+Element (4, 1, 4) has 3 neighbors.
+Counting neighbors for (4, 2, 0)
+    Dead cell (4, 1, 0) now has a count of 5.
+Element (4, 2, 0) has 4 neighbors.
+Counting neighbors for (4, 2, 2)
+Element (4, 2, 2) has 5 neighbors.
+Counting neighbors for (4, 2, 3)
+Element (4, 2, 3) has 6 neighbors.
+Counting neighbors for (4, 2, 4)
+    Dead cell (3, 2, 4) now has a count of 4.
+    Dead cell (4, 3, 4) now has a count of 2.
+Element (4, 2, 4) has 4 neighbors.
+Counting neighbors for (4, 3, 0)
+    Dead cell (4, 3, 4) now has a count of 3.
+    Dead cell (0, 3, 0) now has a count of 5.
+    Dead cell (4, 4, 0) now has a count of 4.
+Element (4, 3, 0) has 2 neighbors.
+Counting neighbors for (4, 3, 2)
+    Dead cell (3, 3, 2) now has a count of 3.
+Element (4, 3, 2) has 4 neighbors.
+Counting neighbors for (4, 3, 3)
+    Dead cell (4, 3, 4) now has a count of 4.
+Element (4, 3, 3) has 5 neighbors.
+Counting neighbors for (4, 4, 2)
+    Dead cell (4, 4, 1) now has a count of 1.
+    Dead cell (3, 4, 2) now has a count of 2.
+Element (4, 4, 2) has 3 neighbors.
+Counting neighbors for (4, 4, 1)
+    Dead cell (0, 4, 1) now has a count of 1.
+    Dead cell (3, 4, 1) now has a count of 3.
+    Dead cell (4, 3, 1) now has a count of 1.
+Element (4, 4, 1) has 1 neighbors.
+Counting neighbors for (4, 4, 3)
+    Dead cell (4, 0, 3) now has a count of 4.
+Element (4, 4, 3) has 4 neighbors.
+Counting neighbors for (4, 4, 4)
+    Dead cell (4, 4, 0) now has a count of 5.
+    Dead cell (4, 3, 4) now has a count of 5.
+Element (4, 4, 4) has 4 neighbors.
+Dead cell (4, 4, 1) has 1 neighbors.
+Dead cell (4, 3, 1) has 1 neighbors.
+Dead cell (3, 3, 4) has 3 neighbors.
+Dead cell (3, 1, 0) has 1 neighbors.
+Dead cell (3, 4, 2) has 2 neighbors.
+Dead cell (2, 4, 3) has 2 neighbors.
+Dead cell (0, 4, 1) has 1 neighbors.
+Dead cell (3, 3, 2) has 3 neighbors.
+Dead cell (2, 1, 1) has 2 neighbors.
+Dead cell (2, 0, 2) has 2 neighbors.
+Dead cell (2, 0, 4) has 3 neighbors.
+Dead cell (3, 4, 1) has 3 neighbors.
+Dead cell (2, 4, 4) has 3 neighbors.
+Dead cell (2, 4, 2) has 3 neighbors.
+Dead cell (3, 3, 1) has 2 neighbors.
+Dead cell (2, 3, 4) has 3 neighbors.
+Dead cell (4, 1, 2) has 1 neighbors.
+Dead cell (1, 2, 1) has 2 neighbors.
+Dead cell (4, 2, 1) has 2 neighbors.
+Dead cell (3, 2, 4) has 4 neighbors.
+Dead cell (1, 3, 0) has 1 neighbors.
+Dead cell (3, 0, 0) has 5 neighbors.
+Dead cell (2, 0, 3) has 3 neighbors.
+Dead cell (1, 4, 1) has 3 neighbors.
+Dead cell (0, 0, 1) has 2 neighbors.
+Dead cell (1, 0, 4) has 3 neighbors.
+Dead cell (2, 0, 1) has 4 neighbors.
+Dead cell (4, 4, 0) has 5 neighbors.
+Dead cell (1, 4, 3) has 3 neighbors.
+Dead cell (4, 3, 4) has 5 neighbors.
+Dead cell (0, 3, 1) has 2 neighbors.
+Dead cell (1, 2, 4) has 4 neighbors.
+Dead cell (2, 2, 0) has 5 neighbors.
+Dead cell (1, 2, 3) has 5 neighbors.
+Dead cell (2, 2, 4) has 2 neighbors.
+Dead cell (0, 3, 0) has 5 neighbors.
+Dead cell (1, 1, 1) has 1 neighbors.
+Dead cell (0, 1, 4) has 4 neighbors.
+Dead cell (4, 1, 0) has 5 neighbors.
+Dead cell (3, 0, 2) has 1 neighbors.
+Dead cell (0, 1, 1) has 2 neighbors.
+Dead cell (4, 0, 3) has 4 neighbors.
+Dead cell (1, 0, 2) has 3 neighbors.
+Dead cell (1, 0, 0) has 5 neighbors.
+Dead cell (0, 0, 4) has 4 neighbors.
+Inserting (3, 3, 4)
+Inserting (3, 4, 2)
+Inserting (2, 4, 3)
+Inserting (3, 3, 2)
+Inserting (2, 1, 1)
+Inserting (2, 0, 2)
+Inserting (2, 0, 4)
+Inserting (3, 4, 1)
+Inserting (2, 4, 4)
+Inserting (2, 4, 2)
+Inserting (3, 3, 1)
+Inserting (2, 3, 4)
+Inserting (1, 2, 1)
+Inserting (4, 2, 1)
+Inserting (2, 0, 3)
+Inserting (1, 4, 1)
+Inserting (0, 0, 1)
+Inserting (1, 0, 4)
+Inserting (1, 4, 3)
+Inserting (0, 3, 1)
+Inserting (2, 2, 4)
+Inserting (0, 1, 1)
+Inserting (1, 0, 2)
+Removing (0, 2, 2)
+Removing (0, 2, 3)
+Removing (0, 3, 2)
+Removing (0, 3, 3)
+Removing (0, 4, 2)
+Removing (0, 4, 3)
+Removing (0, 4, 4)
+Removing (1, 0, 1)
+Removing (1, 1, 3)
+Removing (1, 3, 1)
+Removing (1, 3, 2)
+Removing (2, 1, 3)
+Removing (2, 2, 2)
+Removing (2, 3, 1)
+Removing (2, 4, 0)
+Removing (3, 1, 2)
+Removing (3, 1, 3)
+Removing (3, 1, 4)
+Removing (3, 2, 2)
+Removing (3, 2, 3)
+Removing (4, 0, 1)
+Removing (4, 0, 2)
+Removing (4, 1, 2)
+Removing (4, 2, 2)
+Removing (4, 2, 3)
+Removing (4, 3, 3)
+Removing (4, 4, 1)
+------------------------
+0 0 0
+0 0 1
+0 0 2
+0 0 3
+0 1 2
+0 1 0
+0 1 1
+0 1 3
+0 2 0
+0 2 4
+0 3 1
+0 3 4
+0 4 0
+1 0 2
+1 0 3
+1 0 4
+1 1 0
+1 1 2
+1 1 4
+1 2 0
+1 2 1
+1 2 2
+1 3 0
+1 3 3
+1 3 4
+1 4 0
+1 4 1
+1 4 2
+1 4 3
+1 4 4
+2 0 0
+2 0 2
+2 0 3
+2 0 4
+2 1 0
+2 1 1
+2 1 2
+2 1 4
+2 2 1
+2 2 3
+2 2 4
+2 3 0
+2 3 2
+2 3 3
+2 3 4
+2 4 1
+2 4 2
+2 4 3
+2 4 4
+3 0 3
+3 0 1
+3 0 2
+3 0 4
+3 1 1
+3 1 0
+3 2 0
+3 2 1
+3 3 0
+3 3 1
+3 3 2
+3 3 3
+3 3 4
+3 4 0
+3 4 1
+3 4 2
+3 4 3
+3 4 4
+4 0 0
+4 0 4
+4 1 3
+4 1 1
+4 1 4
+4 2 0
+4 2 1
+4 2 4
+4 3 0
+4 3 2
+4 4 2
+4 4 3
+4 4 4
