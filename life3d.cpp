@@ -7,7 +7,7 @@
 #include <vector>
 
 #define MAX_SIZE 10000
-bool DEBUG = true;
+bool DEBUG = false;
 
 // Define the hash for tuple<int, int, int> so we can use it in the hash_map
 typedef std::tuple<int, int, int> Vector3;
@@ -66,8 +66,13 @@ void matrix_insert(Matrix* m, int x, int y, int z)
     if (ptr == NULL) {
         // Case where there are no nodes yet in the linked list
         m->data[x + (y * m->side)] = new_el;
+    } else if (z < ptr->z) {
+        // We are the head
+        new_el->next = ptr;
+        ptr->prev = new_el;
+        m->data[x + (y * m->side)] = new_el;
     } else {
-        // We already have elements. Insert it ordered.
+        // Search the list for our spot
         while (ptr->next) {
             if (z < ptr->next->z) {
                 new_el->next = ptr->next;
@@ -354,16 +359,16 @@ int main(int argc, char* argv[])
                 printf("Dead cell (%d, %d, %d) has %d neighbors.\n", std::get<0>(it.first), std::get<1>(it.first), std::get<2>(it.first), it.second);
         }
 
-        // Do the inserting and removing now
-        for (auto& t : to_insert) {
-            matrix_insert(&m, std::get<0>(t), std::get<1>(t), std::get<2>(t));
-        }
-
         // By sorting we can remove the nodes closest to the head first. Could be further optimized (only go throught the list once)!
         // @PROFILE!
         std::sort(to_remove.begin(), to_remove.end());
         for (auto& t : to_remove) {
             matrix_remove(&m, std::get<0>(t), std::get<1>(t), std::get<2>(t));
+        }
+
+        // Do the inserting and removing now
+        for (auto& t : to_insert) {
+            matrix_insert(&m, std::get<0>(t), std::get<1>(t), std::get<2>(t));
         }
 
         // Clear all the structures for the next iteration
@@ -380,4 +385,16 @@ int main(int argc, char* argv[])
     //-----------
     // Output the result
     matrix_print_live(&m);
+
+    /*
+    matrix_print(&m);
+    printf("\n\n\n\n\n\n\n\n");
+    Matrix m2 = make_matrix(5);
+    matrix_insert(&m2, 0, 0, 2);
+    matrix_print(&m2);
+    matrix_insert(&m2, 0, 0, 1);
+    matrix_print(&m2);
+    matrix_insert(&m2, 0, 0, 0);
+    matrix_print(&m2);
+    */
 }

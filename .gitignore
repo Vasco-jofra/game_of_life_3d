@@ -1,5 +1,7 @@
 .vscode/*
 life3d
+tests/our_out/*
+.gdb_history
 
 # Object files
 *.o

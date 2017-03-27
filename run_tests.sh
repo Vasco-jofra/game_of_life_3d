@@ -35,8 +35,8 @@ for t in "${!tests[@]}"; do
 	output=$(diff -q $our_out $out)
 	if [[ $output ]]; then
 		echo -e "  [ \e[1;38;5;196mFailed\e[0m ]"
-		# echo "Test								Expected"
-		# diff -y $out $our_out
+		echo "Test								Expected"
+		diff -C 5 $out $our_out
 	else
 		echo -e "  [ \e[1;38;5;41mSucceded\e[0m ]"
 	fi
