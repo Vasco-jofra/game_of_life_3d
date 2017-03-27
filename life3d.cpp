@@ -7,7 +7,13 @@
 #include <vector>
 
 #define MAX_SIZE 10000
-bool DEBUG = false;
+bool DEBUG = true;
+
+const char *RED = "\033[31m";
+const char *GREEN = "\033[32m";
+const char *YELLOW = "\033[33m";
+const char *BLUE = "\033[34m";
+const char *NO_COLOR = "\033[0m";
 
 // Define the hash for tuple<int, int, int> so we can use it in the hash_map
 typedef std::tuple<int, int, int> Vector3;
@@ -54,7 +60,7 @@ z_list matrix_get(Matrix* m, int x, int y)
 void matrix_insert(Matrix* m, int x, int y, int z)
 {
     if (DEBUG)
-        printf("Inserting (%d, %d, %d)\n", x, y, z);
+        printf("%sInserting (%d, %d, %d)%s\n", GREEN, x, y, z, NO_COLOR);
 
     z_list new_el = (z_list)malloc(sizeof(struct node));
     new_el->z = z;
@@ -96,7 +102,7 @@ void matrix_remove(Matrix* m, int x, int y, int z)
     while(ptr) {
         if(ptr->z == z) {
             if (DEBUG)
-                printf("Removing (%d, %d, %d)\n", x, y, z);
+                printf("%sRemoving (%d, %d, %d)%s\n", RED, x, y, z, NO_COLOR);
 
             // Actually removing here
             if(ptr->next) {
@@ -202,8 +208,11 @@ void insert_or_update_in_dead_to_check(int x, int y, int z)
 {
     // @ Sync: Synchronize here the addition and/or creation of the element!
     dead_to_check[std::make_tuple(x, y, z)]++;
-    if(DEBUG)
-        printf("    Dead cell (%d, %d, %d) now has a count of %d.\n", x, y, z, dead_to_check[std::make_tuple(x, y, z)]);
+    if(DEBUG) {
+        int cnt = dead_to_check[std::make_tuple(x, y, z)];
+        const char *color = (cnt == 2 || cnt == 3) ? GREEN: NO_COLOR;
+        printf("    Dead cell %s(%d, %d, %d)%s now has a count of %s%d%s.\n", color, x, y, z, NO_COLOR, color, cnt, NO_COLOR);
+    }
 }
 
 int count_neighbours(Matrix* m, int x, int y, z_list ptr)
@@ -281,11 +290,14 @@ int count_neighbours(Matrix* m, int x, int y, z_list ptr)
         insert_or_update_in_dead_to_check(x, _y, z);
     }
 
-    if (DEBUG)
-        printf("Element (%d, %d, %d) has %d neighbors.\n", x, y, z, cnt);
+    if (DEBUG) {
+        const char *color = (cnt < 2 || cnt > 4) ? RED: GREEN;
+        printf("Element %s(%d, %d, %d)%s has %s%d%s neighbors.\n", color, x, y, z, NO_COLOR, color, cnt, NO_COLOR);
+    }
     return cnt;
 }
 
+void test();
 int main(int argc, char* argv[])
 {
     if (argc != 3) {
@@ -334,7 +346,7 @@ int main(int argc, char* argv[])
         if (DEBUG)
             printf("------------------------\n");
         if (DEBUG)
-            printf("Starting generation %d\n", gen);
+            printf(" *** Starting generation %d ***\n", gen);
 
         // @PARALLEL: Where we parallelize
         for (int i = 0; i < SIZE; i++) {
@@ -385,16 +397,25 @@ int main(int argc, char* argv[])
     //-----------
     // Output the result
     matrix_print_live(&m);
+    // matrix_print(&m);
 
-    /*
-    matrix_print(&m);
-    printf("\n\n\n\n\n\n\n\n");
-    Matrix m2 = make_matrix(5);
+
+    //test();
+}
+
+void test() {
+    DEBUG = true;
+
+    printf("\n\n\n\n\n\nTESTING:\n\n");
+    Matrix m2 = make_matrix(4);
     matrix_insert(&m2, 0, 0, 2);
-    matrix_print(&m2);
     matrix_insert(&m2, 0, 0, 1);
-    matrix_print(&m2);
     matrix_insert(&m2, 0, 0, 0);
     matrix_print(&m2);
-    */
+
+    matrix_remove(&m2, 0, 0, 2);
+    matrix_print(&m2);
+
+    //matrix_remove(&m2)
+    DEBUG = false;
 }

@@ -41,5 +41,3 @@ for t in "${!tests[@]}"; do
 		echo -e "  [ \e[1;38;5;41mSucceded\e[0m ]"
 	fi
 done
-
-make clean
