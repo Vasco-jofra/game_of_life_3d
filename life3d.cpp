@@ -7,7 +7,7 @@
 #include <vector>
 
 #define MAX_SIZE 10000
-bool DEBUG = true;
+bool DEBUG = false;
 
 const char *RED = "\033[31m";
 const char *GREEN = "\033[32m";
@@ -292,7 +292,7 @@ int count_neighbours(Matrix* m, int x, int y, z_list ptr)
 
     if (DEBUG) {
         const char *color = (cnt < 2 || cnt > 4) ? RED: GREEN;
-        printf("Element %s(%d, %d, %d)%s has %s%d%s neighbors.\n", color, x, y, z, NO_COLOR, color, cnt, NO_COLOR);
+        printf("Element %s(%d, %d, %d)%s has %s%d%s neighbors.\n\n", color, x, y, z, NO_COLOR, color, cnt, NO_COLOR);
     }
     return cnt;
 }
@@ -367,8 +367,8 @@ int main(int argc, char* argv[])
             if (it.second == 2 || it.second == 3) {
                 to_insert.push_back(it.first);
             }
-            if (DEBUG)
-                printf("Dead cell (%d, %d, %d) has %d neighbors.\n", std::get<0>(it.first), std::get<1>(it.first), std::get<2>(it.first), it.second);
+            // if (DEBUG)
+            //     printf("Dead cell (%d, %d, %d) has %d neighbors.\n", std::get<0>(it.first), std::get<1>(it.first), std::get<2>(it.first), it.second);
         }
 
         // By sorting we can remove the nodes closest to the head first. Could be further optimized (only go throught the list once)!
@@ -378,7 +378,6 @@ int main(int argc, char* argv[])
             matrix_remove(&m, std::get<0>(t), std::get<1>(t), std::get<2>(t));
         }
 
-        // Do the inserting and removing now
         for (auto& t : to_insert) {
             matrix_insert(&m, std::get<0>(t), std::get<1>(t), std::get<2>(t));
         }
@@ -400,22 +399,27 @@ int main(int argc, char* argv[])
     // matrix_print(&m);
 
 
-    //test();
+    // test();
 }
 
 void test() {
     DEBUG = true;
 
-    printf("\n\n\n\n\n\nTESTING:\n\n");
+    printf("\n\n\n\n\n\nTESTING:\n");
     Matrix m2 = make_matrix(4);
     matrix_insert(&m2, 0, 0, 2);
     matrix_insert(&m2, 0, 0, 1);
     matrix_insert(&m2, 0, 0, 0);
     matrix_print(&m2);
 
+    matrix_remove(&m2, 0, 0, 1);
+    matrix_print(&m2);
+
     matrix_remove(&m2, 0, 0, 2);
     matrix_print(&m2);
 
-    //matrix_remove(&m2)
+    matrix_remove(&m2, 0, 0, 0);
+    matrix_print(&m2);
+
     DEBUG = false;
 }
