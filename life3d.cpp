@@ -7,7 +7,7 @@
 #include <vector>
 
 #define MAX_SIZE 10000
-bool DEBUG = false;
+bool DEBUG = true;
 
 // Define the hash for tuple<int, int, int> so we can use it in the hash_map
 typedef std::tuple<int, int, int> Vector3;
@@ -174,9 +174,9 @@ void matrix_print_live(Matrix* m)
 
 inline int pos_mod(int val, int mod)
 {
-    if (val >= mod) return val - mod;
+    if (val >= mod)   return val - mod;
     else if (val < 0) return val + mod;
-    else return val;
+    else              return val;
     // return ((val % mod) + mod) % mod;
 }
 
@@ -196,13 +196,15 @@ bool matrix_ele_exists(Matrix* m, int x, int y, int z)
 void insert_or_update_in_dead_to_check(int x, int y, int z)
 {
     // @ Sync: Synchronize here the addition and/or creation of the element!
-    int ele = ++dead_to_check[std::make_tuple(x, y, z)];
-    // printf("    Dead cell (%d, %d, %d) now has a count of %d.\n", x, y, z, ele);
+    dead_to_check[std::make_tuple(x, y, z)]++;
+    if(DEBUG)
+        printf("    Dead cell (%d, %d, %d) now has a count of %d.\n", x, y, z, dead_to_check[std::make_tuple(x, y, z)]);
 }
 
 int count_neighbours(Matrix* m, int x, int y, z_list ptr)
 {
-    // printf("Counting neighbors for (%d, %d, %d)\n", x, y, ptr->z);
+    if(DEBUG)
+        printf("Counting neighbors for (%d, %d, %d)\n", x, y, ptr->z);
 
     int cnt = 0;
     int z = ptr->z;
@@ -215,7 +217,7 @@ int count_neighbours(Matrix* m, int x, int y, z_list ptr)
             cnt++;
     } else {
         // check if we are wrapping arround, and if so, if the ele on the other side exists
-        if (_z > SIZE) {
+        if (_z >= SIZE) {
             // We did wrap arround! Check again
             _z = _z - SIZE;
             if (matrix_ele_exists(m, x, y, _z))
