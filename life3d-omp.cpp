@@ -209,7 +209,11 @@ bool matrix_ele_exists(Matrix* m, int x, int y, int z)
 void insert_or_update_in_dead_to_check(int x, int y, int z)
 {
     // @ Sync: Synchronize here the addition and/or creation of the element!
-    dead_to_check[std::make_tuple(x, y, z)]++;
+    #pragma omp critical (DEAD_TO_CHECK)
+    {
+        dead_to_check[std::make_tuple(x, y, z)]++;
+    }
+
     if(DEBUG) {
         int cnt = dead_to_check[std::make_tuple(x, y, z)];
         const char *color = (cnt == 2 || cnt == 3) ? GREEN: NO_COLOR;
@@ -372,14 +376,22 @@ int main(int argc, char* argv[])
             printf(" *** Starting generation %d ***\n", gen);
 
         // @PARALLEL: Where we parallelize
-        for (int i = 0; i < SIZE; i++) {
-            for (int j = 0; j < SIZE; j++) {
-                z_list ptr = matrix_get(&m, i, j);
+        int i, j, counter;
+        z_list ptr;
+
+#pragma omp parallel for private(i, j, counter, ptr)
+        for (i = 0; i < SIZE; i++) {
+            for (j = 0; j < SIZE; j++) {
+                ptr = matrix_get(&m, i, j);
                 // Iterate over every existing z for x and y
                 while (ptr != NULL) {
-                    int counter = count_neighbours(&m, i, j, ptr);
-                    if (counter < 2 || counter > 4)
-                        to_remove.push_back(std::make_tuple(i, j, ptr->z));
+                    counter = count_neighbours(&m, i, j, ptr);
+                    if (counter < 2 || counter > 4) {
+                        #pragma omp critical (TO_REMOVE)
+                        {
+                            to_remove.push_back(std::make_tuple(i, j, ptr->z));
+                        }
+                    }
                     ptr = ptr->next;
                 }
             }
@@ -428,7 +440,7 @@ int main(int argc, char* argv[])
     // Write the time log to a file
     FILE* out_fp = fopen("time.log", "w");
     char out_str[80];
-    sprintf(out_str, "Sequential %s: \ninit_time: %lf \nproc_time: %lf\n", input_file, init_time, process_time);
+    sprintf(out_str, "OMP %s: \ninit_time: %lf \nproc_time: %lf\n", input_file, init_time, process_time);
     fwrite(out_str, strlen(out_str), 1, out_fp);
 
     // test();
