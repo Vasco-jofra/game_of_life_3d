@@ -1,10 +1,12 @@
+#include <omp.h>
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string>
 #include <algorithm>
 #include <unordered_map>
 #include <vector>
+#include <string>
+#include <string.h>
 
 #define MAX_SIZE 10000
 bool DEBUG = false;
@@ -297,9 +299,26 @@ int count_neighbours(Matrix* m, int x, int y, z_list ptr)
     return cnt;
 }
 
+size_t matrix_size(Matrix* m) {
+    int cnt = 0;
+    int SIZE = m->side;
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            z_list ptr = matrix_get(m, i, j);
+            while (ptr != NULL) {
+                cnt++;
+                ptr = ptr->next;
+            }
+        }
+    }
+    return cnt;
+}
+
 void test();
 int main(int argc, char* argv[])
 {
+    double start, end, init_time, process_time;
+    start = omp_get_wtime();
     if (argc != 3) {
         printf("[ERROR] Incorrect usage!\n");
         printf("[Usage] ./life3d <input_file> <nr_generations>\n");
@@ -338,6 +357,10 @@ int main(int argc, char* argv[])
     }
     // Finished parsing!
     fclose(fp);
+
+    end = omp_get_wtime();
+    init_time = end-start;
+    start = omp_get_wtime();
 
     //-----------------
     //--- MAIN LOOP ---
@@ -386,10 +409,14 @@ int main(int argc, char* argv[])
         to_insert.clear();
         to_remove.clear();
         dead_to_check.clear();
+
+        // matrix_print(&m);
+
         if (DEBUG)
             printf("------------------------\n");
     }
-
+    end = omp_get_wtime();
+    process_time = end-start;
 
     //-----------
     //--- END ---
@@ -398,6 +425,11 @@ int main(int argc, char* argv[])
     matrix_print_live(&m);
     // matrix_print(&m);
 
+    // Write the time log to a file
+    FILE* out_fp = fopen("time.log", "w");
+    char out_str[80];
+    sprintf(out_str, "Sequential: \ninit_time: %lf \nproc_time: %lf\n", init_time, process_time);
+    fwrite(out_str, strlen(out_str), 1, out_fp);
 
     // test();
 }

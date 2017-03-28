@@ -1,5 +1,5 @@
 CC=g++
-FLAGS=-O3 -g -Wall -Wextra
+FLAGS=-fopenmp -lgomp -g -Wall -Wextra
 
 all: compile
 compile: life3d.cpp

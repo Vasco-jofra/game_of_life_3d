@@ -2,6 +2,7 @@
 life3d
 tests/our_out/*
 .gdb_history
+time.log
 
 # Object files
 *.o

@@ -16,6 +16,7 @@ their_out_dir="tests/out"
 our_out_dir="tests/our_out"
 
 declare -A tests
+# tests[s150e10k]=1000
 tests[s5e50]=10
 # declare more like this
 # tests[<name>]=<gen_amount>
@@ -35,9 +36,11 @@ for t in "${!tests[@]}"; do
 	output=$(diff -q $our_out $out)
 	if [[ $output ]]; then
 		echo -e "  [ \e[1;38;5;196mFailed\e[0m ]"
-		echo "Test								Expected"
-		diff -C 5 $out $our_out
+		# echo "Test								Expected"
+		# diff -C 5 $out $our_out
 	else
 		echo -e "  [ \e[1;38;5;41mSucceded\e[0m ]"
 	fi
+	cat time.log
+	echo
 done
