@@ -7,6 +7,7 @@
 #include <vector>
 #include <string>
 #include <string.h>
+#include <omp.h>
 
 #define MAX_SIZE 10000
 bool DEBUG = false;
@@ -208,8 +209,6 @@ bool matrix_ele_exists(Matrix* m, int x, int y, int z)
 
 void insert_or_update_in_dead_to_check(int x, int y, int z)
 {
-   //printf("HEY (%d, %d, %d)\n", x, y, z);
-
     // @ Sync: Synchronize here the addition and/or creation of the element!
     dead_to_check[std::make_tuple(x, y, z)]++;
     if(DEBUG) {
@@ -325,8 +324,9 @@ size_t matrix_size(Matrix* m) {
 void test();
 int main(int argc, char* argv[])
 {
-    // double start, end, init_time, process_time;
-  //   start = omp_get_wtime();
+    double start, end, init_time, process_time;
+    start = omp_get_wtime();
+
     if (argc != 3) {
         printf("[ERROR] Incorrect usage!\n");
         printf("[Usage] ./life3d <input_file> <nr_generations>\n");
@@ -366,9 +366,9 @@ int main(int argc, char* argv[])
     // Finished parsing!
     fclose(fp);
 
-    // end = omp_get_wtime();
-   //  init_time = end-start;
-   //  start = omp_get_wtime();
+    end = omp_get_wtime();
+    init_time = end-start;
+    start = omp_get_wtime();
 
     //-----------------
     //--- MAIN LOOP ---
@@ -423,8 +423,8 @@ int main(int argc, char* argv[])
         if (DEBUG)
             printf("------------------------\n");
     }
-    // end = omp_get_wtime();
- //    process_time = end-start;
+    end = omp_get_wtime();
+    process_time = end-start;
 
     //-----------
     //--- END ---
@@ -433,11 +433,11 @@ int main(int argc, char* argv[])
     matrix_print_live(&m);
     // matrix_print(&m);
 
-    // // Write the time log to a file
-//     FILE* out_fp = fopen("time.log", "w");
-//     char out_str[80];
-//     sprintf(out_str, "Sequential %s: \ninit_time: %lf \nproc_time: %lf\n", input_file, init_time, process_time);
-//     fwrite(out_str, strlen(out_str), 1, out_fp);
+    // Write the time log to a file
+    FILE* out_fp = fopen("time.log", "w");
+    char out_str[80];
+    sprintf(out_str, "Sequential %s: \ninit_time: %lf \nproc_time: %lf\n", input_file, init_time, process_time);
+    fwrite(out_str, strlen(out_str), 1, out_fp);
 
     // test();
 }
