@@ -8,6 +8,12 @@ sequencial: life3d.cpp
 parallel: life3d-omp.cpp
 	$(CC) $(FLAGS) life3d-omp.cpp -o life3d-omp
 
+profile: life3d-omp.cpp
+	kinst-ompp $(CC) $(FLAGS) life3d-omp.cpp -o life3d-omp
+
+clean_profile:
+	rm opari.rc opari.tab.c opari.tab.o life3d-omp.cpp.opari.inc life3d-omp.mod.cpp
+
 clean:
-	rm life3d
+	rm life3d life3d-omp
 
