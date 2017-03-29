@@ -18,8 +18,8 @@ tests[s150e10k]=1000
 # tests[s200e50k]=1000
 # tests[s500e300k]=2000
 
-file_name="life3d life3d-omp"
-# file_name="life3d"
+# file_name="life3d life3d-omp"
+file_name="life3d"
 # file_name="life3d-omp"
 num_threads=8
 

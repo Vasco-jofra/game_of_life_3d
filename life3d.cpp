@@ -25,7 +25,7 @@ template <>
 struct hash<Vector3> {
     std::size_t operator()(const Vector3& k) const
     {
-        return (std::get<0>(k) * (MAX_SIZE + 1) * (MAX_SIZE + 1)) + (std::get<1>(k) * (MAX_SIZE + 1)) + (std::get<2>(k));
+        return (std::get<0>(k) << 26) + (std::get<1>(k) << 13) + (std::get<2>(k));
     }
 };
 }
@@ -436,27 +436,13 @@ int main(int argc, char* argv[])
     sprintf(out_str, "Sequential %s: \ninit_time: %lf \nproc_time: %lf\n", input_file, init_time, process_time);
     fwrite(out_str, strlen(out_str), 1, out_fp);
 
-    // test();
+    //test();
 }
 
 void test() {
     DEBUG = true;
 
     printf("\n\n\n\n\n\nTESTING:\n");
-    Matrix m2 = make_matrix(4);
-    matrix_insert(&m2, 0, 0, 2);
-    matrix_insert(&m2, 0, 0, 1);
-    matrix_insert(&m2, 0, 0, 0);
-    matrix_print(&m2);
-
-    matrix_remove(&m2, 0, 0, 1);
-    matrix_print(&m2);
-
-    matrix_remove(&m2, 0, 0, 2);
-    matrix_print(&m2);
-
-    matrix_remove(&m2, 0, 0, 0);
-    matrix_print(&m2);
-
+    printf("%ld, %ld\n", 10<<26, 10*8192*8192);
     DEBUG = false;
 }
