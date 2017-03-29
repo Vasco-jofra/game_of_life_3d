@@ -1,4 +1,4 @@
-#include <omp.h>
+// #include <omp.h>
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,7 +9,7 @@
 #include <string.h>
 
 #define MAX_SIZE 10000
-bool DEBUG = false;
+bool DEBUG = true;
 
 const char *RED = "\033[31m";
 const char *GREEN = "\033[32m";
@@ -208,6 +208,8 @@ bool matrix_ele_exists(Matrix* m, int x, int y, int z)
 
 void insert_or_update_in_dead_to_check(int x, int y, int z)
 {
+   printf("HEY (%d, %d, %d)\n", x, y, z);
+	
     // @ Sync: Synchronize here the addition and/or creation of the element!
     dead_to_check[std::make_tuple(x, y, z)]++;
     if(DEBUG) {
@@ -229,8 +231,10 @@ int count_neighbours(Matrix* m, int x, int y, z_list ptr)
     int _z = z + 1;
     if (ptr->next) {
         // if we have a next we surely are not at the end
-        if (ptr->next->z == _z)
-            cnt++;
+        if (ptr->next->z == _z){
+           cnt++;        	
+        }
+       else insert_or_update_in_dead_to_check(x, y, _z);		  
     } else {
         // check if we are wrapping arround, and if so, if the ele on the other side exists
         if (_z >= SIZE) {
@@ -241,6 +245,8 @@ int count_neighbours(Matrix* m, int x, int y, z_list ptr)
             else
                 insert_or_update_in_dead_to_check(x, y, _z);
         } else {
+		     if(DEBUG)
+		         printf("Enter here (%d, %d, %d)\n", x, y, _z);
             insert_or_update_in_dead_to_check(x, y, _z);
         }
     }
@@ -250,6 +256,8 @@ int count_neighbours(Matrix* m, int x, int y, z_list ptr)
         // if we have a next we surely are not at the end
         if (ptr->prev->z == _z)
             cnt++;
+        else insert_or_update_in_dead_to_check(x, y, _z);		  
+		  
     } else {
         // check if we are wrapping arround, and if so, if the ele on the other side exists
         if (_z < 0) {
@@ -317,8 +325,8 @@ size_t matrix_size(Matrix* m) {
 void test();
 int main(int argc, char* argv[])
 {
-    double start, end, init_time, process_time;
-    start = omp_get_wtime();
+    // double start, end, init_time, process_time;
+  //   start = omp_get_wtime();
     if (argc != 3) {
         printf("[ERROR] Incorrect usage!\n");
         printf("[Usage] ./life3d <input_file> <nr_generations>\n");
@@ -358,9 +366,9 @@ int main(int argc, char* argv[])
     // Finished parsing!
     fclose(fp);
 
-    end = omp_get_wtime();
-    init_time = end-start;
-    start = omp_get_wtime();
+    // end = omp_get_wtime();
+   //  init_time = end-start;
+   //  start = omp_get_wtime();
 
     //-----------------
     //--- MAIN LOOP ---
@@ -415,8 +423,8 @@ int main(int argc, char* argv[])
         if (DEBUG)
             printf("------------------------\n");
     }
-    end = omp_get_wtime();
-    process_time = end-start;
+    // end = omp_get_wtime();
+ //    process_time = end-start;
 
     //-----------
     //--- END ---
@@ -425,11 +433,11 @@ int main(int argc, char* argv[])
     matrix_print_live(&m);
     // matrix_print(&m);
 
-    // Write the time log to a file
-    FILE* out_fp = fopen("time.log", "w");
-    char out_str[80];
-    sprintf(out_str, "Sequential %s: \ninit_time: %lf \nproc_time: %lf\n", input_file, init_time, process_time);
-    fwrite(out_str, strlen(out_str), 1, out_fp);
+    // // Write the time log to a file
+//     FILE* out_fp = fopen("time.log", "w");
+//     char out_str[80];
+//     sprintf(out_str, "Sequential %s: \ninit_time: %lf \nproc_time: %lf\n", input_file, init_time, process_time);
+//     fwrite(out_str, strlen(out_str), 1, out_fp);
 
     // test();
 }
