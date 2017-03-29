@@ -209,9 +209,10 @@ bool matrix_ele_exists(Matrix* m, int x, int y, int z)
 void insert_or_update_in_dead_to_check(int x, int y, int z)
 {
     // @ Sync: Synchronize here the addition and/or creation of the element!
+    auto t = std::make_tuple(x, y, z);
     #pragma omp critical (DEAD_TO_CHECK)
     {
-        dead_to_check[std::make_tuple(x, y, z)]++;
+        dead_to_check[t]++;
     }
 
     if(DEBUG) {
