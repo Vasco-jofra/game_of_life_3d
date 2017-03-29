@@ -9,7 +9,7 @@
 #include <string.h>
 
 #define MAX_SIZE 10000
-bool DEBUG = true;
+bool DEBUG = false;
 
 const char *RED = "\033[31m";
 const char *GREEN = "\033[32m";
@@ -208,8 +208,8 @@ bool matrix_ele_exists(Matrix* m, int x, int y, int z)
 
 void insert_or_update_in_dead_to_check(int x, int y, int z)
 {
-   printf("HEY (%d, %d, %d)\n", x, y, z);
-	
+   //printf("HEY (%d, %d, %d)\n", x, y, z);
+
     // @ Sync: Synchronize here the addition and/or creation of the element!
     dead_to_check[std::make_tuple(x, y, z)]++;
     if(DEBUG) {
@@ -232,9 +232,9 @@ int count_neighbours(Matrix* m, int x, int y, z_list ptr)
     if (ptr->next) {
         // if we have a next we surely are not at the end
         if (ptr->next->z == _z){
-           cnt++;        	
+           cnt++;
         }
-       else insert_or_update_in_dead_to_check(x, y, _z);		  
+       else insert_or_update_in_dead_to_check(x, y, _z);
     } else {
         // check if we are wrapping arround, and if so, if the ele on the other side exists
         if (_z >= SIZE) {
@@ -256,8 +256,8 @@ int count_neighbours(Matrix* m, int x, int y, z_list ptr)
         // if we have a next we surely are not at the end
         if (ptr->prev->z == _z)
             cnt++;
-        else insert_or_update_in_dead_to_check(x, y, _z);		  
-		  
+        else insert_or_update_in_dead_to_check(x, y, _z);
+
     } else {
         // check if we are wrapping arround, and if so, if the ele on the other side exists
         if (_z < 0) {
