@@ -1,10 +1,5 @@
 #!/bin/bash
 
-echo "
-#########
-COMPILING
-#########"
-
 if ! make ; then
     exit 1;
 fi
@@ -26,11 +21,13 @@ tests[s150e10k]=1000
 file_name="life3d life3d-omp"
 # file_name="life3d"
 # file_name="life3d-omp"
+num_threads=8
 
 if [ ! -z "$1" ]; then
 	file_name=$1
 fi
 
+export OMP_NUM_THREADS=$num_threads
 for t in "${!tests[@]}"; do
 	gen=${tests[$t]}
 	in="tests/$t.in"
@@ -58,3 +55,5 @@ for t in "${!tests[@]}"; do
 	done
 	echo
 done
+
+export OMP_NUM_THREADS=

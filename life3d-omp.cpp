@@ -414,9 +414,6 @@ int main(int argc, char* argv[])
             //     printf("Dead cell (%d, %d, %d) has %d neighbors.\n", std::get<0>(it.first), std::get<1>(it.first), std::get<2>(it.first), it.second);
         }
 
-        // By sorting we can remove the nodes closest to the head first. Could be further optimized (only go throught the list once)!
-        // @PROFILE!
-        std::sort(to_remove.begin(), to_remove.end());
         for (auto& t : to_remove) {
             matrix_remove(&m, std::get<0>(t), std::get<1>(t), std::get<2>(t));
         }
