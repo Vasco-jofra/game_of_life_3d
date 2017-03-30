@@ -1,5 +1,5 @@
 CC=g++
-FLAGS=-fopenmp -lgomp -g -Wall -Wextra
+FLAGS=-std=c++11 -fopenmp -lgomp -g -Wall -Wextra
 
 all: sequencial parallel
 sequencial: life3d.cpp
