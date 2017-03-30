@@ -1,0 +1,1 @@
+1. Is the parallelize for creating and destroying threads every time?

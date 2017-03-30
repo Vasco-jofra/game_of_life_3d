@@ -19,15 +19,6 @@ const char *NO_COLOR = "\033[0m";
 
 // Define the hash for tuple<int, int, int> so we can use it in the hash_map
 typedef std::tuple<int, int, int> Vector3;
-namespace std {
-template <>
-struct hash<Vector3> {
-    std::size_t operator()(const Vector3& k) const
-    {
-        return (std::get<0>(k) * (MAX_SIZE + 1) * (MAX_SIZE + 1)) + (std::get<1>(k) * (MAX_SIZE + 1)) + (std::get<2>(k));
-    }
-};
-}
 
 // Node representing elements of sparse matrix
 struct node {
@@ -39,7 +30,7 @@ typedef struct node* z_list;
 
 std::vector<Vector3> to_insert;
 std::vector<Vector3> to_remove;
-std::unordered_map<Vector3, int> dead_to_check;
+std::vector<Vector3> dead_to_check;
 
 typedef struct matrix_str {
     int side;
@@ -209,16 +200,15 @@ bool matrix_ele_exists(Matrix* m, int x, int y, int z)
 void insert_or_update_in_dead_to_check(int x, int y, int z)
 {
     // @ Sync: Synchronize here the addition and/or creation of the element!
-    auto t = std::make_tuple(x, y, z);
     #pragma omp critical (DEAD_TO_CHECK)
     {
-        dead_to_check[t]++;
+        dead_to_check.push_back(std::make_tuple(x, y, z));
     }
 
     if(DEBUG) {
-        int cnt = dead_to_check[std::make_tuple(x, y, z)];
+        /*int cnt = dead_to_check[std::make_tuple(x, y, z)];
         const char *color = (cnt == 2 || cnt == 3) ? GREEN: NO_COLOR;
-        printf("    Dead cell %s(%d, %d, %d)%s now has a count of %s%d%s.\n", color, x, y, z, NO_COLOR, color, cnt, NO_COLOR);
+        printf("    Dead cell %s(%d, %d, %d)%s now has a count of %s%d%s.\n", color, x, y, z, NO_COLOR, color, cnt, NO_COLOR);*/
     }
 }
 
@@ -237,7 +227,7 @@ int count_neighbours(Matrix* m, int x, int y, z_list ptr)
         if (ptr->next->z == _z)
            cnt++;
         else
-            insert_or_update_in_dead_to_check(x, y, _z);
+            insert_or_update_in_dead_to_check(x, y, pos_mod(_z, SIZE));
 
     } else {
         // check if we are wrapping arround, and if so, if the ele on the other side exists
@@ -259,7 +249,7 @@ int count_neighbours(Matrix* m, int x, int y, z_list ptr)
         if (ptr->prev->z == _z)
             cnt++;
         else
-            insert_or_update_in_dead_to_check(x, y, _z);
+            insert_or_update_in_dead_to_check(x, y, pos_mod(_z, SIZE));
 
     } else {
         // check if we are wrapping arround, and if so, if the ele on the other side exists
@@ -306,6 +296,41 @@ int count_neighbours(Matrix* m, int x, int y, z_list ptr)
     if (DEBUG) {
         const char *color = (cnt < 2 || cnt > 4) ? RED: GREEN;
         printf("Element %s(%d, %d, %d)%s has %s%d%s neighbors.\n\n", color, x, y, z, NO_COLOR, color, cnt, NO_COLOR);
+    }
+    return cnt;
+}
+
+int count_neighbours_of_dead(Matrix* m, int x, int y, int z) {
+    int cnt = 0;
+    int SIZE = m->side;
+    int _x = pos_mod(x + 1, SIZE);
+    if (matrix_ele_exists(m, _x, y, z)) {
+        cnt++;
+    }
+
+    _x = pos_mod(x - 1, SIZE);
+    if (matrix_ele_exists(m, _x, y, z)) {
+        cnt++;
+    }
+
+    int _y = pos_mod(y + 1, SIZE);
+    if (matrix_ele_exists(m, x, _y, z)) {
+        cnt++;
+    }
+
+    _y = pos_mod(y - 1, SIZE);
+    if (matrix_ele_exists(m, x, _y, z)) {
+        cnt++;
+    }
+
+    int _z = pos_mod(z + 1, SIZE);
+    if (matrix_ele_exists(m, x, y, _z)) {
+        cnt++;
+    }
+
+    _z = pos_mod(z - 1, SIZE);
+    if (matrix_ele_exists(m, x, y, _z)) {
+        cnt++;
     }
     return cnt;
 }
@@ -377,6 +402,7 @@ int main(int argc, char* argv[])
     //-----------------
     //--- MAIN LOOP ---
     //-----------------
+    // #pragma omp parallel
     for (int gen = 0; gen < generations; gen++) {
         if (DEBUG)
             printf("------------------------\n");
@@ -387,7 +413,7 @@ int main(int argc, char* argv[])
         int i, j, counter;
         z_list ptr;
 
-#pragma omp parallel for private(i, j, counter, ptr)
+        #pragma omp parallel for private(i, j, counter, ptr) schedule(dynamic, 100)
         for (i = 0; i < SIZE; i++) {
             for (j = 0; j < SIZE; j++) {
                 ptr = matrix_get(&m, i, j);
@@ -405,10 +431,21 @@ int main(int argc, char* argv[])
             }
         }
 
+        int x, y, z;
         // Check the dead ones that were neighbours now
-        for (auto& it : dead_to_check) {
-            if (it.second == 2 || it.second == 3) {
-                to_insert.push_back(it.first);
+        #pragma omp parallel for private(i, x, y, z, counter) schedule(dynamic, 100)
+        for (i = 0; i < dead_to_check.size(); i++) {
+            // for (auto& it : dead_to_check) {
+            x = std::get<0>(dead_to_check[i]);
+            y = std::get<1>(dead_to_check[i]);
+            z = std::get<2>(dead_to_check[i]);
+
+            counter = count_neighbours_of_dead(&m, x, y, z);
+            if (counter == 2 || counter == 3) {
+                #pragma omp critical (TO_INSERT)
+                {
+                    to_insert.push_back(std::make_tuple(x, y, z));
+                }
             }
             // if (DEBUG)
             //     printf("Dead cell (%d, %d, %d) has %d neighbors.\n", std::get<0>(it.first), std::get<1>(it.first), std::get<2>(it.first), it.second);
@@ -419,7 +456,12 @@ int main(int argc, char* argv[])
         }
 
         for (auto& t : to_insert) {
-            matrix_insert(&m, std::get<0>(t), std::get<1>(t), std::get<2>(t));
+            x = std::get<0>(t);
+            y = std::get<1>(t);
+            z = std::get<2>(t);
+            if(matrix_ele_exists(&m, x, y, z)) continue;
+
+            matrix_insert(&m, x, y, z);
         }
 
         // Clear all the structures for the next iteration

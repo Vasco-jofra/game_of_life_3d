@@ -433,7 +433,7 @@ int main(int argc, char* argv[])
     // Write the time log to a file
     FILE* out_fp = fopen("time.log", "w");
     char out_str[80];
-    sprintf(out_str, "Sequential %s: \ninit_time: %lf \nproc_time: %lf\n", input_file, init_time, process_time);
+    sprintf(out_str, "Sequential %s:\ninit_time: %lf\nproc_time: %lf\n", input_file, init_time, process_time);
     fwrite(out_str, strlen(out_str), 1, out_fp);
 
     //test();
@@ -442,7 +442,5 @@ int main(int argc, char* argv[])
 void test() {
     DEBUG = true;
 
-    printf("\n\n\n\n\n\nTESTING:\n");
-    printf("%ld, %ld\n", 10<<26, 10*8192*8192);
     DEBUG = false;
 }

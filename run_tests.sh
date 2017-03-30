@@ -12,15 +12,15 @@ our_out_dir="tests/our_out"
 
 declare -A tests
 tests[s5e50]=10
-# tests[s50e5k]=300
 tests[s20e400]=500
 tests[s150e10k]=1000
-# tests[s200e50k]=1000
-# tests[s500e300k]=2000
+tests[s200e50k]=1000
+tests[s50e5k]=300
+tests[s500e300k]=2000
 
 # file_name="life3d life3d-omp"
-file_name="life3d"
-# file_name="life3d-omp"
+# file_name="life3d"
+file_name="life3d-omp"
 num_threads=8
 
 if [ ! -z "$1" ]; then
@@ -47,7 +47,7 @@ for t in "${!tests[@]}"; do
 		if [[ $output ]]; then
 			echo -e "  [ \e[1;38;5;196mFailed\e[0m ]"
 			echo "Test								Expected"
-			diff -C 5 $out $our_out
+			diff -y $out $our_out
 		else
 			echo -e "  [ \e[1;38;5;41mSucceded\e[0m ]"
 		fi
