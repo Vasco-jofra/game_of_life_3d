@@ -462,22 +462,26 @@ int main(int argc, char* argv[])
                 //     printf("Dead cell (%d, %d, %d) has %d neighbors.\n", std::get<0>(it.first), std::get<1>(it.first), std::get<2>(it.first), it.second);
             }
 
-#pragma omp for private(i, x)
+#pragma omp for private(i, x, y, z)
             for (i = 0; i < to_remove.size(); i++) {
                 //for (auto& t : to_remove) {
                 x = std::get<0>(to_remove[i]);
+                y = std::get<1>(to_remove[i]);
+                z = std::get<2>(to_remove[i]);
+
                 omp_set_lock(&writelock[x]);
-                matrix_remove(&m, x, std::get<1>(to_remove[i]), std::get<2>(to_remove[i]));
+                matrix_remove(&m, x, y, z);
                 omp_unset_lock(&writelock[x]);
             }
 
 #pragma omp for private(i, x, y, z)
             for (i = 0; i < to_insert.size(); i++) {
                 x = std::get<0>(to_insert[i]);
-                omp_set_lock(&writelock[x]);
-
                 y = std::get<1>(to_insert[i]);
                 z = std::get<2>(to_insert[i]);
+
+                omp_set_lock(&writelock[x]);
+
                 if (!matrix_ele_exists(&m, x, y, z)) {
                     matrix_insert(&m, x, y, z);
                 }
