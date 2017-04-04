@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/bash
 
 if ! make ; then
     exit 1;
@@ -11,8 +11,8 @@ their_out_dir="tests/out"
 our_out_dir="tests/our_out"
 
 declare -A tests
-tests[s5e50]=10
-tests[s20e400]=500
+#tests[s5e50]=10
+#tests[s20e400]=500
 tests[s150e10k]=1000
 # tests[s200e50k]=1000
 # tests[s50e5k]=300

@@ -408,12 +408,13 @@ int main(int argc, char* argv[])
             printf("------------------------\n");
         if (DEBUG)
             printf(" *** Starting generation %d ***\n", gen);
-
+#pragma omp parallel 
+		  {
         // @PARALLEL: Where we parallelize
         int i, j, counter;
         z_list ptr;
 
-        #pragma omp parallel for private(i, j, counter, ptr) schedule(dynamic, 100)
+        #pragma omp for private(i, j, counter, ptr) schedule(guided, 100)
         for (i = 0; i < SIZE; i++) {
             for (j = 0; j < SIZE; j++) {
                 ptr = matrix_get(&m, i, j);
@@ -433,7 +434,7 @@ int main(int argc, char* argv[])
 
         int x, y, z;
         // Check the dead ones that were neighbours now
-        #pragma omp parallel for private(i, x, y, z, counter) schedule(dynamic, 100)
+        #pragma omp for private(i, x, y, z, counter) schedule(guided, 100)
         for (i = 0; i < dead_to_check.size(); i++) {
             // for (auto& it : dead_to_check) {
             x = std::get<0>(dead_to_check[i]);
@@ -450,6 +451,7 @@ int main(int argc, char* argv[])
             // if (DEBUG)
             //     printf("Dead cell (%d, %d, %d) has %d neighbors.\n", std::get<0>(it.first), std::get<1>(it.first), std::get<2>(it.first), it.second);
         }
+	}
 
         for (auto& t : to_remove) {
             matrix_remove(&m, std::get<0>(t), std::get<1>(t), std::get<2>(t));
