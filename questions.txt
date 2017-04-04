@@ -1,2 +1,0 @@
-1. lista com os nós a percorrer
-2.

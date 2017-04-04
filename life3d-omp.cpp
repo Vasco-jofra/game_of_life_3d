@@ -398,6 +398,11 @@ int main(int argc, char* argv[])
     // Finished parsing!
     fclose(fp);
 
+    omp_lock_t writelock[SIZE];
+    for (int i = 0; i < SIZE; i++) {
+        omp_init_lock(&writelock[i]);
+    }
+
     end = omp_get_wtime();
     init_time = end - start;
     start = omp_get_wtime();
@@ -438,10 +443,10 @@ int main(int argc, char* argv[])
             }
 
             int x, y, z;
+
 // Check the dead ones that were neighbours now
 #pragma omp for private(i, x, y, z, t, counter) schedule(dynamic, 100)
             for (i = 0; i < dead_to_check.size(); i++) {
-                // for (auto& it : dead_to_check) {
                 x = std::get<0>(dead_to_check[i]);
                 y = std::get<1>(dead_to_check[i]);
                 z = std::get<2>(dead_to_check[i]);
@@ -456,35 +461,41 @@ int main(int argc, char* argv[])
                 // if (DEBUG)
                 //     printf("Dead cell (%d, %d, %d) has %d neighbors.\n", std::get<0>(it.first), std::get<1>(it.first), std::get<2>(it.first), it.second);
             }
-#pragma omp single
-            {
-                for (auto& t : to_remove) {
-                    matrix_remove(&m, std::get<0>(t), std::get<1>(t), std::get<2>(t));
-                }
 
-                for (auto& t : to_insert) {
-                    x = std::get<0>(t);
-                    y = std::get<1>(t);
-                    z = std::get<2>(t);
-                    if (matrix_ele_exists(&m, x, y, z))
-                        continue;
+#pragma omp for private(i, x)
+            for (i = 0; i < to_remove.size(); i++) {
+                //for (auto& t : to_remove) {
+                x = std::get<0>(to_remove[i]);
+                omp_set_lock(&writelock[x]);
+                matrix_remove(&m, x, std::get<1>(to_remove[i]), std::get<2>(to_remove[i]));
+                omp_unset_lock(&writelock[x]);
+            }
 
+#pragma omp for private(i, x, y, z)
+            for (i = 0; i < to_insert.size(); i++) {
+                x = std::get<0>(to_insert[i]);
+                omp_set_lock(&writelock[x]);
+
+                y = std::get<1>(to_insert[i]);
+                z = std::get<2>(to_insert[i]);
+                if (!matrix_ele_exists(&m, x, y, z)) {
                     matrix_insert(&m, x, y, z);
                 }
 
-                // Clear all the structures for the next iteration
-                to_insert.clear();
-                to_remove.clear();
-                dead_to_check.clear();
-
-                // matrix_print(&m);
-
-                if (DEBUG)
-                    printf("------------------------\n");
+                omp_unset_lock(&writelock[x]);
             }
+
+            // Clear all the structures for the next iteration
+            to_insert.clear();
+            to_remove.clear();
+            dead_to_check.clear();
+
+            // matrix_print(&m);
+
+            if (DEBUG)
+                printf("------------------------\n");
         }
     }
-
     end = omp_get_wtime();
     process_time = end - start;
 

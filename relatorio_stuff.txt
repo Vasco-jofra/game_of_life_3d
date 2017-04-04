@@ -1,0 +1,2 @@
+1. Ter a estrutura auxiliar em média triplicou o tempo de execução 40s -> 300s nos casos mais densos
+2. Locks:
