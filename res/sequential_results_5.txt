@@ -1,0 +1,33 @@
+g++ -fopenmp -lgomp -g -Wall -Wextra life3d.cpp -o life3d
+g++ -fopenmp -lgomp -g -Wall -Wextra life3d-omp.cpp -o life3d-omp
+
+[1;38;5;215mRunning [32mlife3d [1;38;5;215mtests/s50e5k.in [0m > tests/our_out/s50e5k.300.our_out  [ [1;38;5;41mSucceded[0m ]
+Sequential tests/s50e5k.in:
+init_time: 0.001637
+proc_time: 38.141890
+
+[1;38;5;215mRunning [32mlife3d [1;38;5;215mtests/s150e10k.in [0m > tests/our_out/s150e10k.1000.our_out  [ [1;38;5;41mSucceded[0m ]
+Sequential tests/s150e10k.in:
+init_time: 0.003349
+proc_time: 4.299524
+
+[1;38;5;215mRunning [32mlife3d [1;38;5;215mtests/s200e50k.in [0m > tests/our_out/s200e50k.1000.our_out  [ [1;38;5;41mSucceded[0m ]
+Sequential tests/s200e50k.in:
+init_time: 0.034623
+proc_time: 15.729579
+
+[1;38;5;215mRunning [32mlife3d [1;38;5;215mtests/s500e300k.in [0m > tests/our_out/s500e300k.2000.our_out  [ [1;38;5;41mSucceded[0m ]
+Sequential tests/s500e300k.in:
+init_time: 0.139787
+proc_time: 96.626484
+
+[1;38;5;215mRunning [32mlife3d [1;38;5;215mtests/s5e50.in [0m > tests/our_out/s5e50.10.our_out  [ [1;38;5;41mSucceded[0m ]
+Sequential tests/s5e50.in:
+init_time: 0.000052
+proc_time: 0.001080
+
+[1;38;5;215mRunning [32mlife3d [1;38;5;215mtests/s20e400.in [0m > tests/our_out/s20e400.500.our_out  [ [1;38;5;41mSucceded[0m ]
+Sequential tests/s20e400.in:
+init_time: 0.000143
+proc_time: 3.357001
+

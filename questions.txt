@@ -1,1 +1,2 @@
-1. Is the parallelize for creating and destroying threads every time?
+1. lista com os nós a percorrer
+2.
