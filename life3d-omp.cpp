@@ -1,21 +1,21 @@
-#include <omp.h>
+#include <algorithm>
 #include <iostream>
+#include <omp.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <algorithm>
+#include <string.h>
+#include <string>
 #include <unordered_map>
 #include <vector>
-#include <string>
-#include <string.h>
 
 #define MAX_SIZE 10000
 bool DEBUG = false;
 
-const char *RED = "\033[31m";
-const char *GREEN = "\033[32m";
-const char *YELLOW = "\033[33m";
-const char *BLUE = "\033[34m";
-const char *NO_COLOR = "\033[0m";
+const char* RED = "\033[31m";
+const char* GREEN = "\033[32m";
+const char* YELLOW = "\033[33m";
+const char* BLUE = "\033[34m";
+const char* NO_COLOR = "\033[0m";
 
 // Define the hash for tuple<int, int, int> so we can use it in the hash_map
 typedef std::tuple<int, int, int> Vector3;
@@ -92,17 +92,17 @@ void matrix_remove(Matrix* m, int x, int y, int z)
 {
     z_list ptr = matrix_get(m, x, y);
 
-    while(ptr) {
-        if(ptr->z == z) {
+    while (ptr) {
+        if (ptr->z == z) {
             if (DEBUG)
                 printf("%sRemoving (%d, %d, %d)%s\n", RED, x, y, z, NO_COLOR);
 
             // Actually removing here
-            if(ptr->next) {
+            if (ptr->next) {
                 ptr->next->prev = ptr->prev;
             }
 
-            if(ptr->prev) {
+            if (ptr->prev) {
                 ptr->prev->next = ptr->next;
             } else {
                 // We are the head being removed. (Assigning to NULL it's ok here.)
@@ -175,12 +175,14 @@ void matrix_print_live(Matrix* m)
     }
 }
 
-
 inline int pos_mod(int val, int mod)
 {
-    if (val >= mod)   return val - mod;
-    else if (val < 0) return val + mod;
-    else              return val;
+    if (val >= mod)
+        return val - mod;
+    else if (val < 0)
+        return val + mod;
+    else
+        return val;
     // return ((val % mod) + mod) % mod;
 }
 
@@ -199,13 +201,13 @@ bool matrix_ele_exists(Matrix* m, int x, int y, int z)
 
 void insert_or_update_in_dead_to_check(int x, int y, int z)
 {
-    // @ Sync: Synchronize here the addition and/or creation of the element!
-    #pragma omp critical (DEAD_TO_CHECK)
+// @ Sync: Synchronize here the addition and/or creation of the element!
+#pragma omp critical(DEAD_TO_CHECK)
     {
         dead_to_check.push_back(std::make_tuple(x, y, z));
     }
 
-    if(DEBUG) {
+    if (DEBUG) {
         /*int cnt = dead_to_check[std::make_tuple(x, y, z)];
         const char *color = (cnt == 2 || cnt == 3) ? GREEN: NO_COLOR;
         printf("    Dead cell %s(%d, %d, %d)%s now has a count of %s%d%s.\n", color, x, y, z, NO_COLOR, color, cnt, NO_COLOR);*/
@@ -214,7 +216,7 @@ void insert_or_update_in_dead_to_check(int x, int y, int z)
 
 int count_neighbours(Matrix* m, int x, int y, z_list ptr)
 {
-    if(DEBUG)
+    if (DEBUG)
         printf("Counting neighbors for (%d, %d, %d)\n", x, y, ptr->z);
 
     int cnt = 0;
@@ -225,7 +227,7 @@ int count_neighbours(Matrix* m, int x, int y, z_list ptr)
     if (ptr->next) {
         // if we have a next we surely are not at the end
         if (ptr->next->z == _z)
-           cnt++;
+            cnt++;
         else
             insert_or_update_in_dead_to_check(x, y, pos_mod(_z, SIZE));
 
@@ -294,13 +296,14 @@ int count_neighbours(Matrix* m, int x, int y, z_list ptr)
     }
 
     if (DEBUG) {
-        const char *color = (cnt < 2 || cnt > 4) ? RED: GREEN;
+        const char* color = (cnt < 2 || cnt > 4) ? RED : GREEN;
         printf("Element %s(%d, %d, %d)%s has %s%d%s neighbors.\n\n", color, x, y, z, NO_COLOR, color, cnt, NO_COLOR);
     }
     return cnt;
 }
 
-int count_neighbours_of_dead(Matrix* m, int x, int y, int z) {
+int count_neighbours_of_dead(Matrix* m, int x, int y, int z)
+{
     int cnt = 0;
     int SIZE = m->side;
     int _x = pos_mod(x + 1, SIZE);
@@ -335,8 +338,8 @@ int count_neighbours_of_dead(Matrix* m, int x, int y, int z) {
     return cnt;
 }
 
-
-size_t matrix_size(Matrix* m) {
+size_t matrix_size(Matrix* m)
+{
     int cnt = 0;
     int SIZE = m->side;
     for (int i = 0; i < SIZE; i++) {
@@ -396,123 +399,104 @@ int main(int argc, char* argv[])
     fclose(fp);
 
     end = omp_get_wtime();
-    init_time = end-start;
+    init_time = end - start;
     start = omp_get_wtime();
 
     //-----------------
     //--- MAIN LOOP ---
     //-----------------
-    // #pragma omp parallel
-    for (int gen = 0; gen < generations; gen++) {
-        if (DEBUG)
-            printf("------------------------\n");
-        if (DEBUG)
-            printf(" *** Starting generation %d ***\n", gen);
-#pragma omp parallel 
-		  {
-        // @PARALLEL: Where we parallelize
-        int i, j, counter;
-        z_list ptr;
-
-        #pragma omp for private(i, j, counter, ptr) schedule(guided, 100)
-        for (i = 0; i < SIZE; i++) {
-            for (j = 0; j < SIZE; j++) {
-                ptr = matrix_get(&m, i, j);
-                // Iterate over every existing z for x and y
-                while (ptr != NULL) {
-                    counter = count_neighbours(&m, i, j, ptr);
-                    if (counter < 2 || counter > 4) {
-                        #pragma omp critical (TO_REMOVE)
-                        {
-                            to_remove.push_back(std::make_tuple(i, j, ptr->z));
+    int gen = 0;
+#pragma omp parallel private(gen)
+    {
+        for (gen = 0; gen < generations; gen++) {
+#pragma omp single
+            {
+                if (DEBUG)
+                    printf("------------------------\n");
+                if (DEBUG)
+                    printf(" *** Starting generation %d ***\n", gen);
+            }
+            int i, j, counter;
+            z_list ptr;
+            Vector3 t;
+#pragma omp for private(i, j, counter, t, ptr) schedule(dynamic, 100)
+            for (i = 0; i < SIZE; i++) {
+                for (j = 0; j < SIZE; j++) {
+                    ptr = matrix_get(&m, i, j);
+                    // Iterate over every existing z for x and y
+                    while (ptr != NULL) {
+                        counter = count_neighbours(&m, i, j, ptr);
+                        if (counter < 2 || counter > 4) {
+#pragma omp critical(TO_REMOVE)
+                            {
+                                to_remove.push_back(std::make_tuple(i, j, ptr->z));
+                            }
                         }
+                        ptr = ptr->next;
                     }
-                    ptr = ptr->next;
                 }
             }
-        }
 
-        int x, y, z;
-        // Check the dead ones that were neighbours now
-        #pragma omp for private(i, x, y, z, counter) schedule(guided, 100)
-        for (i = 0; i < dead_to_check.size(); i++) {
-            // for (auto& it : dead_to_check) {
-            x = std::get<0>(dead_to_check[i]);
-            y = std::get<1>(dead_to_check[i]);
-            z = std::get<2>(dead_to_check[i]);
+            int x, y, z;
+// Check the dead ones that were neighbours now
+#pragma omp for private(i, x, y, z, t, counter) schedule(dynamic, 100)
+            for (i = 0; i < dead_to_check.size(); i++) {
+                // for (auto& it : dead_to_check) {
+                x = std::get<0>(dead_to_check[i]);
+                y = std::get<1>(dead_to_check[i]);
+                z = std::get<2>(dead_to_check[i]);
 
-            counter = count_neighbours_of_dead(&m, x, y, z);
-            if (counter == 2 || counter == 3) {
-                #pragma omp critical (TO_INSERT)
-                {
-                    to_insert.push_back(std::make_tuple(x, y, z));
+                counter = count_neighbours_of_dead(&m, x, y, z);
+                if (counter == 2 || counter == 3) {
+#pragma omp critical(TO_INSERT)
+                    {
+                        to_insert.push_back(std::make_tuple(x, y, z));
+                    }
                 }
+                // if (DEBUG)
+                //     printf("Dead cell (%d, %d, %d) has %d neighbors.\n", std::get<0>(it.first), std::get<1>(it.first), std::get<2>(it.first), it.second);
             }
-            // if (DEBUG)
-            //     printf("Dead cell (%d, %d, %d) has %d neighbors.\n", std::get<0>(it.first), std::get<1>(it.first), std::get<2>(it.first), it.second);
+#pragma omp single
+            {
+                for (auto& t : to_remove) {
+                    matrix_remove(&m, std::get<0>(t), std::get<1>(t), std::get<2>(t));
+                }
+
+                for (auto& t : to_insert) {
+                    x = std::get<0>(t);
+                    y = std::get<1>(t);
+                    z = std::get<2>(t);
+                    if (matrix_ele_exists(&m, x, y, z))
+                        continue;
+
+                    matrix_insert(&m, x, y, z);
+                }
+
+                // Clear all the structures for the next iteration
+                to_insert.clear();
+                to_remove.clear();
+                dead_to_check.clear();
+
+                // matrix_print(&m);
+
+                if (DEBUG)
+                    printf("------------------------\n");
+            }
         }
-	}
-
-        for (auto& t : to_remove) {
-            matrix_remove(&m, std::get<0>(t), std::get<1>(t), std::get<2>(t));
-        }
-
-        for (auto& t : to_insert) {
-            x = std::get<0>(t);
-            y = std::get<1>(t);
-            z = std::get<2>(t);
-            if(matrix_ele_exists(&m, x, y, z)) continue;
-
-            matrix_insert(&m, x, y, z);
-        }
-
-        // Clear all the structures for the next iteration
-        to_insert.clear();
-        to_remove.clear();
-        dead_to_check.clear();
-
-        // matrix_print(&m);
-
-        if (DEBUG)
-            printf("------------------------\n");
     }
+
     end = omp_get_wtime();
-    process_time = end-start;
+    process_time = end - start;
 
     //-----------
     //--- END ---
     //-----------
     // Output the result
     matrix_print_live(&m);
-    // matrix_print(&m);
 
     // Write the time log to a file
     FILE* out_fp = fopen("time.log", "w");
     char out_str[80];
     sprintf(out_str, "OMP %s: \ninit_time: %lf \nproc_time: %lf\n", input_file, init_time, process_time);
     fwrite(out_str, strlen(out_str), 1, out_fp);
-
-    // test();
-}
-
-void test() {
-    DEBUG = true;
-
-    printf("\n\n\n\n\n\nTESTING:\n");
-    Matrix m2 = make_matrix(4);
-    matrix_insert(&m2, 0, 0, 2);
-    matrix_insert(&m2, 0, 0, 1);
-    matrix_insert(&m2, 0, 0, 0);
-    matrix_print(&m2);
-
-    matrix_remove(&m2, 0, 0, 1);
-    matrix_print(&m2);
-
-    matrix_remove(&m2, 0, 0, 2);
-    matrix_print(&m2);
-
-    matrix_remove(&m2, 0, 0, 0);
-    matrix_print(&m2);
-
-    DEBUG = false;
 }
