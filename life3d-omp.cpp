@@ -464,7 +464,6 @@ int main(int argc, char* argv[])
 
 #pragma omp for private(i, x, y, z)
             for (i = 0; i < to_remove.size(); i++) {
-                //for (auto& t : to_remove) {
                 x = std::get<0>(to_remove[i]);
                 y = std::get<1>(to_remove[i]);
                 z = std::get<2>(to_remove[i]);
@@ -489,15 +488,18 @@ int main(int argc, char* argv[])
                 omp_unset_lock(&writelock[x]);
             }
 
-            // Clear all the structures for the next iteration
-            to_insert.clear();
-            to_remove.clear();
-            dead_to_check.clear();
+#pragma omp single
+            {
+                // Clear all the structures for the next iteration
+                to_insert.clear();
+                to_remove.clear();
+                dead_to_check.clear();
 
-            // matrix_print(&m);
+                // matrix_print(&m);
 
-            if (DEBUG)
-                printf("------------------------\n");
+                if (DEBUG)
+                    printf("------------------------\n");
+            }
         }
     }
     end = omp_get_wtime();
