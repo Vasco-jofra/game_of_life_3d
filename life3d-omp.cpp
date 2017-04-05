@@ -30,10 +30,6 @@ struct node {
 
 typedef struct node* z_list;
 
-std::vector<Vector3> to_insert;
-std::vector<Vector3> to_remove;
-std::vector<Vector3> dead_to_check;
-
 typedef struct matrix_str {
     int side;
     z_list* data;
@@ -52,13 +48,15 @@ z_list matrix_get(Matrix* m, int x, int y)
     return m->data[x + (y * m->side)];
 }
 
-void matrix_insert(Matrix* m, int x, int y, int z)
+void matrix_insert(Matrix* m, int x, int y, int z, bool is_dead, int num_nei)
 {
     if (DEBUG)
-        printf("%sInserting (%d, %d, %d)%s\n", GREEN, x, y, z, NO_COLOR);
+        printf("%sInserting (%d, %d, %d) %s %s\n", GREEN, x, y, z, is_dead ? "dead" : "alive", NO_COLOR);
 
     z_list new_el = (z_list)malloc(sizeof(struct node));
     new_el->z = z;
+    new_el->num_neighbours = num_nei;
+    new_el->is_dead = is_dead;
     new_el->next = NULL;
     new_el->prev = NULL;
 
@@ -90,28 +88,46 @@ void matrix_insert(Matrix* m, int x, int y, int z)
     }
 }
 
+void matrix_insert_dead_front(int z, z_list ptr)
+{
+    z_list new_el = (z_list)malloc(sizeof(struct node));
+    new_el->z = z;
+    new_el->num_neighbours = 1;
+    new_el->is_dead = true;
+
+    new_el->next = ptr->next;
+    new_el->prev = ptr;
+    if (ptr->next)
+        ptr->next->prev = new_el;
+    ptr->next = new_el;
+}
+
+void matrix_remove_from_ptr(Matrix* m, z_list ptr, int x, int y)
+{
+    /*if (DEBUG)
+        printf("%sRemoving (%d, %d, %d)%s\n", RED, x, y, z, NO_COLOR);*/
+
+    if (ptr->next) {
+        ptr->next->prev = ptr->prev;
+    }
+
+    if (ptr->prev) {
+        ptr->prev->next = ptr->next;
+    } else {
+        // We are the head being removed. (Assigning to NULL it's ok here.)
+        m->data[x + (y * m->side)] = ptr->next;
+    }
+    free(ptr);
+    ptr = NULL;
+}
+
 void matrix_remove(Matrix* m, int x, int y, int z)
 {
     z_list ptr = matrix_get(m, x, y);
 
     while (ptr) {
         if (ptr->z == z) {
-            if (DEBUG)
-                printf("%sRemoving (%d, %d, %d)%s\n", RED, x, y, z, NO_COLOR);
-
-            // Actually removing here
-            if (ptr->next) {
-                ptr->next->prev = ptr->prev;
-            }
-
-            if (ptr->prev) {
-                ptr->prev->next = ptr->next;
-            } else {
-                // We are the head being removed. (Assigning to NULL it's ok here.)
-                m->data[x + (y * m->side)] = ptr->next;
-            }
-            free(ptr);
-            ptr = NULL;
+            matrix_remove_from_ptr(m, ptr, x, y);
             return;
         }
         ptr = ptr->next;
@@ -130,7 +146,7 @@ void matrix_print(Matrix* m)
 
             z_list ptr = matrix_get(m, i, j);
             while (ptr != NULL) {
-                printf("%d%s", ptr->z, ptr->next == NULL ? "" : ", ");
+                printf("%s%d%s%s", ptr->is_dead ? RED : GREEN, ptr->z, ptr->next == NULL ? "" : ", ", NO_COLOR);
                 ptr = ptr->next;
             }
             printf(")\n");
@@ -194,150 +210,27 @@ bool matrix_ele_exists(Matrix* m, int x, int y, int z)
 
     while (ptr != NULL) {
         if (ptr->z == z)
-            return true;
+            return !ptr->is_dead;
         ptr = ptr->next;
     }
 
     return false;
 }
 
-void insert_or_update_in_dead_to_check(int x, int y, int z)
+z_list matrix_get_ele(Matrix* m, int x, int y, int z)
 {
-// @ Sync: Synchronize here the addition and/or creation of the element!
-#pragma omp critical(DEAD_TO_CHECK)
-    {
-        dead_to_check.push_back(std::make_tuple(x, y, z));
+    z_list ptr = matrix_get(m, x, y);
+
+    while (ptr != NULL) {
+        if (ptr->z == z)
+            return ptr;
+        else if (ptr->z > z)
+            return NULL;
+
+        ptr = ptr->next;
     }
 
-    if (DEBUG) {
-        /*int cnt = dead_to_check[std::make_tuple(x, y, z)];
-        const char *color = (cnt == 2 || cnt == 3) ? GREEN: NO_COLOR;
-        printf("    Dead cell %s(%d, %d, %d)%s now has a count of %s%d%s.\n", color, x, y, z, NO_COLOR, color, cnt, NO_COLOR);*/
-    }
-}
-
-int count_neighbours(Matrix* m, int x, int y, z_list ptr)
-{
-    if (DEBUG)
-        printf("Counting neighbors for (%d, %d, %d)\n", x, y, ptr->z);
-
-    int cnt = 0;
-    int z = ptr->z;
-    int SIZE = m->side;
-
-    int _z = z + 1;
-    if (ptr->next) {
-        // if we have a next we surely are not at the end
-        if (ptr->next->z == _z)
-            cnt++;
-        else
-            insert_or_update_in_dead_to_check(x, y, pos_mod(_z, SIZE));
-
-    } else {
-        // check if we are wrapping arround, and if so, if the ele on the other side exists
-        if (_z >= SIZE) {
-            // We did wrap arround! Check again
-            _z = _z - SIZE;
-            if (matrix_ele_exists(m, x, y, _z))
-                cnt++;
-            else
-                insert_or_update_in_dead_to_check(x, y, _z);
-        } else {
-            insert_or_update_in_dead_to_check(x, y, _z);
-        }
-    }
-
-    _z = z - 1;
-    if (ptr->prev) {
-        // if we have a next we surely are not at the end
-        if (ptr->prev->z == _z)
-            cnt++;
-        else
-            insert_or_update_in_dead_to_check(x, y, pos_mod(_z, SIZE));
-
-    } else {
-        // check if we are wrapping arround, and if so, if the ele on the other side exists
-        if (_z < 0) {
-            // We did wrap arround! Check again
-            _z = (_z + SIZE);
-            if (matrix_ele_exists(m, x, y, _z))
-                cnt++;
-            else
-                insert_or_update_in_dead_to_check(x, y, _z);
-        } else {
-            insert_or_update_in_dead_to_check(x, y, _z);
-        }
-    }
-
-    int _x = pos_mod(x + 1, SIZE);
-    if (matrix_ele_exists(m, _x, y, z)) {
-        cnt++;
-    } else {
-        insert_or_update_in_dead_to_check(_x, y, z);
-    }
-
-    _x = pos_mod(x - 1, SIZE);
-    if (matrix_ele_exists(m, _x, y, z)) {
-        cnt++;
-    } else {
-        insert_or_update_in_dead_to_check(_x, y, z);
-    }
-
-    int _y = pos_mod(y + 1, SIZE);
-    if (matrix_ele_exists(m, x, _y, z)) {
-        cnt++;
-    } else {
-        insert_or_update_in_dead_to_check(x, _y, z);
-    }
-
-    _y = pos_mod(y - 1, SIZE);
-    if (matrix_ele_exists(m, x, _y, z)) {
-        cnt++;
-    } else {
-        insert_or_update_in_dead_to_check(x, _y, z);
-    }
-
-    if (DEBUG) {
-        const char* color = (cnt < 2 || cnt > 4) ? RED : GREEN;
-        printf("Element %s(%d, %d, %d)%s has %s%d%s neighbors.\n\n", color, x, y, z, NO_COLOR, color, cnt, NO_COLOR);
-    }
-    return cnt;
-}
-
-int count_neighbours_of_dead(Matrix* m, int x, int y, int z)
-{
-    int cnt = 0;
-    int SIZE = m->side;
-    int _x = pos_mod(x + 1, SIZE);
-    if (matrix_ele_exists(m, _x, y, z)) {
-        cnt++;
-    }
-
-    _x = pos_mod(x - 1, SIZE);
-    if (matrix_ele_exists(m, _x, y, z)) {
-        cnt++;
-    }
-
-    int _y = pos_mod(y + 1, SIZE);
-    if (matrix_ele_exists(m, x, _y, z)) {
-        cnt++;
-    }
-
-    _y = pos_mod(y - 1, SIZE);
-    if (matrix_ele_exists(m, x, _y, z)) {
-        cnt++;
-    }
-
-    int _z = pos_mod(z + 1, SIZE);
-    if (matrix_ele_exists(m, x, y, _z)) {
-        cnt++;
-    }
-
-    _z = pos_mod(z - 1, SIZE);
-    if (matrix_ele_exists(m, x, y, _z)) {
-        cnt++;
-    }
-    return cnt;
+    return NULL;
 }
 
 size_t matrix_size(Matrix* m)
@@ -356,7 +249,6 @@ size_t matrix_size(Matrix* m)
     return cnt;
 }
 
-void test();
 int main(int argc, char* argv[])
 {
     double start, end, init_time, process_time;
@@ -395,7 +287,7 @@ int main(int argc, char* argv[])
     while (fscanf(fp, "%d %d %d", &x, &y, &z) != EOF) {
         if (DEBUG)
             printf("GOT: %d %d %d\n", x, y, z);
-        matrix_insert(&m, x, y, z);
+        matrix_insert(&m, x, y, z, false, -1);
     }
     // Finished parsing!
     fclose(fp);
@@ -423,29 +315,161 @@ int main(int argc, char* argv[])
                 if (DEBUG)
                     printf(" *** Starting generation %d ***\n", gen);
             }
-            int i, j, counter;
-            z_list ptr;
+            int i, j;
+            z_list ptr, to_test;
             Vector3 t;
-#pragma omp for private(i, j, counter, t, ptr) schedule(dynamic, 100)
+            int _z, _y, _x;
+            int z, y, x;
+            bool looped;
+#pragma omp for private(i, j, t, ptr, _z, _y, _x, x, y, z, to_test, looped) schedule(dynamic, 100)
             for (i = 0; i < SIZE; i++) {
                 for (j = 0; j < SIZE; j++) {
                     ptr = matrix_get(&m, i, j);
                     // Iterate over every existing z for x and y
                     while (ptr != NULL) {
-                        counter = count_neighbours(&m, i, j, ptr);
-                        if (counter < 2 || counter > 4) {
-#pragma omp critical(TO_REMOVE)
-                            {
-                                to_remove.push_back(std::make_tuple(i, j, ptr->z));
+                        // If its dead skip
+                        if (ptr->is_dead) {
+                            ptr = ptr->next;
+                            continue;
+                        }
+
+                        x = i;
+                        y = j;
+                        z = ptr->z;
+                        ptr->num_neighbours = 0;
+
+                        _z = pos_mod(z + 1, SIZE);
+                        looped = (_z != z + 1);
+                        if (looped)
+                            to_test = matrix_get_ele(&m, x, y, _z);
+                        else
+                            to_test = ptr->next;
+
+                        if (to_test && to_test->z == _z) {
+                            if (to_test->is_dead == true) {
+                                to_test->num_neighbours++;
+                            } else {
+                                ptr->num_neighbours++;
+                            }
+                        } else {
+                            if (!looped) {
+                                matrix_insert_dead_front(_z, ptr);
+                            } else {
+                                matrix_insert(&m, x, y, _z, true, 1);
+                            }
+                        }
+
+                        _z = pos_mod(z - 1, SIZE);
+                        looped = (_z != z - 1);
+                        if (looped)
+                            to_test = matrix_get_ele(&m, x, y, _z);
+                        else
+                            to_test = ptr->prev;
+
+                        if (to_test && to_test->z == _z) {
+                            if (to_test->is_dead == true) {
+                                to_test->num_neighbours++;
+                            } else {
+                                ptr->num_neighbours++;
+                            }
+                        } else {
+                            if (!looped && to_test) {
+                                matrix_insert_dead_front(_z, to_test);
+                            } else {
+                                matrix_insert(&m, x, y, _z, true, 1);
+                            }
+                        }
+
+                        _x = pos_mod(x + 1, SIZE);
+                        to_test = matrix_get_ele(&m, _x, y, z);
+                        if (to_test) {
+                            if (to_test->is_dead == true) {
+                                to_test->num_neighbours++;
+                            } else {
+                                ptr->num_neighbours++;
+                            }
+                        } else {
+                            matrix_insert(&m, _x, y, z, true, 1);
+                        }
+
+                        _x = pos_mod(x - 1, SIZE);
+                        to_test = matrix_get_ele(&m, _x, y, z);
+                        if (to_test) {
+                            if (to_test->is_dead == true) {
+                                to_test->num_neighbours++;
+                            } else {
+                                ptr->num_neighbours++;
+                            }
+                        } else {
+                            matrix_insert(&m, _x, y, z, true, 1);
+                        }
+
+                        _y = pos_mod(y + 1, SIZE);
+                        to_test = matrix_get_ele(&m, x, _y, z);
+                        if (to_test) {
+                            if (to_test->is_dead == true) {
+                                to_test->num_neighbours++;
+                            } else {
+                                ptr->num_neighbours++;
+                            }
+                        } else {
+                            matrix_insert(&m, x, _y, z, true, 1);
+                        }
+
+                        _y = pos_mod(y - 1, SIZE);
+                        to_test = matrix_get_ele(&m, x, _y, z);
+                        if (to_test) {
+                            if (to_test->is_dead == true) {
+                                to_test->num_neighbours++;
+                            } else {
+                                ptr->num_neighbours++;
+                            }
+                        } else {
+                            matrix_insert(&m, x, _y, z, true, 1);
+                        }
+
+                        ptr = ptr->next;
+                    }
+                }
+            }
+            if (DEBUG) {
+                printf("After inserts.\n");
+                matrix_print(&m);
+            }
+
+#pragma omp for private(i, j, t, ptr, _z, _y, _x, x, y, z, to_test, looped) schedule(dynamic, 100)
+            for (i = 0; i < SIZE; i++) {
+                for (j = 0; j < SIZE; j++) {
+                    ptr = matrix_get(&m, i, j);
+                    // Iterate over every existing z for x and y
+                    while (ptr != NULL) {
+                        // printf("(%d, %d, %d) count: %d\n", i, j, ptr->z, ptr->num_neighbours);
+                        // If its dead skip
+                        if (ptr->is_dead) {
+                            if (ptr->num_neighbours == 2 || ptr->num_neighbours == 3) {
+                                ptr->is_dead = false;
+                            } else {
+                                if (DEBUG)
+                                    printf("%sRemoving (%d, %d, %d)%s\n", RED, i, j, ptr->z, NO_COLOR);
+                                matrix_remove_from_ptr(&m, ptr, i, j);
+                            }
+                        } else {
+                            if (ptr->num_neighbours < 2 || ptr->num_neighbours > 4) {
+                                if (DEBUG)
+                                    printf("%sRemoving (%d, %d, %d)%s\n", RED, i, j, ptr->z, NO_COLOR);
+                                matrix_remove_from_ptr(&m, ptr, i, j);
                             }
                         }
                         ptr = ptr->next;
                     }
                 }
             }
+            if (DEBUG) {
+                printf("After removes.\n");
+                matrix_print(&m);
+            }
 
-            int x, y, z;
-
+            /*
 // Check the dead ones that were neighbours now
 #pragma omp for private(i, x, y, z, t, counter) schedule(dynamic, 100)
             for (i = 0; i < dead_to_check.size(); i++) {
@@ -463,7 +487,6 @@ int main(int argc, char* argv[])
                 // if (DEBUG)
                 //     printf("Dead cell (%d, %d, %d) has %d neighbors.\n", std::get<0>(it.first), std::get<1>(it.first), std::get<2>(it.first), it.second);
             }
-
 #pragma omp for private(i, x, y, z)
             for (i = 0; i < to_remove.size(); i++) {
                 x = std::get<0>(to_remove[i]);
@@ -502,6 +525,7 @@ int main(int argc, char* argv[])
                 if (DEBUG)
                     printf("------------------------\n");
             }
+*/
         }
     }
     end = omp_get_wtime();
