@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/local/bin/bash
 
 if ! make ; then
     exit 1;
@@ -14,14 +14,14 @@ declare -A tests
 #tests[s5e50]=10
 #tests[s20e400]=500
 tests[s150e10k]=1000
-# tests[s200e50k]=1000
-# tests[s50e5k]=300
-# tests[s500e300k]=2000
+#tests[s200e50k]=1000
+#tests[s50e5k]=300
+#tests[s500e300k]=2000
 
-# file_name="life3d life3d-omp"
+#file_name="life3d life3d-omp"
 # file_name="life3d"
 file_name="life3d-omp"
-num_threads=8
+num_threads=1
 
 if [ ! -z "$1" ]; then
 	file_name=$1

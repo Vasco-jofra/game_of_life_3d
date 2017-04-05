@@ -38,3 +38,7 @@ time.log
 # Debug files
 *.dSYM/
 *.su
+
+run_tests.sh
+
+*.sh
