@@ -1,7 +1,6 @@
 .vscode/*
 life3d
 life3d-omp
-tests/our_out/*
 .gdb_history
 time.log
 
@@ -29,7 +28,6 @@ time.log
 
 # Executables
 *.exe
-*.out
 *.app
 *.i*86
 *.x86_64
