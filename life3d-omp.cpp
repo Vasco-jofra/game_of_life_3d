@@ -281,7 +281,7 @@ int main(int argc, char* argv[])
     }
 
     // Finished parsing metadata. Now only need to parse the actual positions
-    Matrix m = make_matrix(SIZE); //@SEE: Why +1?
+    Matrix m = make_matrix(SIZE);
 
     int x, y, z;
     while (fscanf(fp, "%d %d %d", &x, &y, &z) != EOF) {
@@ -292,9 +292,11 @@ int main(int argc, char* argv[])
     // Finished parsing!
     fclose(fp);
 
-    omp_lock_t writelock[SIZE];
+    omp_lock_t lock[SIZE][SIZE];
     for (int i = 0; i < SIZE; i++) {
-        omp_init_lock(&writelock[i]);
+        for (int j = 0; j < SIZE; j++) {
+            omp_init_lock(&lock[i][j]);
+        }
     }
 
     end = omp_get_wtime();
@@ -321,7 +323,7 @@ int main(int argc, char* argv[])
             int _z, _y, _x;
             int z, y, x;
             bool looped;
-#pragma omp for private(i, j, t, ptr, _z, _y, _x, x, y, z, to_test, looped) schedule(dynamic, 100)
+#pragma omp for private(i, j, t, ptr, _z, _y, _x, x, y, z, to_test, looped)
             for (i = 0; i < SIZE; i++) {
                 for (j = 0; j < SIZE; j++) {
                     ptr = matrix_get(&m, i, j);
@@ -338,97 +340,117 @@ int main(int argc, char* argv[])
                         z = ptr->z;
                         ptr->num_neighbours = 0;
 
-                        _z = pos_mod(z + 1, SIZE);
-                        looped = (_z != z + 1);
-                        if (looped)
-                            to_test = matrix_get_ele(&m, x, y, _z);
-                        else
-                            to_test = ptr->next;
+                        omp_set_lock(&lock[x][y]);
+                        {
+                            _z = pos_mod(z + 1, SIZE);
+                            looped = (_z != z + 1);
+                            if (looped)
+                                to_test = matrix_get_ele(&m, x, y, _z);
+                            else
+                                to_test = ptr->next;
 
-                        if (to_test && to_test->z == _z) {
-                            if (to_test->is_dead == true) {
-                                to_test->num_neighbours++;
+                            if (to_test && to_test->z == _z) {
+                                if (to_test->is_dead == true) {
+                                    to_test->num_neighbours++;
+                                } else {
+                                    ptr->num_neighbours++;
+                                }
                             } else {
-                                ptr->num_neighbours++;
+                                if (!looped) {
+                                    matrix_insert_dead_front(_z, ptr);
+                                } else {
+                                    matrix_insert(&m, x, y, _z, true, 1);
+                                }
                             }
-                        } else {
-                            if (!looped) {
-                                matrix_insert_dead_front(_z, ptr);
+
+                            _z = pos_mod(z - 1, SIZE);
+                            looped = (_z != z - 1);
+                            if (looped)
+                                to_test = matrix_get_ele(&m, x, y, _z);
+                            else
+                                to_test = ptr->prev;
+
+                            if (to_test && to_test->z == _z) {
+                                if (to_test->is_dead == true) {
+                                    to_test->num_neighbours++;
+                                } else {
+                                    ptr->num_neighbours++;
+                                }
                             } else {
-                                matrix_insert(&m, x, y, _z, true, 1);
+                                if (!looped && to_test) {
+                                    matrix_insert_dead_front(_z, to_test);
+                                } else {
+                                    matrix_insert(&m, x, y, _z, true, 1);
+                                }
                             }
                         }
-
-                        _z = pos_mod(z - 1, SIZE);
-                        looped = (_z != z - 1);
-                        if (looped)
-                            to_test = matrix_get_ele(&m, x, y, _z);
-                        else
-                            to_test = ptr->prev;
-
-                        if (to_test && to_test->z == _z) {
-                            if (to_test->is_dead == true) {
-                                to_test->num_neighbours++;
-                            } else {
-                                ptr->num_neighbours++;
-                            }
-                        } else {
-                            if (!looped && to_test) {
-                                matrix_insert_dead_front(_z, to_test);
-                            } else {
-                                matrix_insert(&m, x, y, _z, true, 1);
-                            }
-                        }
+                        omp_unset_lock(&lock[x][y]);
 
                         _x = pos_mod(x + 1, SIZE);
-                        to_test = matrix_get_ele(&m, _x, y, z);
-                        if (to_test) {
-                            if (to_test->is_dead == true) {
-                                to_test->num_neighbours++;
+                        omp_set_lock(&lock[_x][y]);
+                        {
+                            to_test = matrix_get_ele(&m, _x, y, z);
+                            if (to_test) {
+                                if (to_test->is_dead == true) {
+                                    to_test->num_neighbours++;
+                                } else {
+                                    ptr->num_neighbours++;
+                                }
                             } else {
-                                ptr->num_neighbours++;
+                                matrix_insert(&m, _x, y, z, true, 1);
                             }
-                        } else {
-                            matrix_insert(&m, _x, y, z, true, 1);
                         }
+                        omp_unset_lock(&lock[_x][y]);
 
                         _x = pos_mod(x - 1, SIZE);
-                        to_test = matrix_get_ele(&m, _x, y, z);
-                        if (to_test) {
-                            if (to_test->is_dead == true) {
-                                to_test->num_neighbours++;
+                        omp_set_lock(&lock[_x][y]);
+                        {
+                            to_test = matrix_get_ele(&m, _x, y, z);
+                            if (to_test) {
+                                if (to_test->is_dead == true) {
+                                    to_test->num_neighbours++;
+                                } else {
+                                    ptr->num_neighbours++;
+                                }
                             } else {
-                                ptr->num_neighbours++;
+                                matrix_insert(&m, _x, y, z, true, 1);
                             }
-                        } else {
-                            matrix_insert(&m, _x, y, z, true, 1);
                         }
+                        omp_unset_lock(&lock[_x][y]);
 
                         _y = pos_mod(y + 1, SIZE);
-                        to_test = matrix_get_ele(&m, x, _y, z);
-                        if (to_test) {
-                            if (to_test->is_dead == true) {
-                                to_test->num_neighbours++;
+                        omp_set_lock(&lock[x][_y]);
+                        {
+                            to_test = matrix_get_ele(&m, x, _y, z);
+                            if (to_test) {
+                                if (to_test->is_dead == true) {
+                                    to_test->num_neighbours++;
+                                } else {
+                                    ptr->num_neighbours++;
+                                }
                             } else {
-                                ptr->num_neighbours++;
+                                matrix_insert(&m, x, _y, z, true, 1);
                             }
-                        } else {
-                            matrix_insert(&m, x, _y, z, true, 1);
                         }
+                        omp_unset_lock(&lock[x][_y]);
 
                         _y = pos_mod(y - 1, SIZE);
-                        to_test = matrix_get_ele(&m, x, _y, z);
-                        if (to_test) {
-                            if (to_test->is_dead == true) {
-                                to_test->num_neighbours++;
+                        omp_set_lock(&lock[x][_y]);
+                        {
+                            to_test = matrix_get_ele(&m, x, _y, z);
+                            if (to_test) {
+                                if (to_test->is_dead == true) {
+                                    to_test->num_neighbours++;
+                                } else {
+                                    ptr->num_neighbours++;
+                                }
                             } else {
-                                ptr->num_neighbours++;
+                                matrix_insert(&m, x, _y, z, true, 1);
                             }
-                        } else {
-                            matrix_insert(&m, x, _y, z, true, 1);
-                        }
 
-                        ptr = ptr->next;
+                            ptr = ptr->next;
+                        }
+                        omp_unset_lock(&lock[x][_y]);
                     }
                 }
             }
@@ -437,7 +459,7 @@ int main(int argc, char* argv[])
                 matrix_print(&m);
             }
 
-#pragma omp for private(i, j, t, ptr, _z, _y, _x, x, y, z, to_test, looped) schedule(dynamic, 100)
+#pragma omp for private(i, j, t, ptr, _z, _y, _x, x, y, z, to_test, looped)
             for (i = 0; i < SIZE; i++) {
                 for (j = 0; j < SIZE; j++) {
                     ptr = matrix_get(&m, i, j);
@@ -468,66 +490,9 @@ int main(int argc, char* argv[])
                 printf("After removes.\n");
                 matrix_print(&m);
             }
-
-            /*
-// Check the dead ones that were neighbours now
-#pragma omp for private(i, x, y, z, t, counter) schedule(dynamic, 100)
-            for (i = 0; i < dead_to_check.size(); i++) {
-                x = std::get<0>(dead_to_check[i]);
-                y = std::get<1>(dead_to_check[i]);
-                z = std::get<2>(dead_to_check[i]);
-
-                counter = count_neighbours_of_dead(&m, x, y, z);
-                if (counter == 2 || counter == 3) {
-#pragma omp critical(TO_INSERT)
-                    {
-                        to_insert.push_back(std::make_tuple(x, y, z));
-                    }
-                }
-                // if (DEBUG)
-                //     printf("Dead cell (%d, %d, %d) has %d neighbors.\n", std::get<0>(it.first), std::get<1>(it.first), std::get<2>(it.first), it.second);
-            }
-#pragma omp for private(i, x, y, z)
-            for (i = 0; i < to_remove.size(); i++) {
-                x = std::get<0>(to_remove[i]);
-                y = std::get<1>(to_remove[i]);
-                z = std::get<2>(to_remove[i]);
-
-                omp_set_lock(&writelock[x]);
-                matrix_remove(&m, x, y, z);
-                omp_unset_lock(&writelock[x]);
-            }
-
-#pragma omp for private(i, x, y, z)
-            for (i = 0; i < to_insert.size(); i++) {
-                x = std::get<0>(to_insert[i]);
-                y = std::get<1>(to_insert[i]);
-                z = std::get<2>(to_insert[i]);
-
-                omp_set_lock(&writelock[x]);
-
-                if (!matrix_ele_exists(&m, x, y, z)) {
-                    matrix_insert(&m, x, y, z);
-                }
-
-                omp_unset_lock(&writelock[x]);
-            }
-
-#pragma omp single
-            {
-                // Clear all the structures for the next iteration
-                to_insert.clear();
-                to_remove.clear();
-                dead_to_check.clear();
-
-                // matrix_print(&m);
-
-                if (DEBUG)
-                    printf("------------------------\n");
-            }
-*/
         }
     }
+
     end = omp_get_wtime();
     process_time = end - start;
 
