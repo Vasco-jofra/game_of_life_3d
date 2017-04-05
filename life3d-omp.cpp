@@ -23,6 +23,8 @@ typedef std::tuple<int, int, int> Vector3;
 // Node representing elements of sparse matrix
 struct node {
     int z;
+    int num_neighbours;
+    bool is_dead;
     struct node *next, *prev;
 };
 
