@@ -206,8 +206,8 @@ int main(int argc, char* argv[])
 
     // Create SIZE*SIZE locks and initialize them
     omp_lock_t lock[SIZE][SIZE];
-    for (short i = 0; i < SIZE; i++) {
-        for (short j = 0; j < SIZE; j++) {
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
             omp_init_lock(&lock[i][j]);
         }
     }
