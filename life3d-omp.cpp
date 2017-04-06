@@ -7,21 +7,21 @@ typedef std::tuple<int, int, int> Vector3;
 
 // Node representing elements of the sparse matrix
 struct node {
-    int z; // The z value
-    int num_neighbours; // The # of neighbours (not always right, only when we need it)
+    short z; // The z value
+    short num_neighbours; // The # of neighbours (not always right, only when we need it)
     bool is_dead; // Is it a dead or an alive node?
     struct node *next, *prev; // Double linked list pointers
 };
 typedef struct node* z_list;
 
 struct matrix_struct {
-    int side;
+    short side;
     z_list* data;
 };
 typedef matrix_struct Matrix;
 
 // Returns a initialized matrix
-inline Matrix make_matrix(int side)
+inline Matrix make_matrix(short side)
 {
     Matrix m;
     m.side = side;
@@ -30,13 +30,13 @@ inline Matrix make_matrix(int side)
 }
 
 // Returns the head of the matric in the position x and y. Can be NULL.
-inline z_list matrix_get(Matrix* m, int x, int y)
+inline z_list matrix_get(Matrix* m, short x, short y)
 {
     return m->data[x + (y * m->side)];
 }
 
 // Returns the element with the x, y, z passed. NULL if it doesn't exist.
-inline z_list matrix_get_ele(Matrix* m, int x, int y, int z)
+inline z_list matrix_get_ele(Matrix* m, short x, short y, short z)
 {
     z_list ptr = matrix_get(m, x, y);
 
@@ -53,7 +53,7 @@ inline z_list matrix_get_ele(Matrix* m, int x, int y, int z)
 }
 
 // Insert a new element in the matrix (ordered)
-inline void matrix_insert(Matrix* m, int x, int y, int z, bool is_dead, int num_nei)
+inline void matrix_insert(Matrix* m, short x, short y, short z, bool is_dead, short num_nei)
 {
     z_list new_el = (z_list)malloc(sizeof(struct node));
     new_el->z = z;
@@ -91,7 +91,7 @@ inline void matrix_insert(Matrix* m, int x, int y, int z, bool is_dead, int num_
 }
 
 // Inserts a dead node in front of the pointer passed in the arguments
-inline void matrix_insert_dead_front(int z, z_list ptr)
+inline void matrix_insert_dead_front(short z, z_list ptr)
 {
     z_list new_el = (z_list)malloc(sizeof(struct node));
     new_el->z = z;
@@ -106,7 +106,7 @@ inline void matrix_insert_dead_front(int z, z_list ptr)
 }
 
 // Remove the given pointer in the arguments from the matrix.
-inline void matrix_remove_from_ptr(Matrix* m, z_list ptr, int x, int y)
+inline void matrix_remove_from_ptr(Matrix* m, z_list ptr, short x, short y)
 {
     if (ptr->next) {
         ptr->next->prev = ptr->prev;
@@ -123,7 +123,7 @@ inline void matrix_remove_from_ptr(Matrix* m, z_list ptr, int x, int y)
 }
 
 // Remove from the matrix. We need to search for the z in the linked list
-inline void matrix_remove(Matrix* m, int x, int y, int z)
+inline void matrix_remove(Matrix* m, short x, short y, short z)
 {
     z_list ptr = matrix_get(m, x, y);
 
@@ -139,19 +139,19 @@ inline void matrix_remove(Matrix* m, int x, int y, int z)
 // Print the live nodes in the matrix (the matrix only contains alive nodes at this point, so print all nodes)
 void matrix_print_live(Matrix* m)
 {
-    int SIZE = m->side;
-    for (int i = 0; i < SIZE; i++) {
-        for (int j = 0; j < SIZE; j++) {
+    short SIZE = m->side;
+    for (short i = 0; i < SIZE; i++) {
+        for (short j = 0; j < SIZE; j++) {
             z_list ptr = matrix_get(m, i, j);
             while (ptr != NULL) {
-                printf("%d %d %d\n", i, j, ptr->z);
+                printf("%hd %hd %hd\n", i, j, ptr->z);
                 ptr = ptr->next;
             }
         }
     }
 }
 
-inline int pos_mod(int val, int mod)
+inline short pos_mod(short val, short mod)
 {
     if (val >= mod)
         return val - mod;
@@ -188,8 +188,8 @@ int main(int argc, char* argv[])
         perror("[ERROR]");
         return -1;
     }
-    int SIZE;
-    if (fscanf(fp, "%d", &SIZE) == EOF) {
+    short SIZE;
+    if (fscanf(fp, "%hd", &SIZE) == EOF) {
         printf("[ERROR] Unable to read the size.\n");
         return -1;
     }
@@ -197,8 +197,8 @@ int main(int argc, char* argv[])
     // Finished parsing metadata. Now only need to parse the actual positions
     Matrix m = make_matrix(SIZE);
 
-    int x, y, z;
-    while (fscanf(fp, "%d %d %d", &x, &y, &z) != EOF) {
+    short x, y, z;
+    while (fscanf(fp, "%hd %hd %hd", &x, &y, &z) != EOF) {
         matrix_insert(&m, x, y, z, false, -1);
     }
     // Finished parsing!
@@ -206,8 +206,8 @@ int main(int argc, char* argv[])
 
     // Create SIZE*SIZE locks and initialize them
     omp_lock_t lock[SIZE][SIZE];
-    for (int i = 0; i < SIZE; i++) {
-        for (int j = 0; j < SIZE; j++) {
+    for (short i = 0; i < SIZE; i++) {
+        for (short j = 0; j < SIZE; j++) {
             omp_init_lock(&lock[i][j]);
         }
     }
@@ -225,7 +225,8 @@ int main(int argc, char* argv[])
         for (gen = 0; gen < generations; gen++) {
             z_list ptr, to_test;
             Vector3 t;
-            int i, j, _z, _y, _x, z, y, x;
+            int32_t i, j;
+            short z, _z, _y, _x, y, x;
             bool looped;
 
 #pragma omp for private(i, j, t, ptr, _z, _y, _x, x, y, z, to_test, looped) collapse(2)
