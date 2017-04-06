@@ -1,41 +1,27 @@
-#include <algorithm>
-#include <iostream>
 #include <omp.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-#include <string>
-#include <unordered_map>
-#include <vector>
+#include <tuple>
 
-#define MAX_SIZE 10000
-bool DEBUG = false;
-
-const char* RED = "\033[31m";
-const char* GREEN = "\033[32m";
-const char* YELLOW = "\033[33m";
-const char* BLUE = "\033[34m";
-const char* NO_COLOR = "\033[0m";
-
-// Define the hash for tuple<int, int, int> so we can use it in the hash_map
 typedef std::tuple<int, int, int> Vector3;
 
-// Node representing elements of sparse matrix
+// Node representing elements of the sparse matrix
 struct node {
-    int z;
-    int num_neighbours;
-    bool is_dead;
-    struct node *next, *prev;
+    int z; // The z value
+    int num_neighbours; // The # of neighbours (not always right, only when we need it)
+    bool is_dead; // Is it a dead or an alive node?
+    struct node *next, *prev; // Double linked list pointers
 };
-
 typedef struct node* z_list;
 
-typedef struct matrix_str {
+struct matrix_struct {
     int side;
     z_list* data;
-} Matrix;
+};
+typedef matrix_struct Matrix;
 
-Matrix make_matrix(int side)
+// Returns a initialized matrix
+inline Matrix make_matrix(int side)
 {
     Matrix m;
     m.side = side;
@@ -43,16 +29,32 @@ Matrix make_matrix(int side)
     return m;
 }
 
-z_list matrix_get(Matrix* m, int x, int y)
+// Returns the head of the matric in the position x and y. Can be NULL.
+inline z_list matrix_get(Matrix* m, int x, int y)
 {
     return m->data[x + (y * m->side)];
 }
 
-void matrix_insert(Matrix* m, int x, int y, int z, bool is_dead, int num_nei)
+// Returns the element with the x, y, z passed. NULL if it doesn't exist.
+inline z_list matrix_get_ele(Matrix* m, int x, int y, int z)
 {
-    if (DEBUG)
-        printf("%sInserting (%d, %d, %d) %s %s\n", GREEN, x, y, z, is_dead ? "dead" : "alive", NO_COLOR);
+    z_list ptr = matrix_get(m, x, y);
 
+    while (ptr != NULL) {
+        if (ptr->z == z)
+            return ptr;
+        else if (ptr->z > z)
+            return NULL;
+
+        ptr = ptr->next;
+    }
+
+    return NULL;
+}
+
+// Insert a new element in the matrix (ordered)
+inline void matrix_insert(Matrix* m, int x, int y, int z, bool is_dead, int num_nei)
+{
     z_list new_el = (z_list)malloc(sizeof(struct node));
     new_el->z = z;
     new_el->num_neighbours = num_nei;
@@ -66,7 +68,7 @@ void matrix_insert(Matrix* m, int x, int y, int z, bool is_dead, int num_nei)
         // Case where there are no nodes yet in the linked list
         m->data[x + (y * m->side)] = new_el;
     } else if (z < ptr->z) {
-        // We are the head
+        // We are the new head
         new_el->next = ptr;
         ptr->prev = new_el;
         m->data[x + (y * m->side)] = new_el;
@@ -88,7 +90,8 @@ void matrix_insert(Matrix* m, int x, int y, int z, bool is_dead, int num_nei)
     }
 }
 
-void matrix_insert_dead_front(int z, z_list ptr)
+// Inserts a dead node in front of the pointer passed in the arguments
+inline void matrix_insert_dead_front(int z, z_list ptr)
 {
     z_list new_el = (z_list)malloc(sizeof(struct node));
     new_el->z = z;
@@ -102,11 +105,9 @@ void matrix_insert_dead_front(int z, z_list ptr)
     ptr->next = new_el;
 }
 
-void matrix_remove_from_ptr(Matrix* m, z_list ptr, int x, int y)
+// Remove the given pointer in the arguments from the matrix.
+inline void matrix_remove_from_ptr(Matrix* m, z_list ptr, int x, int y)
 {
-    /*if (DEBUG)
-        printf("%sRemoving (%d, %d, %d)%s\n", RED, x, y, z, NO_COLOR);*/
-
     if (ptr->next) {
         ptr->next->prev = ptr->prev;
     }
@@ -121,7 +122,8 @@ void matrix_remove_from_ptr(Matrix* m, z_list ptr, int x, int y)
     ptr = NULL;
 }
 
-void matrix_remove(Matrix* m, int x, int y, int z)
+// Remove from the matrix. We need to search for the z in the linked list
+inline void matrix_remove(Matrix* m, int x, int y, int z)
 {
     z_list ptr = matrix_get(m, x, y);
 
@@ -132,53 +134,9 @@ void matrix_remove(Matrix* m, int x, int y, int z)
         }
         ptr = ptr->next;
     }
-    if (DEBUG)
-        printf("Tried to remove, but entry (%d, %d, %d) was not found.\n", x, y, z);
 }
 
-void matrix_print(Matrix* m)
-{
-    int SIZE = m->side;
-    printf("MATRIX: \n");
-    for (int i = 0; i < SIZE; i++) {
-        for (int j = 0; j < SIZE; j++) {
-            printf("%d %d (", i, j);
-
-            z_list ptr = matrix_get(m, i, j);
-            while (ptr != NULL) {
-                printf("%s%d%s%s", ptr->is_dead ? RED : GREEN, ptr->z, ptr->next == NULL ? "" : ", ", NO_COLOR);
-                ptr = ptr->next;
-            }
-            printf(")\n");
-        }
-    }
-}
-
-void matrix_print_backwards(Matrix* m)
-{
-    int SIZE = m->side;
-    printf("MATRIX: \n");
-    for (int i = 0; i < SIZE; i++) {
-        for (int j = 0; j < SIZE; j++) {
-            printf("%d %d (", i, j);
-            fflush(stdout);
-
-            z_list ptr = matrix_get(m, i, j);
-
-            // Go to the end of the list
-            while (ptr && ptr->next) {
-                ptr = ptr->next;
-            }
-            while (ptr) {
-                printf("%d%s", ptr->z, ptr->prev == NULL ? "" : ", ");
-                fflush(stdout);
-                ptr = ptr->prev;
-            }
-            printf(")\n");
-        }
-    }
-}
-
+// Print the live nodes in the matrix (the matrix only contains alive nodes at this point, so print all nodes)
 void matrix_print_live(Matrix* m)
 {
     int SIZE = m->side;
@@ -201,52 +159,10 @@ inline int pos_mod(int val, int mod)
         return val + mod;
     else
         return val;
+
+    // The method above is faster!
     // return ((val % mod) + mod) % mod;
-}
-
-bool matrix_ele_exists(Matrix* m, int x, int y, int z)
-{
-    z_list ptr = matrix_get(m, x, y);
-
-    while (ptr != NULL) {
-        if (ptr->z == z)
-            return !ptr->is_dead;
-        ptr = ptr->next;
-    }
-
-    return false;
-}
-
-z_list matrix_get_ele(Matrix* m, int x, int y, int z)
-{
-    z_list ptr = matrix_get(m, x, y);
-
-    while (ptr != NULL) {
-        if (ptr->z == z)
-            return ptr;
-        else if (ptr->z > z)
-            return NULL;
-
-        ptr = ptr->next;
-    }
-
-    return NULL;
-}
-
-size_t matrix_size(Matrix* m)
-{
-    int cnt = 0;
-    int SIZE = m->side;
-    for (int i = 0; i < SIZE; i++) {
-        for (int j = 0; j < SIZE; j++) {
-            z_list ptr = matrix_get(m, i, j);
-            while (ptr != NULL) {
-                cnt++;
-                ptr = ptr->next;
-            }
-        }
-    }
-    return cnt;
+    // return (val % mod) + (mod * (val < 0));
 }
 
 int main(int argc, char* argv[])
@@ -260,8 +176,6 @@ int main(int argc, char* argv[])
     }
     char* input_file = argv[1];
     int generations = atoi(argv[2]);
-    if (DEBUG)
-        printf("Input file: '%s'\nGenerations: %d\n", input_file, generations);
 
     if (generations <= 0) {
         printf("[ERROR] Number of generations must be bigger that 0. Got: '%d'\n", generations);
@@ -285,13 +199,12 @@ int main(int argc, char* argv[])
 
     int x, y, z;
     while (fscanf(fp, "%d %d %d", &x, &y, &z) != EOF) {
-        if (DEBUG)
-            printf("GOT: %d %d %d\n", x, y, z);
         matrix_insert(&m, x, y, z, false, -1);
     }
     // Finished parsing!
     fclose(fp);
 
+    // Create SIZE*SIZE locks and initialize them
     omp_lock_t lock[SIZE][SIZE];
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j < SIZE; j++) {
@@ -306,27 +219,20 @@ int main(int argc, char* argv[])
     //-----------------
     //--- MAIN LOOP ---
     //-----------------
-    int gen = 0;
+    int gen;
 #pragma omp parallel private(gen)
     {
         for (gen = 0; gen < generations; gen++) {
-#pragma omp single
-            {
-                if (DEBUG)
-                    printf("------------------------\n");
-                if (DEBUG)
-                    printf(" *** Starting generation %d ***\n", gen);
-            }
-            int i, j;
             z_list ptr, to_test;
             Vector3 t;
-            int _z, _y, _x;
-            int z, y, x;
+            int i, j, _z, _y, _x, z, y, x;
             bool looped;
-#pragma omp for private(i, j, t, ptr, _z, _y, _x, x, y, z, to_test, looped)
+
+#pragma omp for private(i, j, t, ptr, _z, _y, _x, x, y, z, to_test, looped) collapse(2)
             for (i = 0; i < SIZE; i++) {
                 for (j = 0; j < SIZE; j++) {
                     ptr = matrix_get(&m, i, j);
+
                     // Iterate over every existing z for x and y
                     while (ptr != NULL) {
                         // If its dead skip
@@ -335,6 +241,7 @@ int main(int argc, char* argv[])
                             continue;
                         }
 
+                        // PROCESS AN ALIVE NODE
                         x = i;
                         y = j;
                         z = ptr->z;
@@ -454,41 +361,27 @@ int main(int argc, char* argv[])
                     }
                 }
             }
-            if (DEBUG) {
-                printf("After inserts.\n");
-                matrix_print(&m);
-            }
 
-#pragma omp for private(i, j, t, ptr, _z, _y, _x, x, y, z, to_test, looped)
+#pragma omp for private(i, j, t, ptr, _z, _y, _x, x, y, z, to_test, looped) collapse(2)
             for (i = 0; i < SIZE; i++) {
                 for (j = 0; j < SIZE; j++) {
                     ptr = matrix_get(&m, i, j);
                     // Iterate over every existing z for x and y
                     while (ptr != NULL) {
-                        // printf("(%d, %d, %d) count: %d\n", i, j, ptr->z, ptr->num_neighbours);
-                        // If its dead skip
                         if (ptr->is_dead) {
                             if (ptr->num_neighbours == 2 || ptr->num_neighbours == 3) {
                                 ptr->is_dead = false;
                             } else {
-                                if (DEBUG)
-                                    printf("%sRemoving (%d, %d, %d)%s\n", RED, i, j, ptr->z, NO_COLOR);
                                 matrix_remove_from_ptr(&m, ptr, i, j);
                             }
                         } else {
                             if (ptr->num_neighbours < 2 || ptr->num_neighbours > 4) {
-                                if (DEBUG)
-                                    printf("%sRemoving (%d, %d, %d)%s\n", RED, i, j, ptr->z, NO_COLOR);
                                 matrix_remove_from_ptr(&m, ptr, i, j);
                             }
                         }
                         ptr = ptr->next;
                     }
                 }
-            }
-            if (DEBUG) {
-                printf("After removes.\n");
-                matrix_print(&m);
             }
         }
     }
