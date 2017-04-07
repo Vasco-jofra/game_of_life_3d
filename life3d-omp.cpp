@@ -205,11 +205,9 @@ int main(int argc, char* argv[])
     fclose(fp);
 
     // Create SIZE*SIZE locks and initialize them
-    omp_lock_t lock[SIZE][SIZE];
+    omp_lock_t lock[SIZE];
     for (int i = 0; i < SIZE; i++) {
-        for (int j = 0; j < SIZE; j++) {
-            omp_init_lock(&lock[i][j]);
-        }
+        omp_init_lock(&lock[i]);
     }
 
     end = omp_get_wtime();
@@ -248,7 +246,7 @@ int main(int argc, char* argv[])
                         z = ptr->z;
                         ptr->num_neighbours = 0;
 
-                        omp_set_lock(&lock[x][y]);
+                        omp_set_lock(&lock[y]);
                         {
                             _z = pos_mod(z + 1, SIZE);
                             looped = (_z != z + 1);
@@ -292,10 +290,10 @@ int main(int argc, char* argv[])
                                 }
                             }
                         }
-                        omp_unset_lock(&lock[x][y]);
+                        omp_unset_lock(&lock[y]);
 
                         _x = pos_mod(x + 1, SIZE);
-                        omp_set_lock(&lock[_x][y]);
+                        omp_set_lock(&lock[y]);
                         {
                             to_test = matrix_get_ele(&m, _x, y, z);
                             if (to_test) {
@@ -308,10 +306,10 @@ int main(int argc, char* argv[])
                                 matrix_insert(&m, _x, y, z, true, 1);
                             }
                         }
-                        omp_unset_lock(&lock[_x][y]);
+                        omp_unset_lock(&lock[y]);
 
                         _x = pos_mod(x - 1, SIZE);
-                        omp_set_lock(&lock[_x][y]);
+                        omp_set_lock(&lock[y]);
                         {
                             to_test = matrix_get_ele(&m, _x, y, z);
                             if (to_test) {
@@ -324,10 +322,10 @@ int main(int argc, char* argv[])
                                 matrix_insert(&m, _x, y, z, true, 1);
                             }
                         }
-                        omp_unset_lock(&lock[_x][y]);
+                        omp_unset_lock(&lock[y]);
 
                         _y = pos_mod(y + 1, SIZE);
-                        omp_set_lock(&lock[x][_y]);
+                        omp_set_lock(&lock[_y]);
                         {
                             to_test = matrix_get_ele(&m, x, _y, z);
                             if (to_test) {
@@ -340,10 +338,10 @@ int main(int argc, char* argv[])
                                 matrix_insert(&m, x, _y, z, true, 1);
                             }
                         }
-                        omp_unset_lock(&lock[x][_y]);
+                        omp_unset_lock(&lock[_y]);
 
                         _y = pos_mod(y - 1, SIZE);
-                        omp_set_lock(&lock[x][_y]);
+                        omp_set_lock(&lock[_y]);
                         {
                             to_test = matrix_get_ele(&m, x, _y, z);
                             if (to_test) {
@@ -358,7 +356,7 @@ int main(int argc, char* argv[])
 
                             ptr = ptr->next;
                         }
-                        omp_unset_lock(&lock[x][_y]);
+                        omp_unset_lock(&lock[_y]);
                     }
                 }
             }

@@ -46,7 +46,7 @@ if __name__ == "__main__":
         i += 1
 
     print "HEY"
-    file_name = PATH + PREFIX + "_%d_%d.in" % (side, initial_cell_count)
+    file_name = PATH + PREFIX + "_s%de%d.in" % (side, initial_cell_count)
     with open(file_name, "w") as f:
         f.write("%d\n" % side)
         for c in cells:
