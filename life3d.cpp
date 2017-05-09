@@ -13,10 +13,10 @@ struct node {
     short z; // The z value
     short num_neighbours; // The # of neighbours (not always right, only when we need it)
     bool is_dead; // Is it a dead or an alive node?
-    /*bool operator<(const struct node& rhs) const
+    bool operator<(const struct node& rhs) const
     {
         return z < rhs.z;
-    }*/
+    }
 };
 
 void print_node(struct node* n)
@@ -61,9 +61,6 @@ void da_resize(dynamic_array* da, size_t new_size)
 {
     assert(da);
 
-    if (new_size == da->size)
-        return;
-
     da->size = new_size;
     da->data = realloc(da->data, new_size * da->step);
     // printf("Reallocating to size %d\n", da->size);
@@ -72,7 +69,7 @@ void da_resize(dynamic_array* da, size_t new_size)
 void da_insert(dynamic_array* da, struct node* to_insert)
 {
     assert(da);
-    printf("Inserting in da '%p'\n", da);
+    // printf("Inserting in da '%p'\n", da);
 
     if (da->used == da->size) {
         da_resize(da, da->size * 2);
@@ -87,7 +84,7 @@ void da_delete_at(dynamic_array* da, size_t i)
 {
     assert(da);
 
-    printf("Deleting in da '%p' at: %lu\n", da, i);
+    // printf("Deleting in da '%p' at: %lu\n", da, i);
     if (i >= da->used) { // i < 0  is always false, cause unsigned
         printf("Invalid delete: index smaller or larger than the array size!\n");
         return;
@@ -190,7 +187,7 @@ inline Matrix make_matrix(short side)
     return m;
 }
 
-// Returns the head of the matrix in the position x and y. Can be NULL.
+// Returns the head of the matrix in the pos\ition x and y. Can be NULL.
 inline dynamic_array* matrix_get(Matrix* m, short x, short y)
 {
     return m->data[x + (y * m->side)];
@@ -200,7 +197,7 @@ inline dynamic_array* matrix_get(Matrix* m, short x, short y)
 inline struct node* matrix_get_ele(Matrix* m, short x, short y, short z)
 {
     dynamic_array* da = matrix_get(m, x, y);
-    if (!da)  {
+    if (!da) {
         return NULL;
     }
 
@@ -233,10 +230,9 @@ inline void matrix_remove(Matrix* m, short x, short y, short z)
         return;
     }
     int pos = da_find_z(da, z);
-    printf("Trying to delete %hd %hd %hd\n", x, y, z);
+    //printf("Trying to delete %hd %hd %hd\n", x, y, z);
     if (pos != -1) {
         da_delete_at(da, pos);
-        // matrix_print(m);
     }
 }
 
@@ -249,7 +245,7 @@ void matrix_print_live(Matrix* m) {
             if (da != NULL) {
                 struct node* ptr = ((struct node*)da->data);
                 // Kinda sucks to sort here, but oh well
-                // std::sort(ptr, (ptr + da->used));
+                std::sort(ptr, (ptr + da->used));
                 for (size_t k = 0; k < da->used; k++) {
                     printf("%hd %hd %hd\n", i, j, ptr->z);
                     ptr++;
@@ -336,8 +332,6 @@ int main(int argc, char* argv[])
     init_time = end - start;
     start = omp_get_wtime();
 
-    matrix_print_live(&m);
-    matrix_print(&m);
     /*dynamic_array* T = da_make_ptr(8);
 
     struct node n = {0, 0, false};
@@ -372,6 +366,10 @@ int main(int argc, char* argv[])
         int32_t i, j;
         short z, _z, _y, _x, y, x;
 
+        // printf("==============================================================\n");
+        // printf("==================== BEFORE INSERTING ========================\n");
+        // printf("==============================================================\n");
+        // matrix_print(&m);
         for (i = 0; i < SIZE; i++) {
             for (j = 0; j < SIZE; j++) {
                 da = matrix_get(&m, i, j);
@@ -379,9 +377,11 @@ int main(int argc, char* argv[])
                     continue;
                 }
 
-                ptr = ((struct node*)da->data);
+                size_t limit = da->used;
                 // Iterate over every existing z for x and y
-                for (size_t k = 0; k < da->used; k++, ptr++) {
+                for (size_t k = 0; k < limit; k++) {
+                    ptr = ((struct node*)da->data) + k;
+
                     // If its dead skip
                     if (ptr->is_dead) {
                         continue;
@@ -403,11 +403,11 @@ int main(int argc, char* argv[])
                         }
                     } else {
                         matrix_insert(&m, x, y, _z, true, 1);
+                        ptr = ((struct node*)da->data) + k;
                     }
 
                     _z = pos_mod(z - 1, SIZE);
                     to_test = matrix_get_ele(&m, x, y, _z);
-
                     if (to_test) {
                         if (to_test->is_dead == true) {
                             to_test->num_neighbours++;
@@ -416,6 +416,7 @@ int main(int argc, char* argv[])
                         }
                     } else {
                         matrix_insert(&m, x, y, _z, true, 1);
+                        ptr = ((struct node*)da->data) + k;
                     }
 
                     _x = pos_mod(x + 1, SIZE);
@@ -428,6 +429,7 @@ int main(int argc, char* argv[])
                         }
                     } else {
                         matrix_insert(&m, _x, y, z, true, 1);
+                        ptr = ((struct node*)da->data) + k;
                     }
 
                     _x = pos_mod(x - 1, SIZE);
@@ -440,6 +442,7 @@ int main(int argc, char* argv[])
                         }
                     } else {
                         matrix_insert(&m, _x, y, z, true, 1);
+                        ptr = ((struct node*)da->data) + k;
                     }
 
                     _y = pos_mod(y + 1, SIZE);
@@ -452,6 +455,7 @@ int main(int argc, char* argv[])
                         }
                     } else {
                         matrix_insert(&m, x, _y, z, true, 1);
+                        ptr = ((struct node*)da->data) + k;
                     }
 
                     _y = pos_mod(y - 1, SIZE);
@@ -464,31 +468,37 @@ int main(int argc, char* argv[])
                         }
                     } else {
                         matrix_insert(&m, x, _y, z, true, 1);
+                        ptr = ((struct node*)da->data) + k;
                     }
                 }
             }
         }
 
-        matrix_print(&m);
+        // printf("=============================================================\n");
+        // printf("==================== BEFORE DELETING ========================\n");
+        // printf("=============================================================\n");
+        // matrix_print(&m);
         for (i = 0; i < SIZE; i++) {
             for (j = 0; j < SIZE; j++) {
                 da = matrix_get(&m, i, j);
                 if (!da) {
                     continue;
                 }
-                ptr = ((struct node*)da->data + da->used - 1);
 
                 // Iterate over every existing z for x and y
-                for (int k = (int) da->used - 1; k >= 0; k--, ptr--) {
+                for (int k = (int) da->used - 1; k >= 0; k--) {
+                    ptr = ((struct node*)da->data) + k;
                     if (ptr->is_dead) {
                         if (ptr->num_neighbours == 2 || ptr->num_neighbours == 3) {
                             ptr->is_dead = false;
                         } else {
                             matrix_remove(&m, i, j, ptr->z);
+                            ptr = ((struct node*)da->data) + k;
                         }
                     } else {
                         if (ptr->num_neighbours < 2 || ptr->num_neighbours > 4) {
                             matrix_remove(&m, i, j, ptr->z);
+                            ptr = ((struct node*)da->data) + k;
                         }
                     }
                 }
@@ -503,8 +513,22 @@ int main(int argc, char* argv[])
     //--- END ---
     //-----------
     // Output the result
-    matrix_print(&m);
+    // matrix_print(&m);
     matrix_print_live(&m);
+
+    // Free all (uneccessary)
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            dynamic_array *da = matrix_get(&m, i, j);
+            if (!da) {
+                continue;
+            }
+            da_free(da);
+            free(da);
+            da = NULL;
+        }
+    }
+    free(m.data);
 
     // Write the time log to a file
     FILE* out_fp = fopen("time.log", "w");
