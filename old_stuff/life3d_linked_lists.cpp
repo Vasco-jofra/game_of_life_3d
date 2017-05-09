@@ -1,170 +1,22 @@
 #include <omp.h>
 #include <stdio.h>
 #include <string.h>
-#include <assert.h>
 #include <tuple>
-#include <algorithm>
-
-#define MAX(a, b) (((a) > (b)) ? (a) : (b))
 
 typedef std::tuple<int, int, int> Vector3;
+
 // Node representing elements of the sparse matrix
 struct node {
     short z; // The z value
     short num_neighbours; // The # of neighbours (not always right, only when we need it)
     bool is_dead; // Is it a dead or an alive node?
-    bool operator<(const struct node& rhs) const
-    {
-        return z < rhs.z;
-    }
+    struct node *next, *prev; // Double linked list pointers
 };
+typedef struct node* z_list;
 
-void print_node(struct node* n)
-{
-    printf("{z: %hd, num_nei: %hd, is_dead: %s}\n", n->z, n->num_neighbours, n->is_dead ? "true" : "false");
-}
-
-typedef struct da_struct {
-    size_t initial_size;
-
-    void* data;
-    size_t used;
-    size_t size;
-    size_t step; // Size of an element
-} dynamic_array;
-
-void da_init(dynamic_array* da, size_t initial_size)
-{
-    da->initial_size = initial_size;
-    da->step = sizeof(struct node);
-    da->used = 0;
-
-    da->size = da->initial_size;
-    da->data = realloc(NULL, da->initial_size * da->step);
-}
-
-dynamic_array da_make(size_t initial_size)
-{
-    dynamic_array da;
-    da_init(&da, MAX(4, initial_size));
-    return da;
-}
-
-dynamic_array* da_make_ptr(size_t initial_size)
-{
-    dynamic_array* da = (dynamic_array*) malloc(sizeof(dynamic_array));
-    da_init(da, MAX(4, initial_size));
-    return da;
-}
-
-void da_resize(dynamic_array* da, size_t new_size)
-{
-    assert(da);
-
-    if (new_size == da->size)
-        return;
-
-    da->size = new_size;
-    da->data = realloc(da->data, new_size * da->step);
-    // printf("Reallocating to size %d\n", da->size);
-}
-
-void da_insert(dynamic_array* da, struct node* to_insert)
-{
-    assert(da);
-
-    if (da->used == da->size) {
-        da_resize(da, da->size * 2);
-    }
-
-    struct node* dest = ((struct node*)da->data) + da->used;
-    memcpy(dest, to_insert, da->step);
-    da->used++;
-}
-
-void da_delete_at(dynamic_array* da, size_t i)
-{
-    if (i >= da->used) { // i < 0  is always false, cause unsigned
-        printf("Invalid delete: index smaller or larger than the array size!\n");
-        return;
-    }
-
-    da->used--;
-
-    struct node* dest = ((struct node*)da->data) + i;
-    struct node* src = ((struct node*)da->data) + da->used;
-    memcpy(dest, src, da->step);
-
-    if (da->size > da->initial_size && da->used <= da->size / 4) {
-        da_resize(da, da->size / 2);
-    }
-}
-
-void da_free(dynamic_array* da)
-{
-    assert(da);
-
-    if (da->data) {
-        free(da->data);
-        da->data = NULL;
-        da->used = 0;
-        da->size = 0;
-    }
-}
-
-void da_print(dynamic_array* da)
-{
-    assert(da);
-
-    printf("************************\n");
-    printf("size: %lu\n", da->size);
-    printf("used: %lu\n", da->used);
-    printf("data:\n");
-
-    size_t i;
-    for (i = 0; i < da->used; i++) {
-        struct node* ptr = ((struct node*)da->data) + i;
-        printf("  ");
-        print_node(ptr);
-    }
-
-    printf("\n");
-    printf("************************\n");
-}
-
-int da_empty(dynamic_array* da)
-{
-    assert(da);
-
-    return da->used;
-}
-
-void da_clear(dynamic_array* da)
-{
-    assert(da);
-
-    da->used = 0;
-    da_resize(da, da->initial_size);
-}
-
-int da_find_z(dynamic_array* da, int test_z)
-{
-    assert(da);
-
-    for (size_t i = 0; i < da->used; i++) {
-        struct node* ptr = ((struct node*)da->data) + i;
-        if (ptr->z == test_z) {
-            return i;
-        }
-    }
-    return -1;
-}
-// ############################################################
-// ######################### MATRIX ###########################
-// ############################################################
 struct matrix_struct {
     short side;
-    dynamic_array** data;
+    z_list* data;
 };
 typedef matrix_struct Matrix;
 
@@ -173,49 +25,114 @@ inline Matrix make_matrix(short side)
 {
     Matrix m;
     m.side = side;
-    m.data = (dynamic_array**) calloc(side * side, sizeof(dynamic_array*));
+    m.data = (z_list*)calloc(side * side, sizeof(z_list));
     return m;
 }
 
-// Returns the head of the matrix in the position x and y. Can be NULL.
-inline dynamic_array* matrix_get(Matrix* m, short x, short y)
+// Returns the head of the matric in the position x and y. Can be NULL.
+inline z_list matrix_get(Matrix* m, short x, short y)
 {
     return m->data[x + (y * m->side)];
 }
 
 // Returns the element with the x, y, z passed. NULL if it doesn't exist.
-inline struct node* matrix_get_ele(Matrix* m, short x, short y, short z)
+inline z_list matrix_get_ele(Matrix* m, short x, short y, short z)
 {
-    dynamic_array* da = matrix_get(m, x, y);
+    z_list ptr = matrix_get(m, x, y);
 
-    size_t pos = da_find_z(da, z);
-    if (da_find_z(da, z) == -1) {
-        return NULL;
-    } else {
-        return ((struct node*)da->data) + pos;
+    while (ptr != NULL) {
+        if (ptr->z == z)
+            return ptr;
+        else if (ptr->z > z)
+            return NULL;
+
+        ptr = ptr->next;
     }
+
+    return NULL;
 }
 
 // Insert a new element in the matrix (ordered)
 inline void matrix_insert(Matrix* m, short x, short y, short z, bool is_dead, short num_nei)
 {
-    struct node new_el = { z, num_nei, is_dead };
+    z_list new_el = (z_list)malloc(sizeof(struct node));
+    new_el->z = z;
+    new_el->num_neighbours = num_nei;
+    new_el->is_dead = is_dead;
+    new_el->next = NULL;
+    new_el->prev = NULL;
 
-    dynamic_array* da = matrix_get(m, x, y);
-    if (da == NULL) {
-        da = da_make_ptr(4);
-        m->data[x + (y * m->side)] = da;
+    z_list ptr = matrix_get(m, x, y);
+
+    if (ptr == NULL) {
+        // Case where there are no nodes yet in the linked list
+        m->data[x + (y * m->side)] = new_el;
+    } else if (z < ptr->z) {
+        // We are the new head
+        new_el->next = ptr;
+        ptr->prev = new_el;
+        m->data[x + (y * m->side)] = new_el;
+    } else {
+        // Search the list for our spot
+        while (ptr->next) {
+            if (z < ptr->next->z) {
+                new_el->next = ptr->next;
+                new_el->prev = ptr;
+                ptr->next->prev = new_el;
+                ptr->next = new_el;
+                break;
+            } else {
+                ptr = ptr->next;
+            }
+        }
+        ptr->next = new_el;
+        new_el->prev = ptr;
     }
-    da_insert(da, &new_el);
+}
+
+// Inserts a dead node in front of the pointer passed in the arguments
+inline void matrix_insert_dead_front(short z, z_list ptr)
+{
+    z_list new_el = (z_list)malloc(sizeof(struct node));
+    new_el->z = z;
+    new_el->num_neighbours = 1;
+    new_el->is_dead = true;
+
+    new_el->next = ptr->next;
+    new_el->prev = ptr;
+    if (ptr->next)
+        ptr->next->prev = new_el;
+    ptr->next = new_el;
+}
+
+// Remove the given pointer in the arguments from the matrix.
+inline void matrix_remove_from_ptr(Matrix* m, z_list ptr, short x, short y)
+{
+    if (ptr->next) {
+        ptr->next->prev = ptr->prev;
+    }
+
+    if (ptr->prev) {
+        ptr->prev->next = ptr->next;
+    } else {
+        // We are the head being removed. (Assigning to NULL it's ok here.)
+        m->data[x + (y * m->side)] = ptr->next;
+    }
+    free(ptr);
+    ptr = NULL;
 }
 
 // Remove from the matrix. We need to search for the z in the linked list
 inline void matrix_remove(Matrix* m, short x, short y, short z)
 {
-    dynamic_array* da = matrix_get(m, x, y);
-    int pos;
-    if (da != NULL && (pos = da_find_z(da, z)) != -1) {
-        da_delete_at(da, pos);
+    z_list ptr = matrix_get(m, x, y);
+
+    while (ptr) {
+        if (ptr->z == z) {
+            matrix_remove_from_ptr(m, ptr, x, y);
+            return;
+        }
+        ptr = ptr->next;
     }
 }
 
@@ -225,15 +142,10 @@ void matrix_print_live(Matrix* m)
     short SIZE = m->side;
     for (short i = 0; i < SIZE; i++) {
         for (short j = 0; j < SIZE; j++) {
-            dynamic_array* da = matrix_get(m, i, j);
-            if (da != NULL) {
-                struct node* ptr = ((struct node*)da->data);
-                // Kinda sucks to sort here, but oh well
-                std::sort(ptr, (ptr + da->used));
-                for (size_t k = 0; k < da->used; k++) {
-                    printf("%hd %hd %hd\n", i, j, ptr->z);
-                    ptr++;
-                }
+            z_list ptr = matrix_get(m, i, j);
+            while (ptr != NULL) {
+                printf("%hd %hd %hd\n", i, j, ptr->z);
+                ptr = ptr->next;
             }
         }
     }
@@ -296,42 +208,26 @@ int main(int argc, char* argv[])
     init_time = end - start;
     start = omp_get_wtime();
 
-    /*
-    dynamic_array T = make_da(8);
-
-    struct node n = {0, 0, false};
-    for (int i = 0; i < 12; i++) {
-        n.z = i;
-        n.num_neighbours = i;
-        da_insert(&T, &n);
-    }
-    da_delete_at(&T, 2);
-    printf("Found: %d\n", da_find_z(&T, 18));
-    da_print(&T);*/
-
     //-----------------
     //--- MAIN LOOP ---
     //-----------------
-
-    for (int gen = 0; gen < generations; gen++) {
-        dynamic_array* da;
-        struct node *ptr, *to_test;
+    int gen;
+    for (gen = 0; gen < generations; gen++) {
+        z_list ptr, to_test;
         Vector3 t;
         int32_t i, j;
         short z, _z, _y, _x, y, x;
+        bool looped;
 
         for (i = 0; i < SIZE; i++) {
             for (j = 0; j < SIZE; j++) {
-                da = matrix_get(&m, i, j);
-                if (!da) {
-                    continue;
-                }
+                ptr = matrix_get(&m, i, j);
 
-                ptr = ((struct node*)da->data);
                 // Iterate over every existing z for x and y
-                for (size_t k = 0; k < da->used; k++, ptr++) {
+                while (ptr != NULL) {
                     // If its dead skip
                     if (ptr->is_dead) {
+                        ptr = ptr->next;
                         continue;
                     }
 
@@ -342,28 +238,45 @@ int main(int argc, char* argv[])
                     ptr->num_neighbours = 0;
 
                     _z = pos_mod(z + 1, SIZE);
-                    to_test = matrix_get_ele(&m, x, y, _z);
-                    if (to_test) {
+                    looped = (_z != z + 1);
+                    if (looped)
+                        to_test = matrix_get_ele(&m, x, y, _z);
+                    else
+                        to_test = ptr->next;
+
+                    if (to_test && to_test->z == _z) {
                         if (to_test->is_dead == true) {
                             to_test->num_neighbours++;
                         } else {
                             ptr->num_neighbours++;
                         }
                     } else {
-                        matrix_insert(&m, x, y, _z, true, 1);
+                        if (!looped) {
+                            matrix_insert_dead_front(_z, ptr);
+                        } else {
+                            matrix_insert(&m, x, y, _z, true, 1);
+                        }
                     }
 
                     _z = pos_mod(z - 1, SIZE);
-                    to_test = matrix_get_ele(&m, x, y, _z);
+                    looped = (_z != z - 1);
+                    if (looped)
+                        to_test = matrix_get_ele(&m, x, y, _z);
+                    else
+                        to_test = ptr->prev;
 
-                    if (to_test) {
+                    if (to_test && to_test->z == _z) {
                         if (to_test->is_dead == true) {
                             to_test->num_neighbours++;
                         } else {
                             ptr->num_neighbours++;
                         }
                     } else {
-                        matrix_insert(&m, x, y, _z, true, 1);
+                        if (!looped && to_test) {
+                            matrix_insert_dead_front(_z, to_test);
+                        } else {
+                            matrix_insert(&m, x, y, _z, true, 1);
+                        }
                     }
 
                     _x = pos_mod(x + 1, SIZE);
@@ -413,31 +326,29 @@ int main(int argc, char* argv[])
                     } else {
                         matrix_insert(&m, x, _y, z, true, 1);
                     }
+
+                    ptr = ptr->next;
                 }
             }
         }
 
         for (i = 0; i < SIZE; i++) {
             for (j = 0; j < SIZE; j++) {
-                da = matrix_get(&m, i, j);
-                if (!da) {
-                    continue;
-                }
-                ptr = ((struct node*)da->data);
-
+                ptr = matrix_get(&m, i, j);
                 // Iterate over every existing z for x and y
-                for (int k = (int) da->used; k >= 0; k--, ptr--) {
+                while (ptr != NULL) {
                     if (ptr->is_dead) {
                         if (ptr->num_neighbours == 2 || ptr->num_neighbours == 3) {
                             ptr->is_dead = false;
                         } else {
-                            matrix_remove(&m, i, j, ptr->z);
+                            matrix_remove_from_ptr(&m, ptr, i, j);
                         }
                     } else {
                         if (ptr->num_neighbours < 2 || ptr->num_neighbours > 4) {
-                            matrix_remove(&m, i, j, ptr->z);
+                            matrix_remove_from_ptr(&m, ptr, i, j);
                         }
                     }
+                    ptr = ptr->next;
                 }
             }
         }
