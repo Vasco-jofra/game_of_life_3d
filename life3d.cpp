@@ -13,10 +13,10 @@ struct node {
     short z; // The z value
     short num_neighbours; // The # of neighbours (not always right, only when we need it)
     bool is_dead; // Is it a dead or an alive node?
-    bool operator<(const struct node& rhs) const
+    /*bool operator<(const struct node& rhs) const
     {
         return z < rhs.z;
-    }
+    }*/
 };
 
 void print_node(struct node* n)
@@ -72,6 +72,7 @@ void da_resize(dynamic_array* da, size_t new_size)
 void da_insert(dynamic_array* da, struct node* to_insert)
 {
     assert(da);
+    printf("Inserting in da '%p'\n", da);
 
     if (da->used == da->size) {
         da_resize(da, da->size * 2);
@@ -84,6 +85,9 @@ void da_insert(dynamic_array* da, struct node* to_insert)
 
 void da_delete_at(dynamic_array* da, size_t i)
 {
+    assert(da);
+
+    printf("Deleting in da '%p' at: %lu\n", da, i);
     if (i >= da->used) { // i < 0  is always false, cause unsigned
         printf("Invalid delete: index smaller or larger than the array size!\n");
         return;
@@ -128,7 +132,6 @@ void da_print(dynamic_array* da)
         print_node(ptr);
     }
 
-    printf("\n");
     printf("************************\n");
 }
 
@@ -147,18 +150,27 @@ void da_clear(dynamic_array* da)
     da_resize(da, da->initial_size);
 }
 
-int da_find_z(dynamic_array* da, int test_z)
+int da_find_z(dynamic_array* da, short test_z)
 {
     assert(da);
 
+    // printf("\n\nStarting loop with da '%p'. Used = %lu; Data: %p\n", da, da->used, da->data);
+    fflush(stdout);
+
     for (size_t i = 0; i < da->used; i++) {
         struct node* ptr = ((struct node*)da->data) + i;
+
+        // printf("   %lu: ", i);
+        // fflush(stdout);
+        // print_node(ptr);
+        // fflush(stdout);
         if (ptr->z == test_z) {
             return i;
         }
     }
     return -1;
 }
+
 // ############################################################
 // ######################### MATRIX ###########################
 // ############################################################
@@ -167,6 +179,7 @@ struct matrix_struct {
     dynamic_array** data;
 };
 typedef matrix_struct Matrix;
+void matrix_print(Matrix* m);
 
 // Returns a initialized matrix
 inline Matrix make_matrix(short side)
@@ -187,9 +200,12 @@ inline dynamic_array* matrix_get(Matrix* m, short x, short y)
 inline struct node* matrix_get_ele(Matrix* m, short x, short y, short z)
 {
     dynamic_array* da = matrix_get(m, x, y);
+    if (!da)  {
+        return NULL;
+    }
 
-    size_t pos = da_find_z(da, z);
-    if (da_find_z(da, z) == -1) {
+    int pos = da_find_z(da, z);
+    if (pos == -1) {
         return NULL;
     } else {
         return ((struct node*)da->data) + pos;
@@ -213,15 +229,19 @@ inline void matrix_insert(Matrix* m, short x, short y, short z, bool is_dead, sh
 inline void matrix_remove(Matrix* m, short x, short y, short z)
 {
     dynamic_array* da = matrix_get(m, x, y);
-    int pos;
-    if (da != NULL && (pos = da_find_z(da, z)) != -1) {
+    if(!da) {
+        return;
+    }
+    int pos = da_find_z(da, z);
+    printf("Trying to delete %hd %hd %hd\n", x, y, z);
+    if (pos != -1) {
         da_delete_at(da, pos);
+        // matrix_print(m);
     }
 }
 
 // Print the live nodes in the matrix (the matrix only contains alive nodes at this point, so print all nodes)
-void matrix_print_live(Matrix* m)
-{
+void matrix_print_live(Matrix* m) {
     short SIZE = m->side;
     for (short i = 0; i < SIZE; i++) {
         for (short j = 0; j < SIZE; j++) {
@@ -229,11 +249,31 @@ void matrix_print_live(Matrix* m)
             if (da != NULL) {
                 struct node* ptr = ((struct node*)da->data);
                 // Kinda sucks to sort here, but oh well
-                std::sort(ptr, (ptr + da->used));
+                // std::sort(ptr, (ptr + da->used));
                 for (size_t k = 0; k < da->used; k++) {
                     printf("%hd %hd %hd\n", i, j, ptr->z);
                     ptr++;
                 }
+            }
+        }
+    }
+}
+
+void matrix_print(Matrix* m) {
+    short SIZE = m->side;
+    for (short i = 0; i < SIZE; i++) {
+        for (short j = 0; j < SIZE; j++) {
+            dynamic_array* da = matrix_get(m, i, j);
+            if (da != NULL) {
+                struct node* ptr = ((struct node*)da->data);
+                printf("(%hd, %hd): [", i, j);
+                for (size_t k = 0; k < da->used; k++) {
+                    printf("%hd%c", ptr->z, k == da->used-1 ? '\x07': ',');
+                    ptr++;
+                }
+                printf("] (size: %lu; used: %lu)\n", da->size, da->used);
+            } else {
+                printf("(%hd, %hd): []\n", i, j);
             }
         }
     }
@@ -296,18 +336,30 @@ int main(int argc, char* argv[])
     init_time = end - start;
     start = omp_get_wtime();
 
-    /*
-    dynamic_array T = make_da(8);
+    matrix_print_live(&m);
+    matrix_print(&m);
+    /*dynamic_array* T = da_make_ptr(8);
 
     struct node n = {0, 0, false};
     for (int i = 0; i < 12; i++) {
         n.z = i;
         n.num_neighbours = i;
-        da_insert(&T, &n);
+        da_insert(T, &n);
     }
-    da_delete_at(&T, 2);
-    printf("Found: %d\n", da_find_z(&T, 18));
-    da_print(&T);*/
+
+    da_delete_at(T, 11);
+    printf("Found: %d\n", da_find_z(T, 2));
+    printf("Found: %d\n", da_find_z(T, 11));
+    da_print(T);
+
+    int test_z = 10;
+    for (size_t i = 0; i < T->used; i++) {
+        struct node* ptr = ((struct node*)T->data) + i;
+        print_node(ptr);
+        if (ptr->z == test_z) {
+            printf("%d\n", i);
+        }
+    }*/
 
     //-----------------
     //--- MAIN LOOP ---
@@ -417,16 +469,17 @@ int main(int argc, char* argv[])
             }
         }
 
+        matrix_print(&m);
         for (i = 0; i < SIZE; i++) {
             for (j = 0; j < SIZE; j++) {
                 da = matrix_get(&m, i, j);
                 if (!da) {
                     continue;
                 }
-                ptr = ((struct node*)da->data);
+                ptr = ((struct node*)da->data + da->used - 1);
 
                 // Iterate over every existing z for x and y
-                for (int k = (int) da->used; k >= 0; k--, ptr--) {
+                for (int k = (int) da->used - 1; k >= 0; k--, ptr--) {
                     if (ptr->is_dead) {
                         if (ptr->num_neighbours == 2 || ptr->num_neighbours == 3) {
                             ptr->is_dead = false;
@@ -450,6 +503,7 @@ int main(int argc, char* argv[])
     //--- END ---
     //-----------
     // Output the result
+    matrix_print(&m);
     matrix_print_live(&m);
 
     // Write the time log to a file
