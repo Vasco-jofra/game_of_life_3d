@@ -13,10 +13,10 @@ our_out_dir="tests/our_out"
 declare -A tests
 tests[s5e50]=10
 tests[s20e400]=500
-tests[s150e10k]=1000
-tests[s200e50k]=1000
-tests[s50e5k]=300
-tests[s500e300k]=2000
+# tests[s150e10k]=1000
+# tests[s200e50k]=1000
+# tests[s50e5k]=300
+# tests[s500e300k]=2000
 # tests[custom_s1000e650000]=750
 # tests[custom_s2500e50000]=100
 # tests[custom_s10000e7500000]=10

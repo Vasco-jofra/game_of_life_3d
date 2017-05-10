@@ -66,17 +66,41 @@ void da_resize(dynamic_array* da, size_t new_size)
     // printf("Reallocating to size %d\n", da->size);
 }
 
+int da_find_closest_higher(dynamic_array* da, short test_z)
+{
+    assert(da);
+
+    // printf("\n\nStarting loop with da '%p'. Used = %lu; Data: %p\n", da, da->used, da->data);
+
+    for (size_t i = 0; i < da->used; i++) {
+        struct node* ptr = ((struct node*)da->data) + i;
+
+        if (ptr->z > test_z) {
+            return i;
+        }
+    }
+    return da->used;
+}
+
 void da_insert(dynamic_array* da, struct node* to_insert)
 {
     assert(da);
-    // printf("Inserting in da '%p'\n", da);
+    //printf("Inserting in da '%p', %hd\n", da, to_insert->z);
 
     if (da->used == da->size) {
         da_resize(da, da->size * 2);
     }
 
+    /* Ordered array
+    struct node* data = ((struct node*)da->data);
+    int index = da_find_closest_higher(da, to_insert->z);
+    memmove(data+index+1, data+index, da->step*(da->used - index));
+    memcpy(data+index, to_insert, da->step);
+    */
+
     struct node* dest = ((struct node*)da->data) + da->used;
     memcpy(dest, to_insert, da->step);
+
     da->used++;
 }
 
@@ -91,6 +115,12 @@ void da_delete_at(dynamic_array* da, size_t i)
     }
 
     da->used--;
+
+    /* Ordered array
+    struct node* dest = ((struct node*)da->data) + i;
+    struct node* src  = ((struct node*)da->data) + i + 1;
+    memmove(dest, src, da->step*(da->used - i));
+    */
 
     struct node* dest = ((struct node*)da->data) + i;
     struct node* src = ((struct node*)da->data) + da->used;
@@ -152,15 +182,10 @@ int da_find_z(dynamic_array* da, short test_z)
     assert(da);
 
     // printf("\n\nStarting loop with da '%p'. Used = %lu; Data: %p\n", da, da->used, da->data);
-    fflush(stdout);
 
     for (size_t i = 0; i < da->used; i++) {
         struct node* ptr = ((struct node*)da->data) + i;
 
-        // printf("   %lu: ", i);
-        // fflush(stdout);
-        // print_node(ptr);
-        // fflush(stdout);
         if (ptr->z == test_z) {
             return i;
         }
@@ -335,25 +360,26 @@ int main(int argc, char* argv[])
     /*dynamic_array* T = da_make_ptr(8);
 
     struct node n = {0, 0, false};
-    for (int i = 0; i < 12; i++) {
+    for (int i = 0; i < 12; i += 2) {
         n.z = i;
         n.num_neighbours = i;
         da_insert(T, &n);
     }
-
-    da_delete_at(T, 11);
-    printf("Found: %d\n", da_find_z(T, 2));
-    printf("Found: %d\n", da_find_z(T, 11));
+    da_print(T);
+    for (int i = 1; i < 12; i += 2) {
+        n.z = i;
+        n.num_neighbours = i;
+        da_insert(T, &n);
+    }
     da_print(T);
 
-    int test_z = 10;
-    for (size_t i = 0; i < T->used; i++) {
-        struct node* ptr = ((struct node*)T->data) + i;
-        print_node(ptr);
-        if (ptr->z == test_z) {
-            printf("%d\n", i);
-        }
-    }*/
+    da_delete_at(T, 1);
+    da_print(T);
+    da_delete_at(T, 0);
+    da_print(T);
+    da_delete_at(T, T->used -1);
+    da_print(T);*/
+
 
     //-----------------
     //--- MAIN LOOP ---

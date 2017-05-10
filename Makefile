@@ -2,6 +2,7 @@ CC=g++
 FLAGS=-std=c++11 -fopenmp -lgomp -ggdb -Wall -Wextra
 
 all: sequencial parallel
+
 sequencial: life3d.cpp
 	$(CC) $(FLAGS) life3d.cpp -o life3d
 
