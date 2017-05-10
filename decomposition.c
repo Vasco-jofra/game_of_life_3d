@@ -3,9 +3,10 @@
 #include <mpi.h>
 #include <math.h>
 
+#define BLOCK_LOW(id,p,n)  ((id)*(n)/(p))
 #define BLOCK_HIGH(id,p,n) (BLOCK_LOW((id)+1,p,n)-1)
-#define BLOCK_SIZE(id,p,n) (BLOCK_LOW((id)+1)-BLOCK_LOW(id))
-#define BLOCK_LOW(id,p,n) ((i)*(n)/(p))
+#define BLOCK_SIZE(id,p,n) (BLOCK_HIGH(id,p,n)-BLOCK_LOW(id,p,n)+1)
+#define BLOCK_OWNER(index,p,n) (((p)*((index)+1)-1)/(n))
 
 int main(int argc, char **argv) {
 
@@ -18,10 +19,10 @@ int main(int argc, char **argv) {
 	 MPI_Comm_rank (MPI_COMM_WORLD, &id);
 	 MPI_Comm_size (MPI_COMM_WORLD, &p);
    
-	 for(int u=0; u < p;u++)
+	 for(int u=0; u < p;u++){
 		 blocksize[u] = BLOCK_SIZE(id,p,5);
-	 		 printf("COLUNA:%d para P:%d\n",  blocksize[u],u);
-  
+	    printf("COLUNA:%d para P:%d\n",  blocksize[u],u);
+  }
     MPI_Finalize();
 
     return 0;
