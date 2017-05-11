@@ -361,9 +361,15 @@ int main(int argc, char* argv[])
             for (int y = 0; y < SIZE; y++) {
                 dynamic_array* da = matrix_get(&m, x, y);
                 z_lengths[y] = (da == NULL) ? 0 : da->used;
-                printf("[TO: %d] (%d, %d) -> %d\n", BLOCK_OWNER(x, p, SIZE), x, y, z_lengths[y]);
+                int to = BLOCK_OWNER(x, p, SIZE);
+                if (to == 1) {
+                    for (int i = 0; i < SIZE; i++) {
+                        z_lengths[i] = i;
+                    }
+                }
+                printf("[TO: %d] (%d, %d) -> %d\n", to, x, y, z_lengths[y]);
                 fflush(stdout);
-                MPI_Send(z_lengths, SIZE, MPI_INT, BLOCK_OWNER(x, p, SIZE), 0, MPI_COMM_WORLD);
+                MPI_Send(z_lengths, SIZE, MPI_INT, to, 0, MPI_COMM_WORLD);
             }
 
             // @TODO: Send rows to each row owner
@@ -392,10 +398,8 @@ int main(int argc, char* argv[])
             int z_lengths[SIZE];
             MPI_Recv(z_lengths, SIZE, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
             for (int y = 0; y < SIZE; y++) {
-                if (id == 1) {
-                    printf("  [RV: %d] (%d, %d) -> %d\n", id, x, y, z_lengths[y]);
-                    fflush(stdout);
-                }
+                printf("  [RV: %d] (%d, %d) -> %d\n", id, x, y, z_lengths[y]);
+                fflush(stdout);
                 if (z_lengths[y] == 0) {
                     continue;
                 }
