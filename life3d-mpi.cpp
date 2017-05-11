@@ -305,6 +305,8 @@ int main(int argc, char* argv[])
     MPI_Comm_size(MPI_COMM_WORLD, &p);
 
     Matrix m;
+    int generations;
+    short SIZE;
 
     if (id == 0) {
         if (argc != 3) {
@@ -313,7 +315,7 @@ int main(int argc, char* argv[])
             return -1;
         }
         char* input_file = argv[1];
-        int generations = atoi(argv[2]);
+        generations = atoi(argv[2]);
 
         if (generations <= 0) {
             printf("[ERROR] Number of generations must be bigger that 0. Got: '%d'\n", generations);
@@ -327,7 +329,6 @@ int main(int argc, char* argv[])
             return -1;
         }
 
-        short SIZE;
         if (fscanf(fp, "%hd", &SIZE) == EOF) {
             printf("[ERROR] Unable to read the size.\n");
             return -1;
@@ -342,20 +343,75 @@ int main(int argc, char* argv[])
         // Finished parsing!
         fclose(fp);
 
-        matrix_print(&m);
+        // matrix_print(&m);
+
+        // ==================================
+        // === WE NOW START TO SEND STUFF ===
+        // ==================================
+        // Send generations and size
+        int buf[2];
+        buf[0] = (int)SIZE;
+        buf[1] = generations;
+        MPI_Bcast(buf, 2, MPI_INT, 0, MPI_COMM_WORLD);
+
         printf("==============================================================\n");
-        for(int x = 0; x < SIZE; x++) {
-            int blocksize[SIZE];
-            for(int y = 0; y < SIZE; y++) {
-                dynamic_array *da = matrix_get(&m, x, y);
-                blocksize[y] = (da == NULL) ? 0 : da->used;
-                printf("(%d, %d) -> %d\n", x, y, blocksize[y]);
+        // Send block size
+        for (int x = 0; x < SIZE; x++) {
+            int z_lengths[SIZE];
+            for (int y = 0; y < SIZE; y++) {
+                dynamic_array* da = matrix_get(&m, x, y);
+                z_lengths[y] = (da == NULL) ? 0 : da->used;
+                printf("[TO: %d] (%d, %d) -> %d\n", BLOCK_OWNER(x, p, SIZE), x, y, z_lengths[y]);
+                fflush(stdout);
+                MPI_Send(z_lengths, SIZE, MPI_INT, BLOCK_OWNER(x, p, SIZE), 0, MPI_COMM_WORLD);
             }
+
+            // @TODO: Send rows to each row owner
+            /*for (int x = 0; x < SIZE; x++) {
+                for (int y = 0; y < SIZE; y++) {
+                    dynamic_array* da = matrix_get(&m, x, y);
+                    // Send the row to the corresponding process
+                    MPI_Send(da->data, da->step * da->used, MPI_BYTE, BLOCK_OWNER(x, p, SIZE), 0, MPI_COMM_WORLD);
+                }
+            }*/
         }
-        // @TODO: Send generations ands size
-        // @TODO: Send rows to each row owner
+
     } else {
         // All processors that don't read the file.
+
+        // Receive SIZE and generations
+        int buf[2];
+        MPI_Bcast(buf, 2, MPI_INT, 0, MPI_COMM_WORLD);
+        SIZE = (short)buf[0];
+        generations = buf[1];
+        // printf("[%d] Received (SIZE, generations) = (%hd, %d)\n", id, SIZE, generations);
+
+        // Recv my rows
+        m = make_matrix(SIZE);
+        for (int x = BLOCK_LOW(id, p, SIZE); x <= BLOCK_HIGH(id, p, SIZE); x++) {
+            int z_lengths[SIZE];
+            MPI_Recv(z_lengths, SIZE, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+            for (int y = 0; y < SIZE; y++) {
+                if (id == 1) {
+                    printf("  [RV: %d] (%d, %d) -> %d\n", id, x, y, z_lengths[y]);
+                    fflush(stdout);
+                }
+                if (z_lengths[y] == 0) {
+                    continue;
+                }
+                dynamic_array* da = matrix_get(&m, x, y);
+                if (da == NULL) {
+                    da = da_make_ptr(4);
+                    m.data[x + (y * m.side)] = da;
+                }
+
+                // MPI_Recv(da->data, (da->step * z_lengths[y]), MPI_BYTE, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+            }
+        }
+
+        //printf("==============================================================\n");
+        //printf("[%d]\n", id);
+        //matrix_print(&m);
     }
 
     init_time = elapsed_time + MPI_Wtime();
@@ -381,7 +437,6 @@ int main(int argc, char* argv[])
         }
         printf("HEY\n");
     }*/
-
 
     //-----------------
     //--- MAIN LOOP ---
@@ -557,14 +612,13 @@ int main(int argc, char* argv[])
     }
     free(m.data);*/
 
-
     // Write the time log to a file
     // FILE* out_fp = fopen("time.log", "w");
     // char out_str[80];
     // sprintf(out_str, "OMP %s: \ninit_time: %lf \nproc_time: %lf\n", input_file, init_time, process_time);
     // fwrite(out_str, strlen(out_str), 1, out_fp);
 
-    printf("[%d] Init time: %lf\n", id, init_time);
+    // printf("[%d] Init time: %lf\n", id, init_time);
     MPI_Finalize();
     return 0;
 }
