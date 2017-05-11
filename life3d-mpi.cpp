@@ -24,6 +24,18 @@ struct node {
     }
 };
 
+inline int highest_power_2(int n)
+{
+    n--;
+    n |= n >> 1;
+    n |= n >> 2;
+    n |= n >> 4;
+    n |= n >> 8;
+    n |= n >> 16;
+    n++;
+    return n;
+}
+
 void print_node(struct node* n)
 {
     printf("{z: %hd, num_nei: %hd, is_dead: %s}\n", n->z, n->num_neighbours, n->is_dead ? "true" : "false");
@@ -40,12 +52,13 @@ typedef struct da_struct {
 
 void da_init(dynamic_array* da, size_t initial_size)
 {
-    da->initial_size = initial_size;
+    da->initial_size = initial_size; //highest_power_2(initial_size);
     da->step = sizeof(struct node);
     da->used = 0;
 
     da->size = da->initial_size;
     da->data = realloc(NULL, da->initial_size * da->step);
+    assert(da->data);
 }
 
 dynamic_array da_make(size_t initial_size)
@@ -68,6 +81,8 @@ void da_resize(dynamic_array* da, size_t new_size)
 
     da->size = new_size;
     da->data = realloc(da->data, new_size * da->step);
+    assert(da->data);
+
     // printf("Reallocating to size %d\n", da->size);
 }
 
@@ -237,6 +252,22 @@ inline void matrix_remove(Matrix* m, short x, short y, short z)
     }
 }
 
+void matrix_free(Matrix* m)
+{
+    for (int i = 0; i < m->side; i++) {
+        for (int j = 0; j < m->side; j++) {
+            dynamic_array* da = matrix_get(m, i, j);
+            if (!da) {
+                continue;
+            }
+            da_free(da);
+            free(da);
+            da = NULL;
+        }
+    }
+    free(m->data);
+}
+
 // Print the live nodes in the matrix (the matrix only contains alive nodes at this point, so print all nodes)
 void matrix_print_live(Matrix* m)
 {
@@ -335,15 +366,13 @@ int main(int argc, char* argv[])
         }
 
         // Finished parsing metadata. Now only need to parse the actual positions
-        m = make_matrix(SIZE);
+        Matrix aux = make_matrix(SIZE);
         short x, y, z;
         while (fscanf(fp, "%hd %hd %hd", &x, &y, &z) != EOF) {
-            matrix_insert(&m, x, y, z, false, -1);
+            matrix_insert(&aux, x, y, z, false, -1);
         }
         // Finished parsing!
         fclose(fp);
-
-        // matrix_print(&m);
 
         // ==================================
         // === WE NOW START TO SEND STUFF ===
@@ -354,43 +383,48 @@ int main(int argc, char* argv[])
         buf[1] = generations;
         MPI_Bcast(buf, 2, MPI_INT, 0, MPI_COMM_WORLD);
 
-        printf("==============================================================\n");
-        // Send block size
+        m = make_matrix(SIZE);
+
+        // Send rows
         for (int x = 0; x < SIZE; x++) {
             int z_lengths[SIZE];
+            int to = BLOCK_OWNER(x, p, SIZE);
             for (int y = 0; y < SIZE; y++) {
-                dynamic_array* da = matrix_get(&m, x, y);
+                dynamic_array* da = matrix_get(&aux, x, y);
                 z_lengths[y] = (da == NULL) ? 0 : da->used;
-                int to = BLOCK_OWNER(x, p, SIZE);
-                if (to == 1) {
-                    for (int i = 0; i < SIZE; i++) {
-                        z_lengths[i] = i;
-                    }
-                }
-                printf("[TO: %d] (%d, %d) -> %d\n", to, x, y, z_lengths[y]);
-                fflush(stdout);
+            }
+            if (to != 0) {
                 MPI_Send(z_lengths, SIZE, MPI_INT, to, 0, MPI_COMM_WORLD);
             }
 
-            // @TODO: Send rows to each row owner
-            /*for (int x = 0; x < SIZE; x++) {
-                for (int y = 0; y < SIZE; y++) {
-                    dynamic_array* da = matrix_get(&m, x, y);
-                    // Send the row to the corresponding process
-                    MPI_Send(da->data, da->step * da->used, MPI_BYTE, BLOCK_OWNER(x, p, SIZE), 0, MPI_COMM_WORLD);
+            // Send rows to each row owner
+            for (int y = 0; y < SIZE; y++) {
+                dynamic_array* da = matrix_get(&aux, x, y);
+                if (da == NULL) {
+                    continue;
                 }
-            }*/
+
+                if (to != 0) {
+                    MPI_Send(da->data, z_lengths[y] * da->step, MPI_BYTE, to, 0, MPI_COMM_WORLD);
+                } else {
+                    dynamic_array* m_da = matrix_get(&m, x, y);
+                    if (m_da == NULL) {
+                        m_da = da_make_ptr(z_lengths[y]);
+                        m.data[x + (y * m.side)] = m_da;
+                    }
+                    memcpy(m_da->data, da->data, z_lengths[y] * m_da->step);
+                    m_da->used = z_lengths[y];
+                }
+            }
         }
+        matrix_free(&aux);
 
     } else {
-        // All processors that don't read the file.
-
         // Receive SIZE and generations
         int buf[2];
         MPI_Bcast(buf, 2, MPI_INT, 0, MPI_COMM_WORLD);
         SIZE = (short)buf[0];
         generations = buf[1];
-        // printf("[%d] Received (SIZE, generations) = (%hd, %d)\n", id, SIZE, generations);
 
         // Recv my rows
         m = make_matrix(SIZE);
@@ -398,49 +432,26 @@ int main(int argc, char* argv[])
             int z_lengths[SIZE];
             MPI_Recv(z_lengths, SIZE, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
             for (int y = 0; y < SIZE; y++) {
-                printf("  [RV: %d] (%d, %d) -> %d\n", id, x, y, z_lengths[y]);
-                fflush(stdout);
+                // printf("    [RV: %d] (%d, %d) -> %d\n", id, x, y, z_lengths[y]);
+                // fflush(stdout);
                 if (z_lengths[y] == 0) {
                     continue;
                 }
                 dynamic_array* da = matrix_get(&m, x, y);
                 if (da == NULL) {
-                    da = da_make_ptr(4);
+                    da = da_make_ptr(z_lengths[y]);
                     m.data[x + (y * m.side)] = da;
                 }
-
-                // MPI_Recv(da->data, (da->step * z_lengths[y]), MPI_BYTE, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+                da->used = z_lengths[y];
+                MPI_Recv(da->data, (da->used * da->step), MPI_BYTE, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
             }
         }
-
-        //printf("==============================================================\n");
-        //printf("[%d]\n", id);
-        //matrix_print(&m);
     }
+
+    //printf("[%d]\n", id);
+    //matrix_print(&m);
 
     init_time = elapsed_time + MPI_Wtime();
-
-    /*dynamic_array* sen;
-    dynamic_array* rec;
-
-    sen = matrix_get(&m, 1, 1);
-
-    a = sen->step * sen->used;
-    printf("USED:A %d\n", sen->used);
-    MPI_Send(sen->data, a, MPI_BYTE, 2, 0, MPI_COMM_WORLD);
-
-    if (id == 2) {
-        MPI_Recv(rec->data, a, MPI_BYTE, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-    }
-    struct node* ptr;
-
-    if (id == 2) {
-        for (u = 0; u < sen->used; u++) {
-            ptr = ((struct node*)rec->data) + u;
-            printf("DADOS RECEBIDOS: UZ %d %d\n", u, ptr->z);
-        }
-        printf("HEY\n");
-    }*/
 
     //-----------------
     //--- MAIN LOOP ---
@@ -601,28 +612,15 @@ int main(int argc, char* argv[])
     // Output the result
     // matrix_print(&m);
     matrix_print_live(&m);
-
-    // Free all (uneccessary)
-    for (int i = 0; i < SIZE; i++) {
-        for (int j = 0; j < SIZE; j++) {
-            dynamic_array* da = matrix_get(&m, i, j);
-            if (!da) {
-                continue;
-            }
-            da_free(da);
-            free(da);
-            da = NULL;
-        }
-    }
-    free(m.data);*/
+    matrix_free(&m);
 
     // Write the time log to a file
     // FILE* out_fp = fopen("time.log", "w");
     // char out_str[80];
     // sprintf(out_str, "OMP %s: \ninit_time: %lf \nproc_time: %lf\n", input_file, init_time, process_time);
-    // fwrite(out_str, strlen(out_str), 1, out_fp);
+    // fwrite(out_str, strlen(out_str), 1, out_fp);*/
 
-    // printf("[%d] Init time: %lf\n", id, init_time);
+    printf("[%d] Init time: %lf\n", id, init_time);
     MPI_Finalize();
     return 0;
 }
