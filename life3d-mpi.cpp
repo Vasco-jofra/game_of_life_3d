@@ -13,6 +13,10 @@
 #define BLOCK_SIZE(id, p, n) (BLOCK_HIGH(id, p, n) - BLOCK_LOW(id, p, n) + 1)
 #define BLOCK_OWNER(index, p, n) (((p) * ((index) + 1) - 1) / (n))
 
+#define TAG_Z_LENGTHS 16
+#define TAG_INIT_MATRIX 17
+#define TAG_SWAP_ROWS 18
+
 // Node representing elements of the sparse matrix
 struct node {
     short z; // The z value
@@ -52,7 +56,7 @@ typedef struct da_struct {
 
 void da_init(dynamic_array* da, size_t initial_size)
 {
-    da->initial_size = initial_size; //highest_power_2(initial_size);
+    da->initial_size = highest_power_2(initial_size);
     da->step = sizeof(struct node);
     da->used = 0;
 
@@ -79,11 +83,18 @@ void da_resize(dynamic_array* da, size_t new_size)
 {
     assert(da);
 
-    da->size = new_size;
-    da->data = realloc(da->data, new_size * da->step);
+    da->size = highest_power_2(new_size);
+    da->data = realloc(da->data, da->size * da->step);
     assert(da->data);
 
     // printf("Reallocating to size %d\n", da->size);
+}
+
+inline void da_contract(dynamic_array* da)
+{
+    if (da->size > da->initial_size && da->used <= da->size / 4) {
+        da_resize(da, da->size / 2);
+    }
 }
 
 void da_insert(dynamic_array* da, struct node* to_insert)
@@ -116,9 +127,7 @@ void da_delete_at(dynamic_array* da, size_t i)
     struct node* src = ((struct node*)da->data) + da->used;
     memcpy(dest, src, da->step);
 
-    if (da->size > da->initial_size && da->used <= da->size / 4) {
-        da_resize(da, da->size / 2);
-    }
+    da_contract(da);
 }
 
 void da_free(dynamic_array* da)
@@ -269,18 +278,21 @@ void matrix_free(Matrix* m)
 }
 
 // Print the live nodes in the matrix (the matrix only contains alive nodes at this point, so print all nodes)
-void matrix_print_live(Matrix* m, int id)
+void matrix_print_live(Matrix* m, int id, int from = 0, int to = -1)
 {
     short SIZE = m->side;
-    for (short i = 0; i < SIZE; i++) {
-        for (short j = 0; j < SIZE; j++) {
-            dynamic_array* da = matrix_get(m, i, j);
+    if (to == -1) {
+        to = SIZE;
+    }
+    for (short x = from; x < to; x++) {
+        for (short y = 0; y < SIZE; y++) {
+            dynamic_array* da = matrix_get(m, x, y);
             if (da != NULL) {
                 struct node* ptr = ((struct node*)da->data);
                 // Kinda sucks to sort here, but oh well
                 std::sort(ptr, (ptr + da->used));
                 for (size_t k = 0; k < da->used; k++) {
-                    printf("[%d] %hd %hd %hd\n", id, i, j, ptr->z);
+                    printf("[%d] %hd %hd %hd\n", id, x, y, ptr->z);
                     ptr++;
                 }
             }
@@ -323,51 +335,124 @@ inline short pos_mod(short val, short mod)
     // return (val % mod) + (mod * (val < 0));
 }
 
-void send_row(Matrix* m, int x, int to)
+void get_z_lengths(Matrix* m, int x, int* z_lengths)
 {
-    /**
-      m    -> the source matrix
-      x    -> row to send
-      to   -> who are we sending to
-    */
-    int SIZE = m->side;
-    int z_lengths[SIZE];
-    for (int y = 0; y < SIZE; y++) { // "Calculate" the length of each z_list
+    for (int y = 0; y < m->side; y++) { // "Calculate" the length of each z_list
         dynamic_array* da = matrix_get(m, x, y);
         z_lengths[y] = (da == NULL) ? 0 : da->used;
     }
+}
 
-    //if (to != 0) {
-    //}
-    MPI_Send(z_lengths, SIZE, MPI_INT, to, 0, MPI_COMM_WORLD);
+/**
+    * m  -> the source matrix
+    * x  -> row to send
+    * to -> who are we sending to
+*/
+// @TODO: Try with Isend
+// @NOTE: Don't bother with optimizing this. The ones that run on every iteration are the important ones.
+void init_send_row(Matrix* m, int x, int to)
+{
+    int SIZE = m->side;
+    int z_lengths[SIZE];
+    get_z_lengths(m, x, z_lengths);
+
+    MPI_Send(z_lengths, SIZE, MPI_INT, to, TAG_Z_LENGTHS, MPI_COMM_WORLD);
 
     // Send each z_list in the row
     for (int y = 0; y < SIZE; y++) {
         dynamic_array* da = matrix_get(m, x, y);
-        if (da == NULL) { // If we have nothing to send, don't send
+        if (da == NULL) { // If we have nothing to send, don't send at all
             continue;
         }
-        MPI_Send(da->data, z_lengths[y] * da->step, MPI_BYTE, to, 0, MPI_COMM_WORLD);
-
-        //if (to != 0) {
-        /*} else {
-            dynamic_array* m_da = matrix_get(&m, x, y);
-            if (m_da == NULL) {
-                m_da = da_make_ptr(z_lengths[y]);
-                m.data[x + (y * m.side)] = m_da;
-            }
-            memcpy(m_da->data, da->data, z_lengths[y] * m_da->step);
-            m_da->used = z_lengths[y];
-        }*/
+        MPI_Send(da->data, z_lengths[y] * da->step, MPI_BYTE, to, TAG_INIT_MATRIX, MPI_COMM_WORLD);
     }
 }
 
-void recv_row()
+// @NOTE: Don't bother with optimizing this. The ones that run on every iteration are the important ones.
+void init_recv_row(Matrix* m, int x)
 {
+    int SIZE = m->side;
+    int z_lengths[SIZE];
+    MPI_Recv(z_lengths, SIZE, MPI_INT, 0, TAG_Z_LENGTHS, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+
+    for (int y = 0; y < SIZE; y++) {
+        // printf("    [RV: %d] (%d, %d) -> %d\n", id, x, y, z_lengths[y]);
+        // fflush(stdout);
+        if (z_lengths[y] == 0) {
+            continue;
+        }
+
+        dynamic_array* da = da_make_ptr(z_lengths[y]);
+        m->data[x + (y * SIZE)] = da;
+
+        da->used = z_lengths[y];
+        MPI_Recv(da->data, (da->used * da->step), MPI_BYTE, 0, TAG_INIT_MATRIX, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+    }
+}
+
+void swap_rows(Matrix* m, int x_have, int x_want, int to, int tmp_id)
+{
+    printf("[%d]--%d-->[%d]\n", tmp_id, x_have, to);
+    MPI_Request request;
+    MPI_Status status;
+    int SIZE = m->side;
+
+    // Recv asynchronously their lengths
+    int their_z_lengths[SIZE];
+    MPI_Irecv(their_z_lengths, SIZE, MPI_INT, to, TAG_Z_LENGTHS, MPI_COMM_WORLD, &request);
+
+    // Compute and send our lengths
+    int my_z_lengths[SIZE];
+    get_z_lengths(m, x_have, my_z_lengths);
+    MPI_Send(my_z_lengths, SIZE, MPI_INT, to, TAG_Z_LENGTHS, MPI_COMM_WORLD);
+
+    // Wait for completion of the recv
+    MPI_Wait(&request, &status);
+
+
+    MPI_Request requests[SIZE];
+    MPI_Status statuses[SIZE];
+    int request_i = 0; // Ends up as the total amount of requests (sends with 0 size are skiped, that why)
+
+    // Assynchronously receive all z_lists
+    for (int y = 0; y < SIZE; y++) {
+        if (their_z_lengths[y] == 0) {
+            continue;
+        }
+
+        dynamic_array* da = matrix_get(m, x_want, y);
+        if(da == NULL) {
+            da = da_make_ptr(their_z_lengths[y]);
+            m->data[x_want + (y * SIZE)] = da;
+        } else {
+            da_resize(da, their_z_lengths[y]);
+        }
+
+        da->used = their_z_lengths[y];
+        MPI_Irecv(da->data, (da->used * da->step), MPI_BYTE, 0, TAG_SWAP_ROWS, MPI_COMM_WORLD, &requests[request_i]);
+        request_i++;
+    }
+
+    // Send each z_list in the row
+    for (int y = 0; y < SIZE; y++) {
+        dynamic_array* da = matrix_get(m, x_have, y);
+        if (da == NULL) { // If we have nothing to send, don't send at all
+            continue;
+        }
+
+        MPI_Send(da->data, my_z_lengths[y] * da->step, MPI_BYTE, to, TAG_SWAP_ROWS, MPI_COMM_WORLD);
+    }
+    if(request_i != 0) {
+        MPI_Waitall(request_i, requests, statuses);
+    }
+
+    printf(" [%d]--%d-->[%d] DONE\n", tmp_id, x_have, to);
 }
 
 int main(int argc, char* argv[])
 {
+    setvbuf(stdout, NULL, _IONBF, 0);
+
     int id, p;
     double elapsed_time, init_time, run_time;
 
@@ -433,7 +518,7 @@ int main(int argc, char* argv[])
             int owner = BLOCK_OWNER(x, p, SIZE);
 
             if (owner != 0) {
-                send_row(&aux, x, owner);
+                init_send_row(&aux, x, owner);
             } else {
                 // If we are the process 0, just setup the matrix, don't send anything
                 for (int y = 0; y < SIZE; y++) {
@@ -442,17 +527,25 @@ int main(int argc, char* argv[])
                         continue;
                     }
 
-                    dynamic_array* new_da = matrix_get(&m, x, y);
-                    if (new_da == NULL) {
-                        new_da = da_make_ptr(da->used);
-                        m.data[x + (y * m.side)] = new_da;
-                    }
-                    memcpy(new_da->data, da->data, da->used * new_da->step);
+                    dynamic_array* new_da = da_make_ptr(da->used);
+                    m.data[x + (y * m.side)] = new_da;
+
                     new_da->used = da->used;
+                    memcpy(new_da->data, da->data, da->used * new_da->step);
                 }
             }
         }
+        printf("Initial Matrix: \n");
+        printf("==============================================================\n");
+        matrix_print(&aux);
+        printf("==============================================================\n\n\n");
+
         matrix_free(&aux);
+
+        // for (int x = 0; x < SIZE; x++) {
+        //     printf("-----> [%d] owns %d.\n", BLOCK_OWNER(x, p, SIZE), x);
+        // }
+
     } else {
         // Receive SIZE and generations
         int buf[2];
@@ -463,31 +556,14 @@ int main(int argc, char* argv[])
         // Recv my rows
         m = make_matrix(SIZE);
         for (int x = BLOCK_LOW(id, p, SIZE); x <= BLOCK_HIGH(id, p, SIZE); x++) {
-            int z_lengths[SIZE];
-            MPI_Recv(z_lengths, SIZE, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-            for (int y = 0; y < SIZE; y++) {
-                // printf("    [RV: %d] (%d, %d) -> %d\n", id, x, y, z_lengths[y]);
-                // fflush(stdout);
-                if (z_lengths[y] == 0) {
-                    continue;
-                }
-                dynamic_array* da = matrix_get(&m, x, y);
-                if (da == NULL) {
-                    da = da_make_ptr(z_lengths[y]);
-                    m.data[x + (y * m.side)] = da;
-                }
-                da->used = z_lengths[y];
-                MPI_Recv(da->data, (da->used * da->step), MPI_BYTE, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-            }
+            init_recv_row(&m, x);
         }
     }
 
     int MY_LOW = BLOCK_LOW(id, p, SIZE);
     int MY_HIGH = BLOCK_HIGH(id, p, SIZE);
 
-    //printf("[%d]\n", id);
-    //matrix_print(&m);
-
+    MPI_Barrier(MPI_COMM_WORLD);
     init_time = elapsed_time + MPI_Wtime();
 
     //-----------------
@@ -496,22 +572,41 @@ int main(int argc, char* argv[])
     for (int gen = 0; gen < generations; gen++) {
         dynamic_array* da;
         struct node *ptr, *to_test;
-        int32_t i, j;
-        short z, _z, _y, _x, y, x;
+        short z, _z, _y, _x;
 
         // printf("==============================================================\n");
         // printf("==================== BEFORE INSERTING ========================\n");
         // printf("==============================================================\n");
         // matrix_print(&m);
-        for (i = 0; i < SIZE; i++) {
-            for (j = 0; j < SIZE; j++) {
-                da = matrix_get(&m, i, j);
-                if (!da) {
+
+        // Get the frontier rows
+        int top_x    = pos_mod(MY_HIGH+1, SIZE);
+        int bottom_x = pos_mod(MY_LOW-1 , SIZE);
+        // printf("[%d] top=%d, bot=%d\n", id, top_x, bottom_x);
+
+        int top_owner    = BLOCK_OWNER(top_x, p, SIZE);
+        int bottom_owner = BLOCK_OWNER(bottom_x, p, SIZE);
+
+        // @SEE: (Maybe failes if processor numbers are odd (impar))
+        // The ideia here is to swap with the lower block and then with to top one if we are an odd processor
+        // or viceversa if we are even.
+        if(id % 2 == 0) {
+            swap_rows(&m, MY_HIGH, top_x, top_owner, id);
+            swap_rows(&m, MY_LOW, bottom_x, bottom_owner, id);
+        } else {
+            swap_rows(&m, MY_LOW, bottom_x, bottom_owner, id);
+            swap_rows(&m, MY_HIGH, top_x, top_owner, id);
+        }
+
+        for (int x = MY_LOW; x <= MY_HIGH; x++) {
+            for (int y = 0; y < SIZE; y++) {
+                da = matrix_get(&m, x, y);
+                if (da == NULL) {
                     continue;
                 }
 
-                size_t limit = da->used;
                 // Iterate over every existing z for x and y
+                size_t limit = da->used;
                 for (size_t k = 0; k < limit; k++) {
                     ptr = ((struct node*)da->data) + k;
 
@@ -520,9 +615,7 @@ int main(int argc, char* argv[])
                         continue;
                     }
 
-                    // PROCESS AN ALIVE NODE
-                    x = i;
-                    y = j;
+                    // Process an active node
                     z = ptr->z;
                     ptr->num_neighbours = 0;
 
@@ -611,9 +704,9 @@ int main(int argc, char* argv[])
         // printf("==================== BEFORE DELETING ========================\n");
         // printf("=============================================================\n");
         // matrix_print(&m);
-        for (i = 0; i < SIZE; i++) {
-            for (j = 0; j < SIZE; j++) {
-                da = matrix_get(&m, i, j);
+        for (int x = 0; x < SIZE; x++) {
+            for (int y = 0; y < SIZE; y++) {
+                da = matrix_get(&m, x, y);
                 if (!da) {
                     continue;
                 }
@@ -624,12 +717,12 @@ int main(int argc, char* argv[])
                         if (ptr->num_neighbours == 2 || ptr->num_neighbours == 3) {
                             ptr->is_dead = false;
                         } else {
-                            matrix_remove(&m, i, j, ptr->z);
+                            matrix_remove(&m, x, y, ptr->z);
                             ptr = ((struct node*)da->data) + k;
                         }
                     } else {
                         if (ptr->num_neighbours < 2 || ptr->num_neighbours > 4) {
-                            matrix_remove(&m, i, j, ptr->z);
+                            matrix_remove(&m, x, y, ptr->z);
                             ptr = ((struct node*)da->data) + k;
                         }
                     }
@@ -645,7 +738,7 @@ int main(int argc, char* argv[])
     //-----------
     // Output the result
     // matrix_print(&m);
-    matrix_print_live(&m, id);
+    matrix_print_live(&m, id, MY_LOW, MY_HIGH);
     matrix_free(&m);
 
     // Write the time log to a file
@@ -654,8 +747,8 @@ int main(int argc, char* argv[])
     // sprintf(out_str, "OMP %s: \ninit_time: %lf \nrun_time: %lf\n", input_file, init_time, run_time);
     // fwrite(out_str, strlen(out_str), 1, out_fp);
 
-    printf("[%d] Init time: %lf\n", id, init_time);
-    printf("[%d]  Run time: %lf\n", id, run_time);
+    // printf("[%d] Init time: %lf\n", id, init_time);
+    // printf("[%d]  Run time: %lf\n", id, run_time);
     MPI_Finalize();
     return 0;
 }
