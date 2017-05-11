@@ -9,6 +9,9 @@ sequencial: life3d.cpp
 parallel: life3d-omp.cpp
 	$(CC) $(FLAGS) life3d-omp.cpp -o life3d-omp
 
+mpi: life3d-omp.cpp
+	mpic++ $(FLAGS) life3d-mpi.cpp -o life3d-mpi
+
 profile: life3d-omp.cpp
 	kinst-ompp $(CC) $(FLAGS) life3d-omp.cpp -o life3d-omp
 
