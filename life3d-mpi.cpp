@@ -1,4 +1,3 @@
-#include <omp.h>
 #include <stdio.h>
 #include <string.h>
 #include <assert.h>
@@ -15,7 +14,6 @@
 #define BLOCK_OWNER(index,p,n) (((p)*((index)+1)-1)/(n))
 
 
-typedef std::tuple<int, int, int> Vector3;
 // Node representing elements of the sparse matrix
 struct node {
     short z; // The z value
@@ -299,9 +297,14 @@ inline short pos_mod(short val, short mod)
 
 int main(int argc, char* argv[])
 {
-	int id,p;
+	int id,p,u,a;
     double start, end, init_time, process_time;
-    start = omp_get_wtime();
+    // start = omp_get_wtime();
+	 
+	  MPI_Init (&argc, &argv);	/* starts MPI */
+	  MPI_Comm_rank (MPI_COMM_WORLD, &id);	/* get current process id */
+	  MPI_Comm_size (MPI_COMM_WORLD, &p);
+	 
     if (argc != 3) {
         printf("[ERROR] Incorrect usage!\n");
         printf("[Usage] ./life3d <input_file> <nr_generations>\n");
@@ -322,7 +325,7 @@ int main(int argc, char* argv[])
         return -1;
     }
     short SIZE;
- 	int blocksize[SIZE};
+ 	int blocksize[SIZE];
 	 
     if (fscanf(fp, "%hd", &SIZE) == EOF) {
         printf("[ERROR] Unable to read the size.\n");
@@ -339,164 +342,193 @@ int main(int argc, char* argv[])
     // Finished parsing!
     fclose(fp);
 
-    end = omp_get_wtime();
-    init_time = end - start;
-    start = omp_get_wtime();
+    // end = omp_get_wtime();
+    // init_time = end - start;
+    // start = omp_get_wtime();
 	 
+	 if(id == 0)
+  matrix_print(&m);
+	 
+	 
+    dynamic_array* sen;
+    dynamic_array* rec;
 	
+	 sen = matrix_get(&m, 1, 1);
+	 
+	 a = sen->step * sen->used;
+	 printf("USED:A %d\n",sen->used);
+	 MPI_Send(sen->data, a, MPI_BYTE, 2, 0, MPI_COMM_WORLD);
+	 
+	 
+	 if(id == 2){
+	 
+	 MPI_Recv(rec->data, a, MPI_BYTE, 0, 0, MPI_COMM_WORLD,MPI_STATUS_IGNORE);
+ }
+	 struct node *ptr;
+	 
+	 if(id == 2){
+	 for(u=0;u < sen->used;u++){
+		 ptr = ((struct node*)rec->data) + u;
+		 printf("DADOS RECEBIDOS: UZ %d %d\n", u,ptr->z);
+		 }
+		 printf("HEY\n");
+	 }
+	 
+    MPI_Finalize();
+	 return 0;
     //-----------------
     //--- MAIN LOOP ---
     //-----------------
-
-    for (int gen = 0; gen < generations; gen++) {
-        dynamic_array* da;
-        struct node *ptr, *to_test;
-        Vector3 t;
-        int32_t i, j;
-        short z, _z, _y, _x, y, x;
+    //
+    // for (int gen = 0; gen < generations; gen++) {
+    //     dynamic_array* da;
+    //     struct node *ptr, *to_test;
+    //     Vector3 t;
+    //     int32_t i, j;
+    //     short z, _z, _y, _x, y, x;
 
         // printf("==============================================================\n");
         // printf("==================== BEFORE INSERTING ========================\n");
         // printf("==============================================================\n");
-        // matrix_print(&m);
-        for (i = 0; i < SIZE; i++) {
-            for (j = 0; j < SIZE; j++) {
-                da = matrix_get(&m, i, j);
-                if (!da) {
-                    continue;
-                }
-
-                size_t limit = da->used;
-                // Iterate over every existing z for x and y
-                for (size_t k = 0; k < limit; k++) {
-                    ptr = ((struct node*)da->data) + k;
-
-                    // If its dead skip
-                    if (ptr->is_dead) {
-                        continue;
-                    }
-
-                    // PROCESS AN ALIVE NODE
-                    x = i;
-                    y = j;
-                    z = ptr->z;
-                    ptr->num_neighbours = 0;
-
-                    _z = pos_mod(z + 1, SIZE);
-                    to_test = matrix_get_ele(&m, x, y, _z);
-                    if (to_test) {
-                        if (to_test->is_dead == true) {
-                            to_test->num_neighbours++;
-                        } else {
-                            ptr->num_neighbours++;
-                        }
-                    } else {
-                        matrix_insert(&m, x, y, _z, true, 1);
-                        ptr = ((struct node*)da->data) + k;
-                    }
-
-                    _z = pos_mod(z - 1, SIZE);
-                    to_test = matrix_get_ele(&m, x, y, _z);
-                    if (to_test) {
-                        if (to_test->is_dead == true) {
-                            to_test->num_neighbours++;
-                        } else {
-                            ptr->num_neighbours++;
-                        }
-                    } else {
-                        matrix_insert(&m, x, y, _z, true, 1);
-                        ptr = ((struct node*)da->data) + k;
-                    }
-
-                    _x = pos_mod(x + 1, SIZE);
-                    to_test = matrix_get_ele(&m, _x, y, z);
-                    if (to_test) {
-                        if (to_test->is_dead == true) {
-                            to_test->num_neighbours++;
-                        } else {
-                            ptr->num_neighbours++;
-                        }
-                    } else {
-                        matrix_insert(&m, _x, y, z, true, 1);
-                        ptr = ((struct node*)da->data) + k;
-                    }
-
-                    _x = pos_mod(x - 1, SIZE);
-                    to_test = matrix_get_ele(&m, _x, y, z);
-                    if (to_test) {
-                        if (to_test->is_dead == true) {
-                            to_test->num_neighbours++;
-                        } else {
-                            ptr->num_neighbours++;
-                        }
-                    } else {
-                        matrix_insert(&m, _x, y, z, true, 1);
-                        ptr = ((struct node*)da->data) + k;
-                    }
-
-                    _y = pos_mod(y + 1, SIZE);
-                    to_test = matrix_get_ele(&m, x, _y, z);
-                    if (to_test) {
-                        if (to_test->is_dead == true) {
-                            to_test->num_neighbours++;
-                        } else {
-                            ptr->num_neighbours++;
-                        }
-                    } else {
-                        matrix_insert(&m, x, _y, z, true, 1);
-                        ptr = ((struct node*)da->data) + k;
-                    }
-
-                    _y = pos_mod(y - 1, SIZE);
-                    to_test = matrix_get_ele(&m, x, _y, z);
-                    if (to_test) {
-                        if (to_test->is_dead == true) {
-                            to_test->num_neighbours++;
-                        } else {
-                            ptr->num_neighbours++;
-                        }
-                    } else {
-                        matrix_insert(&m, x, _y, z, true, 1);
-                        ptr = ((struct node*)da->data) + k;
-                    }
-                }
-            }
-        }
+	  // matrix_print(&m);
+        // for (i = 0; i < SIZE; i++) {
+        //     for (j = 0; j < SIZE; j++) {
+        //         da = matrix_get(&m, i, j);
+        //         if (!da) {
+        //             continue;
+        //         }
+        //
+        //         size_t limit = da->used;
+        //         // Iterate over every existing z for x and y
+        //         for (size_t k = 0; k < limit; k++) {
+        //             ptr = ((struct node*)da->data) + k;
+        //
+        //             // If its dead skip
+        //             if (ptr->is_dead) {
+        //                 continue;
+        //             }
+        //
+        //             // PROCESS AN ALIVE NODE
+        //             x = i;
+        //             y = j;
+        //             z = ptr->z;
+        //             ptr->num_neighbours = 0;
+        //
+        //             _z = pos_mod(z + 1, SIZE);
+        //             to_test = matrix_get_ele(&m, x, y, _z);
+        //             if (to_test) {
+        //                 if (to_test->is_dead == true) {
+        //                     to_test->num_neighbours++;
+        //                 } else {
+        //                     ptr->num_neighbours++;
+        //                 }
+        //             } else {
+        //                 matrix_insert(&m, x, y, _z, true, 1);
+        //                 ptr = ((struct node*)da->data) + k;
+        //             }
+        //
+        //             _z = pos_mod(z - 1, SIZE);
+        //             to_test = matrix_get_ele(&m, x, y, _z);
+        //             if (to_test) {
+        //                 if (to_test->is_dead == true) {
+        //                     to_test->num_neighbours++;
+        //                 } else {
+        //                     ptr->num_neighbours++;
+        //                 }
+        //             } else {
+        //                 matrix_insert(&m, x, y, _z, true, 1);
+        //                 ptr = ((struct node*)da->data) + k;
+        //             }
+        //
+        //             _x = pos_mod(x + 1, SIZE);
+        //             to_test = matrix_get_ele(&m, _x, y, z);
+        //             if (to_test) {
+        //                 if (to_test->is_dead == true) {
+        //                     to_test->num_neighbours++;
+        //                 } else {
+        //                     ptr->num_neighbours++;
+        //                 }
+        //             } else {
+        //                 matrix_insert(&m, _x, y, z, true, 1);
+        //                 ptr = ((struct node*)da->data) + k;
+        //             }
+        //
+        //             _x = pos_mod(x - 1, SIZE);
+        //             to_test = matrix_get_ele(&m, _x, y, z);
+        //             if (to_test) {
+        //                 if (to_test->is_dead == true) {
+        //                     to_test->num_neighbours++;
+        //                 } else {
+        //                     ptr->num_neighbours++;
+        //                 }
+        //             } else {
+        //                 matrix_insert(&m, _x, y, z, true, 1);
+        //                 ptr = ((struct node*)da->data) + k;
+        //             }
+        //
+        //             _y = pos_mod(y + 1, SIZE);
+        //             to_test = matrix_get_ele(&m, x, _y, z);
+        //             if (to_test) {
+        //                 if (to_test->is_dead == true) {
+        //                     to_test->num_neighbours++;
+        //                 } else {
+        //                     ptr->num_neighbours++;
+        //                 }
+        //             } else {
+        //                 matrix_insert(&m, x, _y, z, true, 1);
+        //                 ptr = ((struct node*)da->data) + k;
+        //             }
+        //
+        //             _y = pos_mod(y - 1, SIZE);
+        //             to_test = matrix_get_ele(&m, x, _y, z);
+        //             if (to_test) {
+        //                 if (to_test->is_dead == true) {
+        //                     to_test->num_neighbours++;
+        //                 } else {
+        //                     ptr->num_neighbours++;
+        //                 }
+        //             } else {
+        //                 matrix_insert(&m, x, _y, z, true, 1);
+        //                 ptr = ((struct node*)da->data) + k;
+        //             }
+        //         }
+        //     }
+        // }
 
         // printf("=============================================================\n");
         // printf("==================== BEFORE DELETING ========================\n");
         // printf("=============================================================\n");
         // matrix_print(&m);
-        for (i = 0; i < SIZE; i++) {
-            for (j = 0; j < SIZE; j++) {
-                da = matrix_get(&m, i, j);
-                if (!da) {
-                    continue;
-                }
+    //     for (i = 0; i < SIZE; i++) {
+    //         for (j = 0; j < SIZE; j++) {
+    //             da = matrix_get(&m, i, j);
+    //             if (!da) {
+    //                 continue;
+    //             }
+    //
+    //             // Iterate over every existing z for x and y
+    //             for (int k = (int) da->used - 1; k >= 0; k--) {
+    //                 ptr = ((struct node*)da->data) + k;
+    //                 if (ptr->is_dead) {
+    //                     if (ptr->num_neighbours == 2 || ptr->num_neighbours == 3) {
+    //                         ptr->is_dead = false;
+    //                     } else {
+    //                         matrix_remove(&m, i, j, ptr->z);
+    //                         ptr = ((struct node*)da->data) + k;
+    //                     }
+    //                 } else {
+    //                     if (ptr->num_neighbours < 2 || ptr->num_neighbours > 4) {
+    //                         matrix_remove(&m, i, j, ptr->z);
+    //                         ptr = ((struct node*)da->data) + k;
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
 
-                // Iterate over every existing z for x and y
-                for (int k = (int) da->used - 1; k >= 0; k--) {
-                    ptr = ((struct node*)da->data) + k;
-                    if (ptr->is_dead) {
-                        if (ptr->num_neighbours == 2 || ptr->num_neighbours == 3) {
-                            ptr->is_dead = false;
-                        } else {
-                            matrix_remove(&m, i, j, ptr->z);
-                            ptr = ((struct node*)da->data) + k;
-                        }
-                    } else {
-                        if (ptr->num_neighbours < 2 || ptr->num_neighbours > 4) {
-                            matrix_remove(&m, i, j, ptr->z);
-                            ptr = ((struct node*)da->data) + k;
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    end = omp_get_wtime();
-    process_time = end - start;
+    // end = omp_get_wtime();
+    // process_time = end - start;
 
     //-----------
     //--- END ---
@@ -520,8 +552,8 @@ int main(int argc, char* argv[])
     free(m.data);
 
     // Write the time log to a file
-    FILE* out_fp = fopen("time.log", "w");
-    char out_str[80];
-    sprintf(out_str, "OMP %s: \ninit_time: %lf \nproc_time: %lf\n", input_file, init_time, process_time);
-    fwrite(out_str, strlen(out_str), 1, out_fp);
+    // FILE* out_fp = fopen("time.log", "w");
+    // char out_str[80];
+    // sprintf(out_str, "OMP %s: \ninit_time: %lf \nproc_time: %lf\n", input_file, init_time, process_time);
+    // fwrite(out_str, strlen(out_str), 1, out_fp);
 }

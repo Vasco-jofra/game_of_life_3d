@@ -10,6 +10,7 @@
 
 int main(int argc, char **argv) {
 
+
     int blocksize[5];
 	 int id,p;
   
@@ -19,8 +20,9 @@ int main(int argc, char **argv) {
 	 MPI_Comm_rank (MPI_COMM_WORLD, &id);
 	 MPI_Comm_size (MPI_COMM_WORLD, &p);
    
+	 if(id == 0)
 	 for(int u=0; u < p;u++){
-		 blocksize[u] = BLOCK_SIZE(id,p,5);
+		 blocksize[u] = BLOCK_SIZE(u,p,5);
 	    printf("COLUNA:%d para P:%d\n",  blocksize[u],u);
   }
     MPI_Finalize();
