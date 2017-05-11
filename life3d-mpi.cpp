@@ -269,7 +269,7 @@ void matrix_free(Matrix* m)
 }
 
 // Print the live nodes in the matrix (the matrix only contains alive nodes at this point, so print all nodes)
-void matrix_print_live(Matrix* m)
+void matrix_print_live(Matrix* m, int id)
 {
     short SIZE = m->side;
     for (short i = 0; i < SIZE; i++) {
@@ -280,7 +280,7 @@ void matrix_print_live(Matrix* m)
                 // Kinda sucks to sort here, but oh well
                 std::sort(ptr, (ptr + da->used));
                 for (size_t k = 0; k < da->used; k++) {
-                    printf("%hd %hd %hd\n", i, j, ptr->z);
+                    printf("[%d] %hd %hd %hd\n", id, i, j, ptr->z);
                     ptr++;
                 }
             }
@@ -323,16 +323,59 @@ inline short pos_mod(short val, short mod)
     // return (val % mod) + (mod * (val < 0));
 }
 
+void send_row(Matrix* m, int x, int to)
+{
+    /**
+      m    -> the source matrix
+      x    -> row to send
+      to   -> who are we sending to
+    */
+    int SIZE = m->side;
+    int z_lengths[SIZE];
+    for (int y = 0; y < SIZE; y++) { // "Calculate" the length of each z_list
+        dynamic_array* da = matrix_get(m, x, y);
+        z_lengths[y] = (da == NULL) ? 0 : da->used;
+    }
+
+    //if (to != 0) {
+    //}
+    MPI_Send(z_lengths, SIZE, MPI_INT, to, 0, MPI_COMM_WORLD);
+
+    // Send each z_list in the row
+    for (int y = 0; y < SIZE; y++) {
+        dynamic_array* da = matrix_get(m, x, y);
+        if (da == NULL) { // If we have nothing to send, don't send
+            continue;
+        }
+        MPI_Send(da->data, z_lengths[y] * da->step, MPI_BYTE, to, 0, MPI_COMM_WORLD);
+
+        //if (to != 0) {
+        /*} else {
+            dynamic_array* m_da = matrix_get(&m, x, y);
+            if (m_da == NULL) {
+                m_da = da_make_ptr(z_lengths[y]);
+                m.data[x + (y * m.side)] = m_da;
+            }
+            memcpy(m_da->data, da->data, z_lengths[y] * m_da->step);
+            m_da->used = z_lengths[y];
+        }*/
+    }
+}
+
+void recv_row()
+{
+}
+
 int main(int argc, char* argv[])
 {
-    int id, p, u, a;
-    double elapsed_time, init_time;
+    int id, p;
+    double elapsed_time, init_time, run_time;
 
     MPI_Init(&argc, &argv);
     MPI_Barrier(MPI_COMM_WORLD);
     elapsed_time = -MPI_Wtime();
 
-    MPI_Comm_rank(MPI_COMM_WORLD, &id); // get current process id
+    MPI_Comm_rank(MPI_COMM_WORLD, &id);
     MPI_Comm_size(MPI_COMM_WORLD, &p);
 
     Matrix m;
@@ -387,38 +430,29 @@ int main(int argc, char* argv[])
 
         // Send rows
         for (int x = 0; x < SIZE; x++) {
-            int z_lengths[SIZE];
-            int to = BLOCK_OWNER(x, p, SIZE);
-            for (int y = 0; y < SIZE; y++) {
-                dynamic_array* da = matrix_get(&aux, x, y);
-                z_lengths[y] = (da == NULL) ? 0 : da->used;
-            }
-            if (to != 0) {
-                MPI_Send(z_lengths, SIZE, MPI_INT, to, 0, MPI_COMM_WORLD);
-            }
+            int owner = BLOCK_OWNER(x, p, SIZE);
 
-            // Send rows to each row owner
-            for (int y = 0; y < SIZE; y++) {
-                dynamic_array* da = matrix_get(&aux, x, y);
-                if (da == NULL) {
-                    continue;
-                }
-
-                if (to != 0) {
-                    MPI_Send(da->data, z_lengths[y] * da->step, MPI_BYTE, to, 0, MPI_COMM_WORLD);
-                } else {
-                    dynamic_array* m_da = matrix_get(&m, x, y);
-                    if (m_da == NULL) {
-                        m_da = da_make_ptr(z_lengths[y]);
-                        m.data[x + (y * m.side)] = m_da;
+            if (owner != 0) {
+                send_row(&aux, x, owner);
+            } else {
+                // If we are the process 0, just setup the matrix, don't send anything
+                for (int y = 0; y < SIZE; y++) {
+                    dynamic_array* da = matrix_get(&aux, x, y);
+                    if (da == NULL) {
+                        continue;
                     }
-                    memcpy(m_da->data, da->data, z_lengths[y] * m_da->step);
-                    m_da->used = z_lengths[y];
+
+                    dynamic_array* new_da = matrix_get(&m, x, y);
+                    if (new_da == NULL) {
+                        new_da = da_make_ptr(da->used);
+                        m.data[x + (y * m.side)] = new_da;
+                    }
+                    memcpy(new_da->data, da->data, da->used * new_da->step);
+                    new_da->used = da->used;
                 }
             }
         }
         matrix_free(&aux);
-
     } else {
         // Receive SIZE and generations
         int buf[2];
@@ -448,6 +482,9 @@ int main(int argc, char* argv[])
         }
     }
 
+    int MY_LOW = BLOCK_LOW(id, p, SIZE);
+    int MY_HIGH = BLOCK_HIGH(id, p, SIZE);
+
     //printf("[%d]\n", id);
     //matrix_print(&m);
 
@@ -456,11 +493,9 @@ int main(int argc, char* argv[])
     //-----------------
     //--- MAIN LOOP ---
     //-----------------
-    /*
     for (int gen = 0; gen < generations; gen++) {
         dynamic_array* da;
         struct node *ptr, *to_test;
-        Vector3 t;
         int32_t i, j;
         short z, _z, _y, _x, y, x;
 
@@ -603,24 +638,24 @@ int main(int argc, char* argv[])
         }
     }
 
-    // end = omp_get_wtime();
-    // process_time = end - start;
+    run_time = elapsed_time + MPI_Wtime();
 
     //-----------
     //--- END ---
     //-----------
     // Output the result
     // matrix_print(&m);
-    matrix_print_live(&m);
+    matrix_print_live(&m, id);
     matrix_free(&m);
 
     // Write the time log to a file
     // FILE* out_fp = fopen("time.log", "w");
     // char out_str[80];
-    // sprintf(out_str, "OMP %s: \ninit_time: %lf \nproc_time: %lf\n", input_file, init_time, process_time);
-    // fwrite(out_str, strlen(out_str), 1, out_fp);*/
+    // sprintf(out_str, "OMP %s: \ninit_time: %lf \nrun_time: %lf\n", input_file, init_time, run_time);
+    // fwrite(out_str, strlen(out_str), 1, out_fp);
 
     printf("[%d] Init time: %lf\n", id, init_time);
+    printf("[%d]  Run time: %lf\n", id, run_time);
     MPI_Finalize();
     return 0;
 }
