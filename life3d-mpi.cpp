@@ -424,15 +424,21 @@ void init_send_row(Matrix* m, int x, int to)
     int z_lengths[SIZE];
     get_z_lengths(m, x, z_lengths);
 
+    printf("[SEND] Lengths: ");
+    for (int y = 0; y < SIZE; y++) {
+        printf("%d, ", z_lengths[y]);
+    }
+    putchar('\n');
+
     MPI_Send(z_lengths, SIZE, MPI_INT, to, TAG_Z_LENGTHS, MPI_COMM_WORLD);
 
     // Send each z_list in the row
     for (int y = 0; y < SIZE; y++) {
         dynamic_array* da = matrix_get(m, x, y);
-        if (da == NULL) { // If we have nothing to send, don't send at all
+        if (da == NULL || da->used == 0) { // If we have nothing to send, don't send at all
             continue;
         }
-        MPI_Send(da->data, z_lengths[y] * da->step, MPI_BYTE, to, TAG_INIT_MATRIX, MPI_COMM_WORLD);
+        MPI_Send(da->data, (z_lengths[y] * da->step), MPI_BYTE, to, TAG_INIT_MATRIX, MPI_COMM_WORLD);
     }
 }
 
@@ -442,6 +448,12 @@ void init_recv_row(Matrix* m, int x, int owner = 0)
     int SIZE = m->side;
     int z_lengths[SIZE];
     MPI_Recv(z_lengths, SIZE, MPI_INT, owner, TAG_Z_LENGTHS, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+
+    /*printf("Lengths: ");
+    for (int y = 0; y < SIZE; y++) {
+        printf("%d, ", z_lengths[y]);
+    }
+    putchar('\n');*/
 
     for (int y = 0; y < SIZE; y++) {
         // printf("    [RV: %d] (%d, %d) -> %d\n", id, x, y, z_lengths[y]);
@@ -459,8 +471,10 @@ void init_recv_row(Matrix* m, int x, int owner = 0)
         }
 
         da->used = z_lengths[y];
+        // printf("(%lu/%lu)", da->used, da->size);
         MPI_Recv(da->data, (da->used * da->step), MPI_BYTE, owner, TAG_INIT_MATRIX, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
     }
+    // printf("\n");
 }
 
 void swap_rows(Matrix* m, int x_have, int x_want, int to, int tmp_id)
@@ -663,7 +677,7 @@ int main(int argc, char* argv[])
     for (int gen = 0; gen < generations; gen++) {
         dynamic_array* da;
         struct node *ptr, *to_test;
-        int32_t i, j;
+        int32_t j;
         short z, _z, _y, _x, y, x;
 
         // @SEE: (Maybe failes if processor numbers are odd (impar))
@@ -835,6 +849,10 @@ int main(int argc, char* argv[])
 
     // Gather the results
     if (id == 0) {
+        sleep(1);
+        printf("==============================================================\n");
+        printf("==============================================================\n");
+        printf("==============================================================\n");
         for (int x = 0; x < SIZE; x++) {
             int owner = BLOCK_OWNER(x, p, SIZE);
             if (owner != 0) {
