@@ -1,6 +1,9 @@
 .vscode/*
 life3d
 life3d-omp
+life3d-mpi
+lol
+
 tests/our_out/*
 .gdb_history
 time.log
@@ -41,6 +44,3 @@ time.log
 
 run_tests.sh
 
-*.sh
-
-lol

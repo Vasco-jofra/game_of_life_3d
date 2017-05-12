@@ -1,16 +1,18 @@
 CC=g++
-FLAGS=-std=c++11 -fopenmp -lgomp -ggdb -Wall -Wextra
+MPI_CC=mpic++
+FLAGS=-std=c++11 -ggdb -Wall -Wextra
+OMP_FLAGS=-fopenmp -lgomp
 
 all: sequencial parallel
 
 sequencial: life3d.cpp
-	$(CC) $(FLAGS) life3d.cpp -o life3d
+	$(CC) $(OMP_FLAGS) $(FLAGS) life3d.cpp -o life3d
 
 parallel: life3d-omp.cpp
-	$(CC) $(FLAGS) life3d-omp.cpp -o life3d-omp
+	$(CC) $(OMP_FLAGS) $(FLAGS) life3d-omp.cpp -o life3d-omp
 
 mpi: life3d-omp.cpp
-	mpic++ $(FLAGS) life3d-mpi.cpp -o life3d-mpi
+	$(MPI_CC) $(FLAGS) life3d-mpi.cpp -o life3d-mpi
 
 profile: life3d-omp.cpp
 	kinst-ompp $(CC) $(FLAGS) life3d-omp.cpp -o life3d-omp
