@@ -350,33 +350,7 @@ int get_row_length(Matrix* m, int x)
     return total;
 }
 
-/*
-void send_alive_row(Matrix* m, int x, int to)
-{
-    int res_length = get_row_length(m, x)*3;
-    MPI_Send(&res_length, 1, MPI_INT, to, MPI_ANY_TAG, MPI_COMM_WORLD);
-
-    int *res = (int*)malloc(sizeof(int)*res_length);
-    int index = 0;
-    for (short y = 0; y < m->side; y++) {
-        dynamic_array* da = matrix_get(m, x, y);
-        if (da != NULL) {
-            struct node* ptr = ((struct node*)da->data);
-            std::sort(ptr, (ptr + da->used));
-            for (size_t k = 0; k < da->used; k++) {
-                res[index+0] = x;
-                res[index+1] = y;
-                res[index+2] = ptr->z;
-                index += 3;
-                ptr++;
-            }
-        }
-    }
-
-    MPI_Send(res, res_length, MPI_INT, to, MPI_ANY_TAG, MPI_COMM_WORLD);
-}*/
-
-void matrix_print(Matrix* m, int id)
+void matrix_print(Matrix* m)
 {
     short SIZE = m->side;
     for (short i = 0; i < SIZE; i++) {
@@ -527,8 +501,6 @@ void swap_rows(Matrix* m, int x_have, int x_want, int to, int tmp_id)
     if (request_i != 0) {
         MPI_Waitall(request_i, requests, statuses);
     }
-
-    //mpi_print(tmp_id, 1, "....END_SWAP", "%d--%d with %d.\n", x_have, x_want, to);
 }
 
 int main(int argc, char* argv[])
@@ -548,14 +520,15 @@ int main(int argc, char* argv[])
     Matrix m;
     int generations;
     short SIZE;
+    char* input_file;
 
     if (id == 0) {
         if (argc != 3) {
             printf("[ERROR] Incorrect usage!\n");
-            printf("[Usage] ./life3d <input_file> <nr_generations>\n");
+            printf("[Usage] %s <input_file> <nr_generations>\n", argv[0]);
             return -1;
         }
-        char* input_file = argv[1];
+        input_file = argv[1];
         generations = atoi(argv[2]);
 
         if (generations <= 0) {
@@ -617,21 +590,8 @@ int main(int argc, char* argv[])
                 }
             }
         }
-        // printf("Initial Matrix: \n");
-        // printf("==============================================================\n");
-        // matrix_print(&aux);
-        // printf("==============================================================\n");
-
-        // for (int x = 0; x < SIZE; x++) {
-        //     printf("[%d] owns x=%d\n", BLOCK_OWNER(x, p, SIZE), x);
-        // }
-        // printf("==============================================================\n\n\n");
 
         matrix_free(&aux);
-
-        // for (int x = 0; x < SIZE; x++) {
-        //     printf("-----> [%d] owns %d.\n", BLOCK_OWNER(x, p, SIZE), x);
-        // }
 
     } else {
         // Receive SIZE and generations
@@ -679,15 +639,6 @@ int main(int argc, char* argv[])
             swap_rows(&m, MY_LOW, MY_LOW_FRONTIER, MY_LOW_FRONTIER_OWNER, id);
             swap_rows(&m, MY_HIGH, MY_HIGH_FRONTIER, MY_HIGH_FRONTIER_OWNER, id);
         }
-
-        // if (id == 1) {
-        //     sleep(1);
-        // }
-        // printf("==============================================================\n");
-        // printf("==================== BEFORE INSERTING ========================\n");
-        // printf("==============================================================\n");
-        // printf("[%d]\n", id);
-        // matrix_print(&m);
 
         for (int _a = 0, i = MY_LOW_FRONTIER; _a < BLOCK_SIZE(id, p, SIZE) + 2; _a++) {
             for (j = 0; j < SIZE; j++) {
@@ -794,12 +745,6 @@ int main(int argc, char* argv[])
             i = pos_mod(++i, SIZE);
         }
 
-        // printf("=============================================================\n");
-        // printf("==================== BEFORE DELETING ========================\n");
-        // printf("=============================================================\n");
-        // printf("[%d]\n", id);
-        // matrix_print(&m);
-
         for (int _a = 0, i = MY_LOW_FRONTIER; _a < BLOCK_SIZE(id, p, SIZE) + 2; _a++) {
             for (j = 0; j < SIZE; j++) {
                 da = matrix_get(&m, i, j);
@@ -827,21 +772,12 @@ int main(int argc, char* argv[])
             }
             i = pos_mod(++i, SIZE);
         }
-        // printf("=============================================================\n");
-        // printf("==================== AFTER DELETING ========================\n");
-        // printf("=============================================================\n");
-        // printf("[%d]\n", id);
-        // matrix_print(&m);
     }
 
     run_time = elapsed_time + MPI_Wtime();
 
     // Gather the results
     if (id == 0) {
-        sleep(1);
-        printf("==============================================================\n");
-        printf("==============================================================\n");
-        printf("==============================================================\n");
         for (int x = 0; x < SIZE; x++) {
             int owner = BLOCK_OWNER(x, p, SIZE);
             if (owner != 0) {
@@ -849,35 +785,22 @@ int main(int argc, char* argv[])
             }
         }
         matrix_print_live(&m);
+
+        // Write the time log to a file
+        FILE* out_fp = fopen("time.log", "w");
+        char out_str[80];
+        sprintf(out_str, "OMP %s: \ninit_time: %lf \nrun_time: %lf\n", input_file, init_time, run_time);
+        fwrite(out_str, strlen(out_str), 1, out_fp);
+        // printf("[%d] Init time: %lf\n", id, init_time);
+        // printf("[%d]  Run time: %lf\n", id, run_time);
+
     } else {
         for (int x = MY_LOW; x <= MY_HIGH; x++) {
             init_send_row(&m, x, 0);
         }
     }
-    //-----------
-    //--- END ---
-    //-----------
-    // Output the result
-    // matrix_print(&m);
-    // matrix_print_live(&m, id, MY_LOW, MY_HIGH);
 
-    /*
-    printf("[%d] Final matrix: \n", id);
-    printf("==============================================================\n");
-    matrix_print(&m);
-    printf("==============================================================\n\n\n");
-    */
-
-    matrix_free(&m);
-
-    // Write the time log to a file
-    // FILE* out_fp = fopen("time.log", "w");
-    // char out_str[80];
-    // sprintf(out_str, "OMP %s: \ninit_time: %lf \nrun_time: %lf\n", input_file, init_time, run_time);
-    // fwrite(out_str, strlen(out_str), 1, out_fp);
-
-    //printf("[%d] Init time: %lf\n", id, init_time);
-    //printf("[%d]  Run time: %lf\n", id, run_time);
+    // matrix_free(&m);
     MPI_Finalize();
     return 0;
 }
