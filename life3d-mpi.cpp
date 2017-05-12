@@ -376,7 +376,7 @@ void send_alive_row(Matrix* m, int x, int to)
     MPI_Send(res, res_length, MPI_INT, to, MPI_ANY_TAG, MPI_COMM_WORLD);
 }*/
 
-void matrix_print(Matrix* m)
+void matrix_print(Matrix* m, int id)
 {
     short SIZE = m->side;
     for (short i = 0; i < SIZE; i++) {
@@ -424,12 +424,6 @@ void init_send_row(Matrix* m, int x, int to)
     int z_lengths[SIZE];
     get_z_lengths(m, x, z_lengths);
 
-    printf("[SEND] Lengths: ");
-    for (int y = 0; y < SIZE; y++) {
-        printf("%d, ", z_lengths[y]);
-    }
-    putchar('\n');
-
     MPI_Send(z_lengths, SIZE, MPI_INT, to, TAG_Z_LENGTHS, MPI_COMM_WORLD);
 
     // Send each z_list in the row
@@ -449,20 +443,17 @@ void init_recv_row(Matrix* m, int x, int owner = 0)
     int z_lengths[SIZE];
     MPI_Recv(z_lengths, SIZE, MPI_INT, owner, TAG_Z_LENGTHS, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 
-    /*printf("Lengths: ");
-    for (int y = 0; y < SIZE; y++) {
-        printf("%d, ", z_lengths[y]);
-    }
-    putchar('\n');*/
-
     for (int y = 0; y < SIZE; y++) {
         // printf("    [RV: %d] (%d, %d) -> %d\n", id, x, y, z_lengths[y]);
         // fflush(stdout);
+        dynamic_array* da = matrix_get(m, x, y);
         if (z_lengths[y] == 0) {
+            if (da) {
+                da->used = 0;
+            }
             continue;
         }
 
-        dynamic_array* da = matrix_get(m, x, y);
         if (da == NULL) {
             da = da_make_ptr(z_lengths[y]);
             m->data[x + (y * SIZE)] = da;
@@ -471,10 +462,8 @@ void init_recv_row(Matrix* m, int x, int owner = 0)
         }
 
         da->used = z_lengths[y];
-        // printf("(%lu/%lu)", da->used, da->size);
         MPI_Recv(da->data, (da->used * da->step), MPI_BYTE, owner, TAG_INIT_MATRIX, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
     }
-    // printf("\n");
 }
 
 void swap_rows(Matrix* m, int x_have, int x_want, int to, int tmp_id)
