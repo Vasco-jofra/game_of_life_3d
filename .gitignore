@@ -44,3 +44,7 @@ time.log
 
 run_tests.sh
 
+
+mpi_run_tests.sh
+
+life3d-mpi

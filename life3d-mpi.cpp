@@ -324,7 +324,7 @@ void matrix_print_live(Matrix* m, int from = 0, int to = -1)
                 // Kinda sucks to sort here, but oh well
                 std::sort(ptr, (ptr + da->used));
                 for (size_t k = 0; k < da->used; k++) {
-                    printf("%hd %hd %hd\n", x, y, ptr->z);
+                    printf("%hd %hd %hd  \t NEI:%hd \t DEAD?: %d\n", x, y, ptr->z, ptr->num_neighbours, ptr->is_dead);
                     ptr++;
                 }
             }
@@ -619,6 +619,7 @@ int main(int argc, char* argv[])
 
     MPI_Barrier(MPI_COMM_WORLD);
     init_time = elapsed_time + MPI_Wtime();
+	 
 
     //-----------------
     //--- MAIN LOOP ---
@@ -639,6 +640,13 @@ int main(int argc, char* argv[])
             swap_rows(&m, MY_LOW, MY_LOW_FRONTIER, MY_LOW_FRONTIER_OWNER, id);
             swap_rows(&m, MY_HIGH, MY_HIGH_FRONTIER, MY_HIGH_FRONTIER_OWNER, id);
         }
+		  if(id == 2 && gen == 6){
+			  sleep(1);
+			  printf("ID 2, NA ITERAção 6 DEVIA RECEBER O MESMO QUE A ITERçÂO 5 do ID3..MAS NAO\n");
+ 	 		 matrix_print_live(&m);
+			  
+			
+		  }
 
         for (int _a = 0, i = MY_LOW_FRONTIER; _a < BLOCK_SIZE(id, p, SIZE) + 2; _a++) {
             for (j = 0; j < SIZE; j++) {
@@ -652,6 +660,9 @@ int main(int argc, char* argv[])
                 for (size_t k = 0; k < limit; k++) {
                     ptr = ((struct node*)da->data) + k;
 
+					 if(id == 2 && gen == generations - 1 && i==2 && j==1 && ptr->z == 3){
+						 printf(" ANTES DE CONTAR VIZINHOS DO X: %d \t Y:%d \t Z:%d \t NEIGH:%d\n", i,j,ptr->z, ptr->num_neighbours);
+					 }
                     // If its dead skip
                     if (ptr->is_dead) {
                         continue;
@@ -669,6 +680,9 @@ int main(int argc, char* argv[])
                         if (to_test->is_dead == true) {
                             to_test->num_neighbours++;
                         } else {
+  			  					 if(id == 2 && gen == generations - 1 && i==2 && j==1 && ptr->z == 3){
+  			  						 printf("Z+1\n");
+  			  					 }
                             ptr->num_neighbours++;
                         }
                     } else {
@@ -683,6 +697,10 @@ int main(int argc, char* argv[])
                             to_test->num_neighbours++;
                         } else {
                             ptr->num_neighbours++;
+									 
+				  					 if(id == 2 && gen == generations - 1 && i==2 && j==1 && ptr->z == 3){
+				  						 printf("Z-1\n");
+				  					 }
                         }
                     } else {
                         matrix_insert(&m, x, y, _z, true, 1);
@@ -696,6 +714,9 @@ int main(int argc, char* argv[])
                             to_test->num_neighbours++;
                         } else {
                             ptr->num_neighbours++;
+				  					 if(id == 2 && gen == generations - 1 && i==2 && j==1 && ptr->z == 3){
+				  						 printf("x+1\n");
+				  					 }
                         }
                     } else {
                         matrix_insert(&m, _x, y, z, true, 1);
@@ -709,6 +730,9 @@ int main(int argc, char* argv[])
                             to_test->num_neighbours++;
                         } else {
                             ptr->num_neighbours++;
+				  					 if(id == 2 && gen == generations - 1 && i==2 && j==1 && ptr->z == 3){
+				  						 printf("x-1\n");
+				  					 }
                         }
                     } else {
                         matrix_insert(&m, _x, y, z, true, 1);
@@ -722,6 +746,9 @@ int main(int argc, char* argv[])
                             to_test->num_neighbours++;
                         } else {
                             ptr->num_neighbours++;
+				  					 if(id == 2 && gen == generations - 1 && i==2 && j==1 && ptr->z == 3){
+				  						 printf("y+1\n");
+				  					 }
                         }
                     } else {
                         matrix_insert(&m, x, _y, z, true, 1);
@@ -735,16 +762,30 @@ int main(int argc, char* argv[])
                             to_test->num_neighbours++;
                         } else {
                             ptr->num_neighbours++;
+				  					 if(id == 2 && gen == generations - 1 && i==2 && j==1 && ptr->z == 3){
+				  						 printf("x-1\n");
+				  					 }
                         }
                     } else {
                         matrix_insert(&m, x, _y, z, true, 1);
                         ptr = ((struct node*)da->data) + k;
                     }
+	 					 if(id == 2 && gen == generations - 1 && i==2 && j==1 && ptr->z == 3){
+	 						 printf("DEPOIS DE CONTAR OS VIZINHOS DE X: %d \t Y:%d \t Z:%d \t NEIGH:%d\n", i,j,ptr->z, ptr->num_neighbours);
+	 					 }
                 }
             }
             i = pos_mod(++i, SIZE);
         }
-
+		 
+		  // if(id == 2 && generations -1 == gen){
+ // 			  sleep(2);
+ // 			  printf("----------------------------------------------------------------\n");
+ //
+ //  	 		 matrix_print_live(&m);
+ //
+ //
+ // 		  }
         for (int _a = 0, i = MY_LOW_FRONTIER; _a < BLOCK_SIZE(id, p, SIZE) + 2; _a++) {
             for (j = 0; j < SIZE; j++) {
                 da = matrix_get(&m, i, j);
@@ -772,7 +813,21 @@ int main(int argc, char* argv[])
             }
             i = pos_mod(++i, SIZE);
         }
+		  if(id == 3 && gen == 5){
+			  sleep(1);
+						  printf("-------------ID: 3 acaba a iteração 5 e deve enviar isto ao id2---------------------\n");
+ 	 		 matrix_print_live(&m);
+			  printf("-------------ID: 3 acaba a iteração 5 e deve enviar isto ao id2---------------------\n");
+			  
+			  
+		  }
+
     }
+	 
+
+
+
+
 
     run_time = elapsed_time + MPI_Wtime();
 
@@ -784,7 +839,7 @@ int main(int argc, char* argv[])
                 init_recv_row(&m, x, owner);
             }
         }
-        matrix_print_live(&m);
+		  //matrix_print_live(&m);
 
         // Write the time log to a file
         FILE* out_fp = fopen("time.log", "w");
