@@ -467,11 +467,14 @@ void swap_rows(Matrix* m, int x_have, int x_want, int to, int tmp_id)
 
     // Assynchronously receive all z_lists
     for (int y = 0; y < SIZE; y++) {
+        dynamic_array* da = matrix_get(m, x_want, y);
         if (their_z_lengths[y] == 0) {
+            if(da) {
+                da->used = 0;
+            }
             continue;
         }
 
-        dynamic_array* da = matrix_get(m, x_want, y);
         if (da == NULL) {
             da = da_make_ptr(their_z_lengths[y]);
             m->data[x_want + (y * SIZE)] = da;
