@@ -1,5 +1,3 @@
-#!/bin/bash
-
 if ! make mpi ; then
     exit 1;
 fi

@@ -324,7 +324,7 @@ void matrix_print_live(Matrix* m, int from = 0, int to = -1)
                 // Kinda sucks to sort here, but oh well
                 std::sort(ptr, (ptr + da->used));
                 for (size_t k = 0; k < da->used; k++) {
-                    printf("%hd %hd %hd\n", x, y, ptr->z);
+                    printf("%hd %hd %hd\n", x, y, ptr->z, ptr->num_neighbours, ptr->is_dead);
                     ptr++;
                 }
             }
@@ -623,6 +623,7 @@ int main(int argc, char* argv[])
     MPI_Barrier(MPI_COMM_WORLD);
     init_time = elapsed_time + MPI_Wtime();
 
+
     //-----------------
     //--- MAIN LOOP ---
     //-----------------
@@ -787,12 +788,12 @@ int main(int argc, char* argv[])
                 init_recv_row(&m, x, owner);
             }
         }
-        matrix_print_live(&m);
+		matrix_print_live(&m);
 
         // Write the time log to a file
         FILE* out_fp = fopen("time.log", "w");
         char out_str[80];
-        sprintf(out_str, "OMP %s: \ninit_time: %lf \nrun_time: %lf\n", input_file, init_time, run_time);
+        sprintf(out_str, "MPI %s: \ninit_time: %lf \nrun_time: %lf\n", input_file, init_time, run_time);
         fwrite(out_str, strlen(out_str), 1, out_fp);
         // printf("[%d] Init time: %lf\n", id, init_time);
         // printf("[%d]  Run time: %lf\n", id, run_time);

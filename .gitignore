@@ -3,6 +3,9 @@ life3d
 life3d-omp
 life3d-mpi
 lol
+run_tests.sh
+mpi_run_tests.sh
+
 
 tests/our_out/*
 .gdb_history
@@ -41,6 +44,3 @@ time.log
 # Debug files
 *.dSYM/
 *.su
-
-run_tests.sh
-
