@@ -461,6 +461,74 @@ void swap_rows(Matrix* m, int x_have, int x_want, int to, int tmp_id)
     MPI_Wait(&request, &status);
     //mpi_print(tmp_id, 1, "FINISHED LENGTH SWAP", "%d--%d with %d.\n", x_have, x_want, to);
 
+    MPI_Request request_read;
+    MPI_Status status_read;
+
+    // Receive (asynchronously)
+    size_t total_size_to_recv = 0;
+    for (int y = 0; y < SIZE; y++) {
+        total_size_to_recv += (their_z_lengths[y] * sizeof(struct node));
+    }
+
+    char* recv_data = NULL;
+    if (total_size_to_recv > 0) {
+        recv_data = (char*)malloc(total_size_to_recv);
+        MPI_Irecv(recv_data, total_size_to_recv, MPI_BYTE, to, TAG_SWAP_ROWS, MPI_COMM_WORLD, &request_read);
+    }
+
+    // Init data to send, and send it
+    size_t total_size_to_send = 0;
+    for (int y = 0; y < SIZE; y++) {
+        total_size_to_send += (my_z_lengths[y] * sizeof(struct node));
+    }
+    char* send_data = NULL;
+    int current_pos = 0;
+    if (total_size_to_send > 0) {
+        send_data = (char*)malloc(total_size_to_send);
+
+        for (int y = 0; y < SIZE; y++) {
+            dynamic_array* da = matrix_get(m, x_have, y);
+            if (da == NULL || da->used == 0) { // If we have nothing to send, don't send at all
+                continue;
+            }
+
+            memcpy((send_data + current_pos), da->data, (my_z_lengths[y] * da->step));
+            current_pos += (my_z_lengths[y] * da->step);
+        }
+
+        MPI_Send(send_data, total_size_to_send, MPI_BYTE, to, TAG_SWAP_ROWS, MPI_COMM_WORLD);
+    }
+
+    // Wait until the recv finishes
+    if (total_size_to_recv > 0) {
+        MPI_Wait(&request_read, &status_read);
+    }
+
+    // Insert the received data in the arrays
+    current_pos = 0;
+    for (int y = 0; y < SIZE; y++) {
+        dynamic_array* da = matrix_get(m, x_want, y);
+        if (their_z_lengths[y] == 0) {
+            if (da) {
+                da->used = 0;
+            }
+            continue;
+        }
+
+        if (da == NULL) {
+            da = da_make_ptr(their_z_lengths[y]);
+            m->data[x_want + (y * SIZE)] = da;
+        } else {
+            da_resize(da, their_z_lengths[y]);
+        }
+
+        da->used = their_z_lengths[y];
+        // mpi_print(tmp_id, 1, "WAITING FOR", "%d %d with %d\n", x_want, y, to);
+        memcpy(da->data, (recv_data + current_pos), (da->used * da->step));
+        current_pos += (da->used * da->step);
+    }
+
+    /*
     MPI_Request requests[SIZE];
     MPI_Status statuses[SIZE];
     int request_i = 0; // Ends up as the total amount of requests (sends with 0 size are skiped, that why)
@@ -504,6 +572,7 @@ void swap_rows(Matrix* m, int x_have, int x_want, int to, int tmp_id)
     if (request_i != 0) {
         MPI_Waitall(request_i, requests, statuses);
     }
+    */
 }
 
 int main(int argc, char* argv[])
@@ -622,7 +691,6 @@ int main(int argc, char* argv[])
 
     MPI_Barrier(MPI_COMM_WORLD);
     scatter_time = elapsed_time + MPI_Wtime();
-
 
     //-----------------
     //--- MAIN LOOP ---
@@ -788,7 +856,7 @@ int main(int argc, char* argv[])
                 init_recv_row(&m, x, owner);
             }
         }
-		matrix_print_live(&m);
+        matrix_print_live(&m);
 
         gather_time = elapsed_time + MPI_Wtime() - scatter_time - run_time;
 
@@ -797,15 +865,11 @@ int main(int argc, char* argv[])
         char out_str[120];
         sprintf(out_str, "MPI %s: \nscatter_time: %lf \n    run_time: %lf\n gather_time: %lf\n", input_file, scatter_time, run_time, gather_time);
         fwrite(out_str, strlen(out_str), 1, out_fp);
-        // printf("[%d] Init time: %lf\n", id, scatter_time);
-        // printf("[%d]  Run time: %lf\n", id, run_time);
-
     } else {
         for (int x = MY_LOW; x <= MY_HIGH; x++) {
             init_send_row(&m, x, 0);
         }
     }
-
 
     // matrix_free(&m);
     MPI_Finalize();
