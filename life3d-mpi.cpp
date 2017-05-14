@@ -440,7 +440,8 @@ void init_recv_row(Matrix* m, int x, int owner = 0)
     }
 }
 
-void swap_rows(Matrix* m, int x_have, int x_want, int to, int tmp_id)
+
+void swap_rows_less_sends_version(Matrix* m, int x_have, int x_want, int to, int tmp_id)
 {
     //mpi_print(tmp_id, 0, "--%d-->[%d]\n", x_have, to);
     mpi_print(tmp_id, 0, "SWAP_ROWS", "%d--%d with %d.\n", x_have, x_want, to);
@@ -527,8 +528,27 @@ void swap_rows(Matrix* m, int x_have, int x_want, int to, int tmp_id)
         memcpy(da->data, (recv_data + current_pos), (da->used * da->step));
         current_pos += (da->used * da->step);
     }
+}
 
-    /*
+
+void swap_rows(Matrix* m, int x_have, int x_want, int to, int tmp_id)
+{
+    MPI_Request request;
+    MPI_Status status;
+    int SIZE = m->side;
+
+    // Recv asynchronously their lengths
+    int their_z_lengths[SIZE];
+    MPI_Irecv(their_z_lengths, SIZE, MPI_INT, to, TAG_Z_LENGTHS, MPI_COMM_WORLD, &request);
+
+    // Compute and send our lengths
+    int my_z_lengths[SIZE];
+    get_z_lengths(m, x_have, my_z_lengths);
+    MPI_Send(my_z_lengths, SIZE, MPI_INT, to, TAG_Z_LENGTHS, MPI_COMM_WORLD);
+
+    // Wait for completion of the recv
+    MPI_Wait(&request, &status);
+
     MPI_Request requests[SIZE];
     MPI_Status statuses[SIZE];
     int request_i = 0; // Ends up as the total amount of requests (sends with 0 size are skiped, that why)
@@ -551,7 +571,6 @@ void swap_rows(Matrix* m, int x_have, int x_want, int to, int tmp_id)
         }
 
         da->used = their_z_lengths[y];
-        // mpi_print(tmp_id, 1, "WAITING FOR", "%d %d with %d\n", x_want, y, to);
         MPI_Irecv(da->data, (da->used * da->step), MPI_BYTE, to, TAG_SWAP_ROWS, MPI_COMM_WORLD, &requests[request_i]);
         request_i++;
     }
@@ -563,16 +582,13 @@ void swap_rows(Matrix* m, int x_have, int x_want, int to, int tmp_id)
             continue;
         }
 
-        //mpi_print(tmp_id, 1, "SENDING", "%d %d with %d\n", x_have, y, to);
         MPI_Send(da->data, my_z_lengths[y] * da->step, MPI_BYTE, to, TAG_SWAP_ROWS, MPI_COMM_WORLD);
     }
-    //mpi_print(tmp_id, 1, "FINISHED SENDING", "%d--%d with %d.\n", x_have, x_want, to);
 
     // If we sent any array at all (aka the z's were not all empty)
     if (request_i != 0) {
         MPI_Waitall(request_i, requests, statuses);
     }
-    */
 }
 
 int main(int argc, char* argv[])
@@ -863,8 +879,14 @@ int main(int argc, char* argv[])
         // Write the time log to a file
         FILE* out_fp = fopen("time.log", "w");
         char out_str[120];
-        sprintf(out_str, "MPI %s: \nscatter_time: %lf \n    run_time: %lf\n gather_time: %lf\n", input_file, scatter_time, run_time, gather_time);
+        sprintf(out_str, "MPI %s: \nscatter_time: %lf \n    run_time: %lf\n gather_time: %lf\n   total_time: %lf", input_file, scatter_time, run_time, gather_time, (scatter_time + run_time + gather_time));
         fwrite(out_str, strlen(out_str), 1, out_fp);
+
+        // printf("scatter_time: %lf\n", scatter_time);
+        // printf("    run_time: %lf\n", run_time);
+        // printf(" gather_time: %lf\n", gather_time);
+        // printf("----------------------\n", gather_time);
+        // printf("  total_time: %lf\n", (scatter_time + run_time + gather_time));
     } else {
         for (int x = MY_LOW; x <= MY_HIGH; x++) {
             init_send_row(&m, x, 0);
